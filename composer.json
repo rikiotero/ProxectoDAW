@@ -1,0 +1,21 @@
+{
+    "name": "ricardo/proxectodaw",
+    "description": "aplicación para xestionar tarefas de una academia de estudos",
+    "type": "project",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "Clases\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ricardo",
+            "email": "riki.otero@gmail.com"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "v5.3.2"
+    }
+    
+}

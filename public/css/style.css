@@ -1,0 +1,6 @@
+
+/* texto place holder rojo nas validacións dos formularios */
+input.redText::placeholder {
+    color: red;
+    opacity: 1; /* Firefox */
+  }
