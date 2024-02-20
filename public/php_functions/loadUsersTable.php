@@ -1,5 +1,5 @@
 <?php
-require "../vendor/autoload.php";
+require "../../vendor/autoload.php";
 use Clases\UserDB;
 
 //columnas donde vamos a realizar a búsqueda
@@ -71,7 +71,7 @@ if ( $stmt->rowCount() != 0 ) {
         $html .= "<td>".$row['apellido2']."</td>";
         $html .= "<td>".$row['email']."</td>";
         $html .= "<td>".$row['telefono']."</td>";       
-        $html .= "<td>".date('d/m/Y', strtotime($row['fecha_alta']))."</td>";
+        $html .= "<td>".date('d-m-Y', strtotime($row['fecha_alta']))."</td>";
 
         if ( $row['activo'] == "1" ) $html .= "<td><i class='fa-solid fa-check' style='color: #098b43;'></i></td>";
         else $html .= "<td><i class='fa-solid fa-x' style='color: #f03333;'></i></td>";

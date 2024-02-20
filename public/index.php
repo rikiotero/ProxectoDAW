@@ -1,10 +1,10 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
-require "../src/functions/redirect.php";
+require "./php_functions/redirect.php";
+use Clases\UserDB;
 
 if( isset($_SESSION["rol"]) ) redirect($_SESSION["rol"]);
-use Clases\UserDB;
 
 ?>
 <!DOCTYPE html>
@@ -13,13 +13,10 @@ use Clases\UserDB;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesión</title>
-    <!-- css para usar Bootstrap -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-    <!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">           -->
-    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">          
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">          
 </head>
-<body style="background:silver;">
+<body >
 <?php
 
 if (isset($_POST['login'])) {
@@ -31,9 +28,9 @@ if (isset($_POST['login'])) {
 
     $usr = new UserDB();
 
-    if ( $usr->validateUserCredentials($user,$pass) ) {        
+    if ( $usr->validateUserCredentials($user,$pass) ) {        //Validación de credenciales e comprobasción de que é usuario activo
         if( $usr->isActive($user) ) {
-            $_SESSION["user"] = $user;
+            $_SESSION["user"] = $user;                         //gárdanse os datos do usuario na sesión
             $_SESSION["rol"] = $usr->getRole($user) ? $usr->getRole($user) : ""; 
             $_SESSION["id"] = $usr->getUserId($user) ? $usr->getUserId($user) : "";
             $usr->cerrarConexion();           
@@ -42,8 +39,7 @@ if (isset($_POST['login'])) {
             $_SESSION["error"] = "O usuario está desactivado.";
             $usr->cerrarConexion();
             redirect("");
-        }
-        
+        }        
         
     }else {
         $_SESSION["error"] = "Credenciais incorrectas.";
@@ -77,18 +73,11 @@ if (isset($_POST['login'])) {
                         ?>
                     </form>                    
                 </div>
-            </div>
-            
+            </div>            
         </div>
     </div>
 
-
-    <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    -->
-  <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- el bundle ya incluye el popper -->
+  <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
 
  <?php } ?> 
 </body>

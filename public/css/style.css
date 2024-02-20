@@ -1,4 +1,9 @@
 
+
+body {
+  background:rgb(219,236,250);
+}
+
 /* texto place holder rojo nas validacións dos formularios */
 input.redText::placeholder {
     color: red;

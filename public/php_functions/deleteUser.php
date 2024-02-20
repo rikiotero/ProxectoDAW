@@ -1,8 +1,8 @@
 <?php
 session_start();
-if( !isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "administrador") redirect("");
+if( !isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "administrador" ) redirect("");
 
-require "../vendor/autoload.php";
+require "../../vendor/autoload.php";
 
 use Clases\UserDB;
 

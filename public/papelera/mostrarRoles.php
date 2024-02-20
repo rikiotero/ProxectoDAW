@@ -4,23 +4,16 @@ require "../vendor/autoload.php";
 use Clases\RoleDB;
 use Clases\UserDB;
 
-
 $roles = new RoleDB();
 $stmt = $roles->getRoles();
 $roles->cerrarConexion();
-
 
 $usr = new UserDB();
 $stmt = $usr->getUsers();
 $usr->cerrarConexion();
 
-
 // $hash = password_hash('admin', PASSWORD_DEFAULT, [15]);
 // echo "passW: ". $hash;
-
-
-
-
 ?>
 
 <!DOCTYPE html>

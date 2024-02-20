@@ -3,27 +3,28 @@ namespace Clases;
 
 class User {
 
-    private $usuario;
-    private $passw;
-    private $nombre;
-    private $apelido1;
-    private $apelido2;
-    private $email;
-    private $tlf;
-    private $fechaAlta;
-    private $activo;
-    private $rol;
+    protected $usuario;
+    protected $password;
+    protected $nombre;
+    protected $apellido1;
+    protected $apellido2;
+    protected $email;
+    protected $telefono;
+    protected $fecha_alta;
+    protected $activo;
+    protected $rol;
 
-    public function __construct($usuario, $passw, $nombre, $apelido1, $apelido2, $email, $tlf, $fechaAlta, $activo, $rol) {
+
+    public function __construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol) {
         
         $this->usuario = $usuario;
-        $this->passw = $passw;
+        $this->password = $password;
         $this->nombre = $nombre;
-        $this->apelido1 = $apelido1;
-        $this->apelido2 = $apelido2;
+        $this->apellido1 = $apellido1;
+        $this->apellido2 = $apellido2;
         $this->email = $email;
-        $this->tlf = $tlf;
-        $this->fechaAlta = $fechaAlta;
+        $this->telefono = $telefono;
+        $this->fecha_alta = $fecha_alta;
         $this->activo = $activo;
         $this->rol = $rol;
     }
@@ -32,15 +33,15 @@ class User {
      * Validación de datos de usuario
      * @return boolean True si valida ou false si non valida
      */
-    public function validaUsuario() {
+    public function validaUsuario2() {
         if ( preg_match("/[a-zA-ZçÇñÑáéíóúÁÉÍÓÚ0-9_-]{3,16}$/", $this->usuario) 
-             && preg_match("/^[^\s]{4,}$/", $this->passw)
+             && preg_match("/^[^\s]+.{2,}[^\s]$/", $this->password)
              && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->nombre)
-             && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apelido1)
-             && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apelido2)
+             && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apellido1)
+             && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apellido2)
              && (preg_match("/^[0-9a-zA-Z_\-\.]{2,}@[a-zA-Z_\-]+\.[a-zA-Z]{2,5}$/", $this->email) || $this->email == null)
              && (preg_match("/^[0-9]{9}$/", $this->tlf) || $this->tlf === null)
-             && preg_match("/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/", $this->fechaAlta)
+             && preg_match("/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/", $this->fecha_alta)
              && is_bool($this->activo)
              && preg_match("/^[1-3]$/", $this->rol)) 
              { 
@@ -49,7 +50,27 @@ class User {
         return false;
     }
 
-   
+
+    /**
+     * Validación de datos de usuario
+     * @return array Array cos erros de validación
+     */
+    public function validaUsuario() {
+        $error = [];
+        if ( !preg_match("/[a-zA-ZçÇñÑáéíóúÁÉÍÓÚ0-9_-]{3,16}$/", $this->usuario) ) $error [] = "O nome de usuario debe ter entre 3 e 16 caracteres";
+        if ( !preg_match("/^[^\s]+.{2,}[^\s]$/", $this->password) ) $error [] = "O password debe ter mínimo 4 caracteres e sin espacios";
+        if ( !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->nombre) ) $error [] = "O nombre só pode ter letras";
+        if ( !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apellido1) ) $error [] = "O primeiro apelido só pode ter letras";
+        if ( !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apellido2) ) $error [] = "O segundo apelido só pode ter letras";
+        if ( !preg_match("/^[0-9a-zA-Z_\-\.]{2,}@[a-zA-Z_\-]+\.[a-zA-Z]{2,5}$/", $this->email) && $this->email != null) $error [] = "O email é incorrecto";
+        if ( !preg_match("/^[0-9]{9}$/", $this->telefono) && $this->telefono != null) $error [] = "O teléfono só poder 9 números";
+        if ( !preg_match("/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/", $this->fecha_alta) ) $error [] = "A fecha é incorrecta";
+        if ( !is_bool($this->activo) ) $error [] = "O valor de usuario activo é incorrecto";
+        if ( !preg_match("/^[1-3]$/", $this->rol) ) $error [] = "O rol é incorrecto";
+        
+        return $error;
+    }
+
 
    //Getters e Setters
 
@@ -65,15 +86,15 @@ class User {
     }
 
    
-    public function getPassw()
+    public function getPassword()
     {
-        return $this->passw;
+        return $this->password;
     }
 
 
-    public function setPassw($passw)
+    public function setPassword($password)
     {
-        $this->passw = $passw;
+        $this->password = $password;
     }
 
   
@@ -89,27 +110,27 @@ class User {
     }
 
   
-    public function getApelido1()
+    public function getApellido1()
     {
-        return $this->apelido1;
+        return $this->apellido1;
     }
 
   
-    public function setApelido1($apelido1)
+    public function setApellido1($apellido1)
     {
-        $this->apelido1 = $apelido1;
+        $this->apellido1 = $apellido1;
     }
 
   
-    public function getApelido2()
+    public function getApellido2()
     {
-        return $this->apelido2;
+        return $this->apellido2;
     }
 
 
-    public function setApelido2($apelido2)
+    public function setApellido2($apellido2)
     {
-        $this->apelido2 = $apelido2;
+        $this->apellido2 = $apellido2;
     }
 
 
@@ -127,25 +148,25 @@ class User {
 
     public function getTlf()
     {
-        return $this->tlf;
+        return $this->telefono;
     }
 
 
-    public function setTlf($tlf)
+    public function setTlf($telefono)
     {
-        $this->tlf = $tlf;
+        $this->telefono = $telefono;
     }
 
 
     public function getFechaAlta()
     {
-        return $this->fechaAlta;
+        return $this->fecha_alta;
     }
 
 
-    public function setFechaAlta($fechaAlta)
+    public function setFechaAlta($fecha_alta)
     {
-        $this->fechaAlta = $fechaAlta;
+        $this->fecha_alta = $fecha_alta;
     }
 
 

@@ -43,7 +43,7 @@ function getUsersData() {
   }
 
   let tablaUsuarios = document.getElementById("tablaUsuarios");
-  let url = './loadUsersTable.php';
+  let url = './php_functions/loadUsersTable.php';
   
   formData.append("buscar", filtro);
   formData.append("activo", activoCkecked);
@@ -62,10 +62,9 @@ function getUsersData() {
     // e engádese o listener 
     tablaUsuarios.childNodes.forEach( element => {
       element.childNodes[10].childNodes[0].addEventListener("click", () => {
-        updateUserModal.show(); //abre o modal 'updateUserModal' 
-        //gardo o id do usuario nun campo oculto do modal
-        document.getElementById("idUsuarioActualizar").value = element.childNodes[10].childNodes[0].id;
-        loadUserDataModal(); 
+        updateUsersListModal.show();                //abre o modal 'updateUsersListModal' declarado en modal.js         
+        id = element.childNodes[10].childNodes[0].id;
+        loadUserDataModal(id);            //definida en updateUser.js, carga os datos do usuario
         // alert("pulsado id:"+element.childNodes[10].childNodes[0].id+" evenTarget:"+event.target)
       })
     })

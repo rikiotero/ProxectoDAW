@@ -10,14 +10,14 @@ create user administrador@'localhost' identified by 'admin';
 grant all on academia.* to administrador@'localhost';
 
 -- Creamos tabla de "roles"
-CREATE TABLE roles (
-id INT PRIMARY KEY AUTO_INCREMENT , 
-rol VARCHAR(30) NOT NULL) ENGINE = InnoDB;
+CREATE TABLE `roles`.`usuarios` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT , 
+    `rol` VARCHAR(30) NOT NULL) ENGINE = InnoDB;
 
 -- Creamos tabla de "usuarios"
 CREATE TABLE `academia`.`usuarios` (
     `id` INT NOT NULL AUTO_INCREMENT , 
-    `usuario` VARCHAR(30) NOT NULL , 
+    `usuario` VARCHAR(30) NOT NULL UNIQUE , 
     `password` VARCHAR(120) NOT NULL , 
     `nombre` VARCHAR(50) NOT NULL , 
     `apellido1` VARCHAR(50) NOT NULL , 
@@ -87,22 +87,29 @@ ADD FOREIGN KEY (`usuario_id`)
 REFERENCES `usuarios`(`id`) 
 ON DELETE CASCADE ON UPDATE CASCADE;
 
--- -- Creamos tabla "usuario_asignatura"
--- CREATE TABLE `academia`.`usuario_asignatura` (
---     `usuario_id` INT NOT NULL , 
---     `asignatura_id` INT NOT NULL , 
---     PRIMARY KEY (`usuario_id`, `asignatura_id`)) ENGINE = InnoDB;
+-- Creamos tabla "usuario_asignatura"
+CREATE TABLE `academia`.`usuario_asignatura` (
+    `usuario_id` INT NOT NULL , 
+    `asignatura_id` INT NOT NULL , 
+    PRIMARY KEY (`usuario_id`, `asignatura_id`)) ENGINE = InnoDB;
 
--- -- Añadimos claves foráneas
--- ALTER TABLE `usuario_asignatura` 
--- ADD FOREIGN KEY (`asignatura_id`) 
--- REFERENCES `asignaturas`(`id`) 
--- ON DELETE CASCADE ON UPDATE CASCADE; 
+-- Añadimos claves foráneas
+ALTER TABLE `usuario_asignatura` 
+ADD FOREIGN KEY (`asignatura_id`) 
+REFERENCES `asignaturas`(`id`) 
+ON DELETE CASCADE ON UPDATE CASCADE; 
 
--- ALTER TABLE `usuario_asignatura` 
--- ADD FOREIGN KEY (`usuario_id`) 
--- REFERENCES `usuarios`(`id`) 
--- ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `usuario_asignatura` 
+ADD FOREIGN KEY (`usuario_id`) 
+REFERENCES `usuarios`(`id`) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- Insertamos usuarios
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'administrador', '$2y$10$hDl6apU1qTmsdQF3c87u0.zD3gmZusyhuG/qAK4bDgZhQpI2IcHFK', 'Ricardo', 'Otero', 'González', 'riki.otero@gmail.com', '678441054', '2024-01-25 13:42:23.000000', '1', '1');
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'profesor1', '$2y$10$jlL0xTiFmdGllVBcPLKgbOykzVrVtBkzlGfjMcZh7eB6vBU2HVo1e', 'David', 'López', 'García', 'davidlopez@hotmail.com', '678999000', '2024-01-30 18:39:06.000000', '1', '2');
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'profesor2', '$2y$10$ipRVlSXB88q5Xkw35u5QJePbtuxaQMXyU2QoIeD5p8rEbXqRGlvqi', 'Jose Luis', 'Gallardo', 'Pérez', 'gallardoperez@gmail.es', '786564342', '2024-01-30 18:42:58.000000', '1', '2');
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'estudiante1', '$2y$10$ONeYYcf.6DAbiZDfna/9UeoF1DUio5FXBN0VaXaBFwm5rYFTm/sy.', 'Juan', 'Caamaño', 'del toro', 'caamañodeltoro@terra.es', '654349875', '2024-01-30 18:50:55.000000', '1', '3');
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'estudiante2', '$2y$10$9GVTENGTt2LK4eK0UuvP4edu4ndvjcOcYfPCZb3P/kKiGvbh7lkFm', 'Ángela', 'Prol', 'Vidal', 'angelaprol@gmail.com', NULL, '2024-01-30 18:56:53.000000', '1', '3');
 
 -- Insertamos cursos
 INSERT INTO `cursos` (`id`, `nombre`) VALUES 
@@ -136,9 +143,3 @@ INSERT INTO `exercicios` (`id`, `tema`, `enunciado`, `asignatura`) VALUES (NULL,
 INSERT INTO `exercicios` (`id`, `tema`, `enunciado`, `asignatura`) VALUES (NULL, 'Leyes Ponderales', '1. Definir: mol, átomo-gramo, u.m.a., peso atómico, peso molecular, número de Avogadro. 2. Al analizar dos muestras se han obtenido los siguientes resultados: 1ª muestra 1,004 g. de Ca y 0,400 g de oxigeno. 2ª muestra 2,209 g. de Ca y 0,880 g de oxigeno. Indicar si se cumple la ley de Proust. Solución. Se cumple la Ley de Proust.3. Los elementos A y B pueden formar dos compuestos diferentes. En el 1º hay 8 g. de A por cada 26 g de compuesto. En el 2º tiene una composición centesimal de 25 % de A y 75 % de B. Se cumple la ley de las proporciones múltiples. Solución. Se cumple la Ley de Dalton4. Sabiendo que 2 g. de Na se combinan con 3,0842 g de Cl; 1 g de Cl con 0,2256 g. de O, para formar oxido y que 1 g de O reacciona con 2,8738 g. de Na para dar él oxido de sodio. Comprobar si se cumple la ley de las proporciones recíprocas. Solución. Se cumple la Ley de Richter.5. En análisis de dos óxidos de Cr, muestran que 2,51 g del 1º contienen 1,305 g de Cr, y que 3,028 g del 2º contiene 2,072 g. de Cr. Demostrar que se cumple la ley de las proporciones múltiples. Solución. Se cumple la Ley de Dalton6. El H y él O reaccionan dando agua, pero sometido a una fuerte descarga eléctrica pueden producir peróxido de hidrogeno. La 1ª contiene el 11,2% de H, mientras que la 2ª posee un 5,93%. Demostrar que se cumple la ley de las proporciones múltiples. H = 1 gr.; O = 16 gr. Solución. Se cumple la Ley de DaltonLey de las proporciones múltiples ó Ley de Dalton. 7. Una muestra de óxido de vanadio que pesaba 3,53 g. se redujo con H obteniendo agua y otro óxido de vanadio que peso 2,909 g. Este 2º óxido se trato de nuevo con H hasta que se obtuvieron 1,979 g. de metal. a.cuales son las formulas empíricas de ambos óxidos. b.Cual es la cantidad de agua formada en ambas reacciones. V = 50’9 gr.; O = 16 gr.; H = 1 gr. Solución. a) V2O5, V2O3. b) 0’699 gr., 1’046 gr 8. Calcular él % en peso de cada átomo que forma el ácido sulfúrico. H = 1 gr.; S = 32 gr.; O = 16 gr. Solución. H(2’04%), S(32’65%), O(65’31%) 9. La progesterona es un componente común de la píldora anticonceptiva, si su fórmula es C21H30O2 ¿cuál es su composición porcentual? Datos: C = 12 gr.; H = 1 gr.; O = 16 gr. Solución. C(80’25%), S(9’55%), O(10’20%)10. Calcular el porcentaje de cobre en cada uno de los minerales siguientes cuprita Cu2O, piritas cupríferas CuFeS2, malaquita Cu2CO3(OH)2, ¿Cuántas toneladas de cuprita se necesitan para extraer 500 toneladas de cobre? Datos: Cu = 63’5 gr.; O = 16 gr.; Fe = 55’8 gr.; S = 32 gr.; C = 12 gr.; H = 1gr. Solución. 88’81% en cuprita, 34’64% en piritas cupríferas; 57’47% en malaquita; 563 toneladas de cuprita.11. Hallar la fórmula de un compuesto cuya composición centesimal es: N 10,7%, O 36,8% y Ba 52,5%. Pesos atómicos: N = 14, O = 16 y Ba = 137’3. Solución.Ba(NO3)2\r\n', '5'), (NULL, 'Termodinámica', '1. Explicar cómo variar con la temperatura la espontaneidad de una reacción en la que AHº < 0 y ASº < 0, suponiendo que ambas magnitudes constantes con la temperatura. 2. Se suele decir que la ley de Hess es una consecuencia directa del primer principio de la Termodinámica en su aplicación a una reacción química. Justificar esta afirmación. 3. La Entalpía de formación del agua a 298 K es −286 kJ/mol. Sin embargo, cuando se mezclan a 298 K el hidrógeno y el oxígeno, no se observa reacción apreciable. Comente estos hechos. 4.a-Utilizando diagramas Energía / coordenada de reacción, represente los perfiles de una reacción endotérmica y de otra exotérmica, partiendo de reactivos (R) para dar productos (P) y establezca, al mismo tiempo, el signo de la variación de entalpía (∆H) para ambas reacciones. b-En uno de los diagramas, represente el perfil de la reacción al añadir un catalizador al medio de reacción y comente qué efecto tiene sobre: b.l.- la entalpía de reacción, y b.2.-la constante cinética de la reacción directa. 5. Dadas tres reacciones espontáneas cualquiera. Razone: a)Cual es el signo de ∆G para cada una. b)Qué datos serían precisos conocer para saber si al producirse las reacciones, aumenta el grado de desorden y cuál de ellas transcurriría a mayor velocidad. 6. De las siguientes reacciones, cada una de ellas a 1 atm de presión. ∆H (kJ) ∆S (kJ/K) ½ H 2 (g) + ½ I 2 (g) → HI (g) +25’94 +34’63·10−22NO2 (g) → N2O4 (g) −58’16 −73’77·10−2S (s) + H2 (g) → H2S (g) −16’73 +18’19·10−2Razonar: a)Las que son espontáneas a todas temperaturas. b)Las que son espontáneas a bajas temperaturas y no espontáneas a altas temperaturas. c)Las que son espontáneas a altas temperaturas y no espontáneas a bajas temperaturas. 7. Teniendo en cuenta la gráfica adjunta que deberá copiar en su hoja de contestaciones: a)Indique si la reacción es exotérmica o endotérmica. b)Represente el valor de ∆H de reacción. c)Represente la curva de reacción al añadir un catalizador positivo. d)¿Qué efectos produce el hecho de añadir un catalizador positivo? \r\n', '5')
 INSERT INTO `exercicios` (`id`, `tema`, `enunciado`, `asignatura`) VALUES (NULL, 'Números Reales', '1.Averiguar los valores reales que verifican las siguientes condiciones: a.22x≤−b.521x=+c.63x2≥+2.Expresar en forma de valor absoluto los siguientes intervalos: a.(−3, 5) b.(−∞, 2] ∪ [5, +∞) 3.Calcular: a.33385423216−+b.ab21ab2ba2+−c.()233x2x8x42x+−+−+d.()()63644222nm·cb·nmnama−+−+−e.125,0c·ac92ca2c2ab18baba18,03,0b432222−++4.Calcular: a.334:32b.333133c.32bb25.Racionalizar: 23223−+6.Racionalizar: 2232263++7.Racionalizar: 32233223−+8.Racionalizar: 18232−9.Racionalizar: 12232+10.Racionalizar: 2332263++\r\n', '1'), (NULL, 'Números Complejos', '1. Hallar \"a\" para que el complejo i6ai23++: a)sea real puro b)sea imaginario puro 2. Hallar el valor de k para que el complejo ()ki1i·k12−+− sea un nº real. Hallar su cociente. 3. Hallar a y b para que el complejo bi3i2a++ sea igual 31524. Hallar dos números complejos cuya diferencia es imaginaria, su suma tiene como parte imaginaria 5 y su producto vale i55+−. 5. Hallar dos nº complejos tales que su suma sea 1 + 2i, el cociente de ambos real puro y la parte real del 1º sea igual a 2. 6. Determine un número complejo cuyo cuadrado sea igual a su conjugado. 7. Expresar en forma polar los siguientes nº complejos: a)2 b)−5 c)i d)i 322+−e)i3−8. Expresar en forma binómica los siguientes complejos: a)3180ºb)630ºc)2270ºd)√245º9. El complejo de argumento 75º y módulo 12 es el producto de dos complejos, uno de ellos tiene de argumento 45º y el otro de módulo 3. Escribir ambos en forma binómica. 10. Sean los complejos: Z = 330º ; W = 260º ; P = 2 + 2i ; i322Q−=realizar las siguientes operaciones: a)Z· W b)2WZ⋅c)P² d)Q5e)12QPZ−⋅f)3333PWZQ−+\r\n', '1')
 
--- Insertamos usuarios
-INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'administrador', '$2y$10$hDl6apU1qTmsdQF3c87u0.zD3gmZusyhuG/qAK4bDgZhQpI2IcHFK', 'Ricardo', 'Otero', 'González', 'riki.otero@gmail.com', '678441054', '2024-01-25 13:42:23.000000', '1', '1');
-INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'profesor1', '$2y$10$jlL0xTiFmdGllVBcPLKgbOykzVrVtBkzlGfjMcZh7eB6vBU2HVo1e', 'David', 'López', 'García', 'davidlopez@hotmail.com', '678999000', '2024-01-30 18:39:06.000000', '1', '2');
-INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'profesor2', '$2y$10$ipRVlSXB88q5Xkw35u5QJePbtuxaQMXyU2QoIeD5p8rEbXqRGlvqi', 'Jose Luis', 'Gallardo', 'Pérez', 'gallardoperez@gmail.es', '786564342', '2024-01-30 18:42:58.000000', '1', '2');
-INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'estudiante1', '$2y$10$ONeYYcf.6DAbiZDfna/9UeoF1DUio5FXBN0VaXaBFwm5rYFTm/sy.', 'Juan', 'Caamaño', 'del toro', 'caamañodeltoro@terra.es', '654349875', '2024-01-30 18:50:55.000000', '1', '3');
-INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'estudiante2', '$2y$10$9GVTENGTt2LK4eK0UuvP4edu4ndvjcOcYfPCZb3P/kKiGvbh7lkFm', 'Ángela', 'Prol', 'Vidal', 'angelaprol@gmail.com', NULL, '2024-01-30 18:56:53.000000', '1', '3');

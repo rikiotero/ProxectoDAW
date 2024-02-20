@@ -1,17 +1,17 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
-require "../src/functions/redirect.php";
+require "./php_functions/redirect.php";
 
 use Clases\UserDB;
-
+use Clases\RoleDB;
+use Clases\CursosDB;
 
 if( !isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "administrador") redirect("");
 
 //recuperamos os datos do usuario
 $usr = new UserDB();
 $datosUsuario = $usr->getUser($_SESSION["user"]);
-// $_SESSION["userId"] = $datosUsuario->id;
 $activo = $datosUsuario->activo ? "checked" : "";    //guardamos o estado activo nunha variable para usalo no formulario
 $usr->cerrarConexion();     
 
@@ -22,7 +22,7 @@ $usr->cerrarConexion();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de administrador</title>
-    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">          
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script type="text/javascript" src="./js/createUser.js" defer></script>
@@ -32,22 +32,28 @@ $usr->cerrarConexion();
     <script type="text/javascript" src="./js/modal.js" defer></script>
 </head>
 <body>
-    <div class="float float-right d-inline-flex mt-2">
-        <input type="text" size='10px' value="<?php echo $_SESSION["user"]; ?>" class="form-control mr-2 bg-transparent"
-           disabled>
-        <a href="../src/functions/closeSession.php" class='btn btn-danger'>Cerrar sesión</a>
-    </div>    
-    <h1 class="text-center">Panel de administrador</h1>
+    <div class="d-flex flex-row mb-3 align-items-center">
+        <div class="p-2 flex-fill ">
+            <h1>Panel de administrador</h1>
+        </div>
+        <div class="p-2">
+            <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
+        </div> 
+        <div class="p-2">
+            <a href="./php_functions/closeSession.php" title="cerrar sesión" class=''>
+                <span class="fa-solid fa-right-from-bracket fa-2xl" style="color: #d71919;"></span>
+            </a>
+        </div>       
+    </div> 
 
     <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Datos de usuario</button>
-        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Xestión de usuarios</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Xestión de asignaturas</button>
-    </div>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Datos de usuario</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Xestión de usuarios</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Xestión de asignaturas</button>
+        </div>
     </nav>
 
-    
     <div class="tab-content" id="nav-tabContent">
         <!-- contido da tab de usuario-->
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -60,6 +66,7 @@ $usr->cerrarConexion();
                         <span class="font-weight-bold"><?php echo $datosUsuario->usuario?></span>
                         <span class="text-black-50"><?php echo $datosUsuario->email?></span>
                         <span class="text-black-50">Id de usuario: <?php echo $datosUsuario->id?></span>
+                        <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
                         <span class="text-black-50">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
                     </div>
                 </div>
@@ -115,12 +122,12 @@ $usr->cerrarConexion();
 
                         <div class="row g-3 mt-3">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-primary" id="updateUserModalButton" data-bs-toggle="modal">
-                                    Actualizar usuario        
+                                <button type="button" class="btn btn-primary" id="updateUserModalButton"  data-bs-toggle="modal">
+                                    Actualizar datos        
                                 </button>
-                                <button type="button" class="btn btn-danger" id="updatePassModalButton" data-bs-toggle="modal">
+                                <!-- <button type="button" class="btn btn-danger" id="updatePassModalButton" data-bs-toggle="modal">
                                     Cambiar contrasinal        
-                                </button>
+                                </button> -->
                             </div>
                         </div>
 
@@ -200,10 +207,12 @@ $usr->cerrarConexion();
     </div>
 <?php
 require "createUserModal.php";
-require "updateUserModal.php";
+// require "updateUserModal.php";
+require "updateUsersListModal.php";
 require "deleteUserModal.php";
 
 ?>
+
 <script type="text/javascript" src="./js/validateForm.js" defer></script>
 <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
 

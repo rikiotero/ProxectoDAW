@@ -1,7 +1,7 @@
 //Definición de expresiones regulares para validación
 //----------------------------------------------------
 const regExpUsuario = /^[a-zA-ZçÇñÑáéíóúÁÉÍÓÚ0-9_-]{3,16}$/;                //nome usuario
-const regExpPass = /^[^\s]{4,}$/;                                           //password
+const regExpPass = /^[^\s]+.{2,}[^\s]$/;                                    //password
 const regExpNombre = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/;        //nome e apelidos
 const regExpMail = /^[0-9a-zA-Z_\-\.]{2,}@[a-zA-Z_\-]+\.[a-zA-Z]{2,5}$/;    //email
 const regExpTlf = /^[0-9]{9}$/;                                             //teléfono
@@ -95,7 +95,7 @@ const validaUsuario = (id,expresionR,divErr) => {
             usuario: user.value
         }
 
-        fetch('../src/functions/checkUser.php', {
+        fetch('./php_functions/checkUser.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ const validarPassw = (IdPassw,IdPassw2,IdDivErr) => {
     let novoPassw2 = document.getElementById(IdPassw2);
     const divError = document.getElementById(IdDivErr);
 
-    if (novoPassw.value.trim() == ""  || regExpPass.test(novoPassw.value) == false) {
+    if ( novoPassw.value.trim() == ""  || regExpPass.test(novoPassw.value) == false ) {
         divError.innerHTML = "O contrasinal ten que ter mínimo 4 caracteres";
         divError.classList.add("alert","alert-danger");
         novoPassw.style.borderColor = "red";
@@ -143,13 +143,14 @@ const validarPassw = (IdPassw,IdPassw2,IdDivErr) => {
         return false;
     }
 
-    if( novoPassw.value != novoPassw2.value || novoPassw2.value.trim() == "") {
+    if( novoPassw.value != novoPassw2.value || novoPassw2.value.trim() == "" ) {
         divError.innerHTML = "A repetición do contrasinal non coincide";
         divError.classList.add("alert","alert-danger");
         novoPassw2.style.borderColor = "red";
         novoPassw2.classList.add("redText");
         return false;
     }
+
     novoPassw.style.borderColor = "rgb(233,236,239)";
     novoPassw2.style.borderColor = "rgb(233,236,239)";
     novoPassw.classList.remove("redText");
@@ -167,37 +168,38 @@ const validarPassw = (IdPassw,IdPassw2,IdDivErr) => {
 // const botonCrear = document.getElementById("enviar");
 // // botonCrear.disabled = true;
 
-document.getElementById("novoUsuario").addEventListener("blur", () => {
-    validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario");
-});
+// document.getElementById("novoUsuario").addEventListener("blur", () => {
+//     validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario");
+// });
 
-document.getElementById("novoPassword").addEventListener("blur", () => {
-    validarCampoObligatorio("novoPassword",regExpPass,"O contrasinal debe ten como mínimo 4 caracteres","msgNovoUsuario")
-});
+// document.getElementById("novoPassword").addEventListener("blur", () => {
+//     validarCampoObligatorio("novoPassword",regExpPass,"O contrasinal debe ten como mínimo 4 caracteres","msgNovoUsuario")
+// });
 
-document.getElementById("novoPassword2").addEventListener("blur", () => {
-    validarPassw("novoPassword","novoPassword2","msgNovoUsuario");
-})
+// document.getElementById("novoPassword2").addEventListener("blur", () => {
+//     validarPassw("novoPassword","novoPassword2","msgNovoUsuario");
+// })
 
-document.getElementById("novoNome").addEventListener("blur", () => {
-    validarCampoObligatorio("novoNome",regExpNombre,"O nome só pode ter letras","msgNovoUsuario");
-});
+// document.getElementById("novoNome").addEventListener("blur", () => {
+//     validarCampoObligatorio("novoNome",regExpNombre,"O nome só pode ter letras","msgNovoUsuario");
+// });
 
-document.getElementById("novoApellido1").addEventListener("blur", () => {
-    validarCampoObligatorio("novoApellido1",regExpNombre,"Os apelidos só poden ter letras","msgNovoUsuario");
-});
+// document.getElementById("novoApellido1").addEventListener("blur", () => {
+//     validarCampoObligatorio("novoApellido1",regExpNombre,"Os apelidos só poden ter letras","msgNovoUsuario");
+// });
 
-document.getElementById("novoApellido2").addEventListener("blur", () => {
-    validarCampoObligatorio("novoApellido2",regExpNombre,"Os apelidos só poden ter letras","msgNovoUsuario");
-});
+// document.getElementById("novoApellido2").addEventListener("blur", () => {
+//     validarCampoObligatorio("novoApellido2",regExpNombre,"Os apelidos só poden ter letras","msgNovoUsuario");
+// });
 
-document.getElementById("novoEmail").addEventListener("blur", () => {
-    validarCampo("novoEmail",regExpMail,"Formato de email incorrecto","msgNovoUsuario");
-});
 
-document.getElementById("novoTlf").addEventListener("blur", () => {
-    validarCampo("novoTlf",regExpTlf,"O teléfono ten que ter 9 números","msgNovoUsuario");
-});
+// document.getElementById("novoEmail").addEventListener("blur", () => {
+//     validarCampo("novoEmail",regExpMail,"Formato de email incorrecto","msgNovoUsuario");
+// });
+
+// document.getElementById("novoTlf").addEventListener("blur", () => {
+//     validarCampo("novoTlf",regExpTlf,"O teléfono ten que ter 9 números","msgNovoUsuario");
+// });
 
 
 
@@ -205,25 +207,22 @@ document.getElementById("novoTlf").addEventListener("blur", () => {
  * Validación do formulario para crear usuarios
  * @returns boolean True si todos os campos son válidos ou False si algún non o é
  */
-// const validaCreateUser = () => {
- 
+const validaCreateUser = () => { 
 
-//     if (validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario") 
-//         && validarCampoObligatorio("novoNome",regExpNombre,"O nome só pode ter letras","msgUpdate")
-//         && validarCampoObligatorio("novoApellido1",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
-//         && validarCampoObligatorio("novoApellido2",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
-//         && validarCampo("novoEmail",regExpMail,"Formato de email incorrecto","msgUpdate") 
-//         && validarCampo("novoTlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate")
-//         && validarPassw("novoPassword","novoPassword2","msgNovoUsuario")
-//         && validarCampoObligatorio("novoAlta",regExpFecha,"Fecha incorrecta","msgNovoUsuario")
-//         )
-//     {
-//         return true
-//     }
-//     return false
-// } 
-
-
+    if (validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario")
+        && validarPassw("novoPassword","novoPassword2","msgNovoUsuario") 
+        && validarCampoObligatorio("novoNome",regExpNombre,"O nome só pode ter letras","msgNovoUsuario")        
+        && validarCampoObligatorio("novoApellido1",regExpNombre,"O apelido só pode ter letras","msgNovoUsuario") 
+        && validarCampoObligatorio("novoApellido2",regExpNombre,"O apelido só pode ter letras","msgNovoUsuario") 
+        && validarCampo("novoEmail",regExpMail,"Formato de email incorrecto","msgNovoUsuario") 
+        && validarCampo("novoTlf",regExpTlf,"O teléfono ten que ter 9 números","msgNovoUsuario")        
+        && validarCampoObligatorio("novoAlta",regExpFecha,"Fecha incorrecta","msgNovoUsuario")
+        )
+    {
+        return true
+    }
+    return false
+} 
 
 /** Validación do formulario do modal de actualizar usuario ------------------------------------------
  * --------------------------------------------------------------------------------------------------------
@@ -233,50 +232,64 @@ document.getElementById("novoTlf").addEventListener("blur", () => {
 //  * Validación do formulario para actualizar os datos de usuario
 //  * @returns boolean True si todos os campos son válidos ou False si algún non o é
 //  */
-// const validaUpdateUser = () => {
-//     if (validarCampoObligatorio("usuario",regExpUsuario,"O nome de usuario debe ter entre 3-16 letras ou números","msgUpdate")
-//         && validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate")
-//         && validarCampoObligatorio("apellido1",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
-//         && validarCampoObligatorio("apellido2",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
-//         && validarCampo("email",regExpMail,"Formato de email incorrecto","msgUpdate") 
-//         && validarCampo("tlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate")) 
-//     {
-//         return true
-//     }
-//     return false
-// }
-usuarioVello = document.getElementById("usuarioVello").value;
-
-document.getElementById("usuario").addEventListener("blur", () => {
-    
+const validaUpdateUser = () => {    
+    usuarioVello = document.getElementById("usuarioVello").value;
     usuarioNovo = document.getElementById("usuario");
-    if( usuarioVello != usuarioNovo.value) {
-        validaUsuario("usuario",regExpUsuario,"msgUpdate");
-    }else {
-        usuarioNovo.style.borderColor = "rgb(233,236,239)";
-        usuarioNovo.classList.remove("redText"); 
-    }
+
+    if( usuarioVello != usuarioNovo.value ) {
+
+        if (validaUsuario("usuario",regExpUsuario,"msgUpdate")
+            && validarCampoObligatorio("usuario",regExpUsuario,"O nome de usuario debe ter entre 3-16 letras ou números","msgUpdate")
+            && validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate")
+            && validarCampoObligatorio("apellido1",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
+            && validarCampoObligatorio("apellido2",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
+            && validarCampo("email",regExpMail,"Formato de email incorrecto","msgUpdate") 
+            && validarCampo("tlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate")) {
+            return true
+        }
+    }else if(validarCampoObligatorio("usuario",regExpUsuario,"O nome de usuario debe ter entre 3-16 letras ou números","msgUpdate")
+            && validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate")
+            && validarCampoObligatorio("apellido1",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
+            && validarCampoObligatorio("apellido2",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
+            && validarCampo("email",regExpMail,"Formato de email incorrecto","msgUpdate") 
+            && validarCampo("tlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate")) {
+            return true
+        } 
+    return false   
+}
+
+
+
+// document.getElementById("usuario").addEventListener("blur", () => {
+    
+//     usuarioNovo = document.getElementById("usuario");
+//     if( usuarioVello != usuarioNovo.value) {
+//         validaUsuario("usuario",regExpUsuario,"msgUpdate");
+//     }else {
+//         usuarioNovo.style.borderColor = "rgb(233,236,239)";
+//         usuarioNovo.classList.remove("redText"); 
+//     }
    
-});
+// });
 
-document.getElementById("nome").addEventListener("blur", () => {
-    validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate");
-});
+// document.getElementById("nome").addEventListener("blur", () => {
+//     validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate");
+// });
 
-document.getElementById("apellido1").addEventListener("blur", () => {
-    validarCampoObligatorio("apellido1",regExpNombre,"Os apelidos só poden ter letras","msgUpdate");
-});
+// document.getElementById("apellido1").addEventListener("blur", () => {
+//     validarCampoObligatorio("apellido1",regExpNombre,"Os apelidos só poden ter letras","msgUpdate");
+// });
 
-document.getElementById("apellido2").addEventListener("blur", () => {
-    validarCampoObligatorio("apellido2",regExpNombre,"Os apelidos só poden ter letras","msgUpdate");
-});
+// document.getElementById("apellido2").addEventListener("blur", () => {
+//     validarCampoObligatorio("apellido2",regExpNombre,"Os apelidos só poden ter letras","msgUpdate");
+// });
 
-document.getElementById("email").addEventListener("blur", () => {
-    validarCampo("email",regExpMail,"Formato de email incorrecto","msgUpdate");
-});
+// document.getElementById("email").addEventListener("blur", () => {
+//     validarCampo("email",regExpMail,"Formato de email incorrecto","msgUpdate");
+// });
 
-document.getElementById("tlf").addEventListener("blur", () => {
-    validarCampo("tlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate");
-});
+// document.getElementById("tlf").addEventListener("blur", () => {
+//     validarCampo("tlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate");
+// });
 
 

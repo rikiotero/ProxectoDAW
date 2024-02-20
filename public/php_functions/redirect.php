@@ -16,15 +16,7 @@ function redirect($rol) {
             header('Location:studentPanel.php');
             break;
         default:
-        header('Location:login.php');
+            header('Location:index.php');
             break;
     }
 }
-
-// function closeSession() {
-//     session_start();
-//     unset($_SESSION['rol']);
-//     unset($_SESSION['user']);
-//     unset($_SESSION['error']);
-//     redirect("");
-// }

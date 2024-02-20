@@ -1,8 +1,7 @@
 <?php
 session_start();
-require "../src/functions/redirect.php";
 require "../vendor/autoload.php";
-
+require "./php_functions/redirect.php";
 
 if( !isset($_SESSION["rol"]) || ($_SESSION["rol"] != "profesor" &&  $_SESSION["rol"] != "administrador") ) redirect("");
 
@@ -19,8 +18,10 @@ if( !isset($_SESSION["rol"]) || ($_SESSION["rol"] != "profesor" &&  $_SESSION["r
     <div class="float float-right d-inline-flex mt-2">
         <input type="text" size='10px' value="<?php echo $_SESSION["user"]; ?>" class="form-control mr-2 bg-transparent"
            disabled>
-        <a href="closeSession.php" class='btn btn-danger mr-2'>Salir</a>
+        <a href="./php_functions/closeSession.php" class='btn btn-danger mr-2'>Salir</a>
     </div>    
     <h1>Panel del teacher</h1>
+  <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

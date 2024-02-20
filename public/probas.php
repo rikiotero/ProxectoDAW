@@ -1,12 +1,11 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
+use Clases\Student;
+use Clases\UserDB;
+use Clases\User;
 // require "load.php";
 
-
-
-// use Clases\RoleDB;
-// use Clases\UserDB;
 
 
 // $hash = password_hash('estudiante2', PASSWORD_DEFAULT, [15]);
@@ -15,6 +14,10 @@ require "../vendor/autoload.php";
 // $user = new UserDB();
 // $activo = $user->isActive("profesor1");
 // echo "Activo: ".$activo;
+
+$usuario = new User("riki", "pass", "rikiNick", "otero","Gonzalez", "lellamaban@gmail.com", "222333444", "02-04-2018", "1", "estudiante");
+$estudiante = new Student($usuario);
+var_dump($estudiante);
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +41,7 @@ require "../vendor/autoload.php";
     </style>
 </head>
 <body>
-  <h2>Empleados</h2>
+  <!-- <h2>Empleados</h2>
 
   <form action="" method="post">
     <label for="campo">Buscar:</label>
@@ -144,7 +147,7 @@ require "../vendor/autoload.php";
       })
       .catch(err => console.log(err))
     }
-  </script>
+  </script> -->
 
 </body>
 </html>

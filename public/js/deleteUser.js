@@ -8,7 +8,7 @@ const deleteUser = () => {
         id: userId,
     };
 
-    fetch('./deleteUser.php', {
+    fetch('./php_functions/deleteUser.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

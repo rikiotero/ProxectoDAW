@@ -1,5 +1,6 @@
 <?php
 use Clases\RoleDB;
+use Clases\CursosDB;
 ?>
 
 <!-- Modal crear usuario-->
@@ -11,8 +12,7 @@ use Clases\RoleDB;
         <h1 class="modal-title fs-5" id="createUserModalLabel">Rexistro de novo usuario</h1>
       </div>
       <!-- Modal crear usuario body-->
-      <div class="modal-body">
-        
+      <div class="modal-body">        
         <div class="container">
           <!-- formulario -->
           <form  class="row g-3 align-items-center" id="crearUsuario" name="crearUsuario">      
@@ -61,13 +61,13 @@ use Clases\RoleDB;
               </div>
             </div>
       
-            <div class="row g-3 align-items-center">
+            <div class="row g-3">
               <div class="col-md-4">
                 <label for="novoRol" class="form-label">Rol de usuario *</label>
                 <select id="novoRol" name="novoRol" class="form-select" <?php $_SESSION["rol"] == "administrador" ? "disabled" : ""?>>      
             
                   <?php
-                      $roles = new RoleDB();
+                      $roles = new RoleDB();  //obtemos os roles da db
                       $stmt = $roles->getRoles();
                       $roles->cerrarConexion();
                       while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
@@ -75,11 +75,58 @@ use Clases\RoleDB;
                           else echo "<option value='$row->id'>$row->rol</option>";                        
                       }
                       $stmt = null;
-                  ?>
-            
+                  ?>            
                 </select>
-              </div>    
-              <div class="col-md-4">
+              </div>
+              
+                <?php
+                  $db = new CursosDB();  //obtemos os cursos da db
+                  $cursos = $db->getCursos();
+                  $db->cerrarConexion();
+                ?>
+              <div class="col-md-4" id="divCursoNovo">
+                <label for="novoCurso" class="form-label">Curso</label>
+                <select id="novoCurso" name="novoCurso" class="form-select">
+                  <option value="0">Seleción de curso</option>
+                  <?php                        
+                    foreach ($cursos as $key => $value) {
+                      echo "<option value='$key'>".$value."</option>";
+                    }
+                  ?>
+                </select>
+              </div>
+
+              <div class="col-md-4" id="divNovoAsignaturas">
+                  <label for="novoAsignaturas" class="form-label">Asignaturas</label>
+                  <select id="novoAsignaturas" name="novoAsignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple>
+                    <option value="0">Selección de asignaturas</option>
+                  </select>
+                  <div class="form-text">
+                    Manten "Ctrl" pulsado para seleccionar varias
+                  </div>
+
+                  <script>
+                  let novoRol = document.getElementById("novoRol");
+                  novoRol.addEventListener("change" , () => {
+                    if(novoRol.value != 3) {
+                      document.getElementById("divCursoNovo").style.display = "none";
+                      document.getElementById("divNovoAsignaturas").style.display = "none";
+                    }else {
+                      document.getElementById("divCursoNovo").style.display = "";
+                      document.getElementById("divNovoAsignaturas").style.display = "";
+
+                    }
+                  }); 
+
+                  selectNovoCurso = document.getElementById("novoCurso");
+                  // selectAsignaturas = document.getElementById("novoAsignaturas");
+                  selectNovoCurso.addEventListener("change", () => {
+                    cargarAsignaturas(selectNovoCurso.value,"novoAsignaturas");
+                  });
+                  </script>
+              </div>
+
+              <div class="col-md-12">
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox" name="novoActivo" id="novoActivo" value="1" checked>
                     <label class="form-check-label" for="novoActivo">Usuario activo</label>
@@ -98,7 +145,7 @@ use Clases\RoleDB;
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="getUsersData()">Cerrar</button>
         <!-- <input type="submit" form="crearUsuario" class="btn btn-primary" name="enviar" id="enviar" value="Rexistrar usuario" onclick="createUser()"></input> -->
-        <button class="btn btn-primary" name="enviar" id="enviar"  onclick="createUser(event)">Rexistrar usuario</button>
+        <button class="btn btn-primary" name="enviar" id="enviar"  onclick="createUser()">Rexistrar usuario</button>
 
       </div>
       
