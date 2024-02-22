@@ -87,9 +87,9 @@ use Clases\CursosDB;
                   <select id="curso" name="curso" class="form-select">
                     <option value="0">Seleción de curso</option>
                     <?php                        
-                      foreach ($cursos as $key => $value) {
-                        echo "<option value='$key'>".$value."</option>";
-                      }
+                      // foreach ($cursos as $key => $value) {
+                      //   echo "<option value='$key'>".$value."</option>";
+                      // }
                       // foreach ($cursos as $key => $value) { 
                       //   foreach ($value as $curso => $asignaturas) {
                       //     echo "<option value='$key'>".$curso."</option>";
@@ -121,8 +121,7 @@ use Clases\CursosDB;
 
                     
                     <script>
-
-
+                        //mostrar ou ocultar select de curso e asignaturas según rol seleccionado      
                         let rol = document.getElementById("rol");
                         rol.addEventListener("change" , () => {
                           if(rol.value != 3) {
@@ -131,40 +130,16 @@ use Clases\CursosDB;
                           }else {
                             document.getElementById("divCurso").style.display = "";
                             document.getElementById("divAsignaturas").style.display = "";
+                            getCursos("curso");  //función definida en ajaxCursos.js
+                            document.getElementById("asignaturas").innerHTML = "<option value='0'>Sin asignaturas</option>";
                           }
                         });                        
 
-                        selectCurso = document.getElementById("curso");
-                        selectAsignaturas = document.getElementById("asignaturas");
-
-                        selectCurso.addEventListener("change", () => {
-                          cargarAsignaturas(selectCurso.value,"asignaturas");
-                        });
-                        
-                        /**
-                         * Carga as asignaturas do curso correspondente no "input select" de asignaturas
-                         * @param {string} idCurso Id do curso
-                         * @param {string} idSelectInput Id do input select donde se van cargar as asignaturas
-                         */
-                        const cargarAsignaturas = (idCurso,idSelectInput) => {
-                          
-                          fetch('./php_functions/getAsignaturas.php', {
-                              method: 'POST',
-                              headers: {
-                                  'Content-Type': 'application/json',
-                              },
-                              body: JSON.stringify(idCurso),
-                          })
-                          .then(response => response.json())
-                          .then(data => { 
-                                                         
-                            document.getElementById(idSelectInput).innerHTML = data;
-                            
-                          }).catch(err => {
-                              console.error("ERROR: ", err.message);
-                          });
-                        }
-
+                        //cargar asignaturas o cambiar o select de curso
+                        selectUpdateCurso = document.getElementById("curso");
+                        selectUpdateCurso.addEventListener("change", () => {
+                          cargarAsignaturas(selectUpdateCurso.value,"asignaturas");//función definida en ajaxCursos.js
+                        }); 
                     </script>
 
 

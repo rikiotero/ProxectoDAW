@@ -15,7 +15,7 @@ const regExpFecha = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;     //fe
  * @param {string} divErr Div de error que se quere mostrar si non valida
  * @returns {boolean} True si o campo cumple coa expresión regular, False si non
  */
-const validarCampoObligatorio = (id,expresionR,error,divErr) => {
+function validarCampoObligatorio(id,expresionR,error,divErr) {
     const divError = document.getElementById(divErr);
     const campo = document.getElementById(id);
 
@@ -48,7 +48,7 @@ const validarCampoObligatorio = (id,expresionR,error,divErr) => {
  * @param {string} divErr Div de error que se quere mostrar si non valida
  * @returns {boolean} True si o campo cumple coa expresión regular, False si non
  */
-const validarCampo = (id,expresionR,error,divErr) => {
+function validarCampo(id,expresionR,error,divErr) {
     const divError = document.getElementById(divErr);
     const campo = document.getElementById(id);
 
@@ -73,7 +73,7 @@ const validarCampo = (id,expresionR,error,divErr) => {
  * @param {string} divErr Div de error que se quere mostrar si non valida
  * @returns {Boolean} true si valida, false si non
  */
-const validaUsuario = (id,expresionR,divErr) => {
+function validaUsuario(id,expresionR,divErr) {
     const user = document.getElementById(id);
     const divError = document.getElementById(divErr);
 
@@ -130,7 +130,7 @@ const validaUsuario = (id,expresionR,divErr) => {
  * @param {string} divErr Id do div de error que se quere mostrar si non valida
  * @returns {Boolean} True si valida, False si non
  */
-const validarPassw = (IdPassw,IdPassw2,IdDivErr) => {
+function validarPassw(IdPassw,IdPassw2,IdDivErr) {
     let novoPassw = document.getElementById(IdPassw);
     let novoPassw2 = document.getElementById(IdPassw2);
     const divError = document.getElementById(IdDivErr);
@@ -207,7 +207,7 @@ const validarPassw = (IdPassw,IdPassw2,IdDivErr) => {
  * Validación do formulario para crear usuarios
  * @returns boolean True si todos os campos son válidos ou False si algún non o é
  */
-const validaCreateUser = () => { 
+function validaCreateUser() { 
 
     if (validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario")
         && validarPassw("novoPassword","novoPassword2","msgNovoUsuario") 
@@ -232,7 +232,7 @@ const validaCreateUser = () => {
 //  * Validación do formulario para actualizar os datos de usuario
 //  * @returns boolean True si todos os campos son válidos ou False si algún non o é
 //  */
-const validaUpdateUser = () => {    
+function validaUpdateUser() {    
     usuarioVello = document.getElementById("usuarioVello").value;
     usuarioNovo = document.getElementById("usuario");
 

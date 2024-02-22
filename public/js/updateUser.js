@@ -48,7 +48,6 @@ function loadUserDataModal(userId) {
         document.getElementById("apellido2").value = data.apellido2;
         document.getElementById("email").value = data.email;
         document.getElementById("tlf").value = data.telefono;
-        // document.getElementById("alta").value = new Date(data.fecha_alta).toLocaleDateString();
         document.getElementById("alta").value = new Date(data.fecha_alta).toLocaleDateString("en-GB").replace(/\//g, '-');
         document.getElementById("rol").value = data.rol;
         
@@ -59,13 +58,22 @@ function loadUserDataModal(userId) {
         }else {
             document.getElementById("divCurso").style.display = "";             //mostrar select de cursos
             document.getElementById("divAsignaturas").style.display = "";       //mostrar select de asignaturas
-            //carga de cursos e asignaturas
-            //obtemos a key do curso para marcar seleccionado o curso correspondente do alumno, a key equivale o id do curso
-            document.getElementById("curso").selectedIndex = Object.keys(data.curso)[0]; 
+            
+            //carga de cursos no select de cursos
+            getCursos("curso"); //declarada en ajaxCursos.js   
 
-            //añadimos ao select de asignaturas as asignaturas correspontes co curso seleccionado
-            cargarAsignaturas(Object.keys(data.curso)[0],"asignaturas");
-
+            setTimeout( () => { //seleccion do curso correspondente do alumno, retrásase para esperar que termine getCursos
+                let index = "0";
+                document.getElementById("curso").childNodes.forEach(element => {
+                    if ( element.value == Object.keys(data.curso)[0] ) {//obtemos a key do curso para marcar seleccionado o curso correspondente do alumno, a key equivale o id do curso
+                        index = element.index;
+                    }
+                }); 
+                document.getElementById("curso").selectedIndex = index;                        
+            },500);
+           
+            //añadimos o select de asignaturas as asignaturas correspontes co curso seleccionado
+            cargarAsignaturas(Object.keys(data.curso)[0],"asignaturas"); //definida en ajaxCursos.js
   
             //márcanse como seleccionadas as asignaturas do usuario, poño un setTimeout para esperar pola 
             //carga de asignaturas da función anterior 
@@ -90,10 +98,11 @@ function loadUserDataModal(userId) {
 }
 
 
-    
-const updateUser = () => {
+/**
+ * Actualiza os datos de un usuario, recolle os datos da pantalla modal de actualizar usuario
+ */  
+function updateUser() {
 
-    // event.preventDefault();
     const divError = document.getElementById("msgUpdate");
     divError.innerHTML = "";
 
@@ -159,8 +168,10 @@ const updateUser = () => {
 
 
 
-
-const updatePassw = () => {
+/**
+ * Actualiza o contrasinal de un usuario
+ */
+function updatePassw() {
 
     if (validarPassw("passwUpdate","passwUpdate2","msgUpdatepassw")) {
     

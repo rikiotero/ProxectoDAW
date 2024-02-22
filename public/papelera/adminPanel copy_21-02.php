@@ -30,6 +30,7 @@ $usr->cerrarConexion();
     <script type="text/javascript" src="./js/getUsers.js" defer></script>
     <script type="text/javascript" src="./js/deleteUser.js" defer></script>
     <script type="text/javascript" src="./js/modal.js" defer></script>
+    <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
 </head>
 <body>
     <header>
@@ -208,60 +209,28 @@ $usr->cerrarConexion();
             <div class="container mt-3">
                 <div class="row d-flex justify-content-between">
                     <div class="col-md-5 mt-5">
-                        <div class="d-flex justify-content-end">
-                            <div class="flex-grow-1">
-                                <input type="text" name="addCurso" id="addCurso" class="form-control" 
-                                placeholder="Escribe o nome do curso novo" title="Escribe o nome do curso e pulsa para añadilo"required>
-                            </div>
+                        <div class="row">
+                            <!-- <form method="post" class="input-group" id="myform" onsubmit="addCurso(event)"> -->
+                                <div class="col">
+                                    <input type="text" name="addCurso" id="addCurso" class="form-control" placeholder="Escribe o nome do curso novo" required>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success" id="addCursoButton" onclick="addCurso()">
+                                        Añadir curso<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
+                                    </button>
+                                </div>
 
-                            <div class="ms-2">
-                                <button type="submit" class="btn btn-success" id="addCursoButton" onclick="addCurso()" 
-                                title="Escribe o nome do curso e pulsa para añadilo">
-                                    Añadir curso<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
-                                </button>
-                            </div>
-                        </div>
-                        <div class="form-text">
-                                Para insertar un curso novo escribe o nome do curso e pulsa en "Añadir curso"
+                            <!-- </form>  -->
                         </div>
 
                         <div class="row">
-                            <div class="col m-2" id="msgCursos">
-                            </div>
+                                <div class="col m-2" id="msgCursos">
+                                </div>
+                            <!-- </form>  -->
                         </div>
-                    </div>
-
-                    <div class="col-md-5 mt-5">
-                        <div class="row">
-                            <div class="col">
-                                <select id="selectCurso" name="selectCurso" class="form-select">
-                                    <option value="0">Selecciona curso...</option>                            
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-3">
-                            <div class="flex-grow-1">
-                                <input type="text" name="addAsign" id="addAsign" class="form-control" 
-                                placeholder="Escribe o nome da asignatura nova" title="Escribe o nome da asignatura e pulsa para añadila" required>
-                            </div>
-                            <div class="ms-2">
-                                <button type="submit" class="btn btn-success" id="addAsignButton" onclick="addAsignatura()" 
-                                title="Escribe o nome da asignatura e pulsa para añadila">
-                                    Añadir asignatura o curso<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
-                                </button>
-                            </div>                         
-                        </div>
-                        <div class="form-text">
-                                Para insertar unha asignatura nova selecciona primeiro o curso donde queres insertala
-                        </div>                    
-                    </div>              
-                </div> 
-
-                <div class="row d-flex justify-content-between">
-                    <div class="col-md-5 mt-5">
+                        
                         <table class="table table-striped table-light">
-                        <caption>Cursos</caption>
+                            <caption>Cursos</caption>
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
@@ -275,6 +244,28 @@ $usr->cerrarConexion();
                     </div>
 
                     <div class="col-md-5 mt-5">
+                        <div class="row">
+                            <div class="col">
+                                <select id="selectCurso" name="selectCurso" class="form-select">
+                                    <option value="0">Selecciona curso...</option>                            
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- <form method="post" class="input-group" id="myform" onsubmit="addCurso(event)"> -->
+                                <div class="col">
+                                    <input type="text" name="addAsign" id="addAsign" class="form-control" placeholder="Escribe o nome da asignatura nova" required>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success" id="addAsignButton" onclick="">
+                                        Añadir asignatura o curso<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
+                                    </button>
+                                </div>
+
+                            <!-- </form>  -->
+                        </div>
+
                         <table class="table table-striped table-light">
                         <caption>Asignaturas</caption>
                             <thead>
@@ -290,9 +281,7 @@ $usr->cerrarConexion();
                     </div>
                     
 
-                </div>
-
-                </div>  
+                </div>    
             </div>
 
 
@@ -304,10 +293,8 @@ require "createUserModal.php";
 // require "updateUserModal.php";
 require "updateUsersListModal.php";
 require "deleteUserModal.php";
-require "updateCursosModal.php";
 
 ?>
-<script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
 
 <script type="text/javascript" src="./js/validateForm.js" defer></script>
 <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>

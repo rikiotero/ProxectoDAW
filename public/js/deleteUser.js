@@ -1,4 +1,4 @@
-const deleteUser = () => {
+function deleteUser() {
     //recuperamos o id do usuario a borrar, está en formato 'borrar-X', con slice bórranse as letras e o guión 
     //e queda solo o id de usuario
     let userId = document.getElementById("idUsuarioBorrar").value;  
@@ -18,8 +18,8 @@ const deleteUser = () => {
     .then(response => response.json())
     .then(data => {
 
-        deleteUserModal.hide();
-        getUsersData();
+        // deleteUserModal.hide();
+        getUsersData(); 
 
         notificacion = document.getElementById('notificacion');
         notificacion.innerHTML = data;

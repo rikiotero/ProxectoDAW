@@ -15,6 +15,8 @@ const deleteUserModal = new bootstrap.Modal(document.getElementById('deleteUserM
 // const updateUserModal = new bootstrap.Modal(document.getElementById('updateUserModal'), {});
 const updateUsersListModal = new bootstrap.Modal(document.getElementById('updateUsersListModal'), {});
 const updatePasswModal = new bootstrap.Modal(document.getElementById('updatePassModal'), {});
+const updateCursoModal = new bootstrap.Modal(document.getElementById('updateCursoModal'), {});          //modal actualizar nome de curso
+const updateAsignModal = new bootstrap.Modal(document.getElementById('updateAsingModal'), {});          //modal actualizar nome de asignatura
 
 const createUserModalButton = document.getElementById('createUserModalButton');
 const updateUserModalButton = document.getElementById('updateUserModalButton');

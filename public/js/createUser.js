@@ -1,5 +1,5 @@
 
-const createUser = () => {
+function  createUser() {
  // event.preventDefault();
     //recollida dos datos
     let usuario = document.getElementById("novoUsuario").value;

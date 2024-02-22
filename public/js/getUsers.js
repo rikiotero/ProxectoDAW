@@ -63,9 +63,9 @@ function getUsersData() {
     tablaUsuarios.childNodes.forEach( element => {
       element.childNodes[10].childNodes[0].addEventListener("click", () => {
         updateUsersListModal.show();                //abre o modal 'updateUsersListModal' declarado en modal.js         
-        id = element.childNodes[10].childNodes[0].id;
+        // let id = element.childNodes[10].childNodes[0].id;
+        let id = element.childNodes[0].innerHTML;
         loadUserDataModal(id);            //definida en updateUser.js, carga os datos do usuario
-        // alert("pulsado id:"+element.childNodes[10].childNodes[0].id+" evenTarget:"+event.target)
       })
     })
 
@@ -76,7 +76,8 @@ function getUsersData() {
         deleteUserModal.show(); //abre o modal 'deleteUserModal'
         // alert("pulsado id:"+element.childNodes[11].childNodes[0].id+" evenTarget:"+event.target)
         //gardo o id do usuario nun campo oculto do modal
-        document.getElementById("idUsuarioBorrar").value = element.childNodes[11].childNodes[0].id;
+        let id = element.childNodes[0].innerHTML;
+        document.getElementById("idUsuarioBorrar").value = id;
       })
     })
 
