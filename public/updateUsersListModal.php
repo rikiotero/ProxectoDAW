@@ -9,7 +9,7 @@ use Clases\CursosDB;
     <div class="modal-content">
         <!-- Modal actualizar usuario header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateUsersListModalLabel">Actualizar datos de lista usuarios</h1>
+        <h1 class="modal-title fs-5" id="updateUsersListModalLabel">Actualizar datos de usuario</h1>
       </div>
         <!-- Modal actualizar usuario body-->
       <div class="modal-body">
@@ -61,7 +61,7 @@ use Clases\CursosDB;
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="rol" class="form-label">Rol de usuario</label>
-                <select id="rol" name="rol" class="form-select">            
+                <select id="rol" name="rol" class="form-select" <?php echo $_SESSION["rol"] != "administrador" ? "disabled" : "" ?> >            
                   <?php
                       $roles = new RoleDB();
                       $stmt = $roles->getRoles();
@@ -130,7 +130,7 @@ use Clases\CursosDB;
                           }else {
                             document.getElementById("divCurso").style.display = "";
                             document.getElementById("divAsignaturas").style.display = "";
-                            getCursos("curso");  //función definida en ajaxCursos.js
+                            getCursos("curso");           //función definida en ajaxCursos.js
                             document.getElementById("asignaturas").innerHTML = "<option value='0'>Sin asignaturas</option>";
                           }
                         });                        
@@ -147,7 +147,8 @@ use Clases\CursosDB;
               
               <div class="col-md-12">
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" name="updateActivo" id="updateActivo" value="1" >
+                    <input class="form-check-input" type="checkbox" name="updateActivo" id="updateActivo" value="1" 
+                    <?php echo $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor" ? "style='display:none' disabled" : "" ?>>
                     <label class="form-check-label" for="updateActivo">Usuario activo</label>
                 </div>
               </div>
@@ -165,7 +166,7 @@ use Clases\CursosDB;
       <div class="modal-footer">
         <!-- onclick="window.location.reload()" -->
         <button type="button" class="me-auto btn btn-danger" data-bs-dismiss="modal" id="updatePassListModalButton">Cambiar Contrasinal</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="getUsersData()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick=<?php echo $_SESSION["rol"] == "administrador" ? "getUsersData()" : "getStudentTable()"?>>Cerrar</button>
         <!-- <input type="submit" form="actualizaUsuario" class="btn btn-primary" name="enviar" id="enviar" value="Actualizar"></input> -->
         <button class="btn btn-primary" name="actualizar" id="actualizar"  onclick="updateUser()">Actualizar usuario</button>
       </div>      

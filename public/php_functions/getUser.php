@@ -1,6 +1,7 @@
 <?php
 session_start();
-if( !isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "administrador") redirect("");
+require "./redirect.php";
+if( !isset($_SESSION["rol"]) ) redirect("");
 
 require "../../vendor/autoload.php";
 
@@ -47,15 +48,13 @@ if( $datos ) {
             // $output = $estudiante->jsonSerialize();
             $output = $estudiante;
             break;
-        default:
-            
+        default:            
             break;
     }
 
 }else {
     $output = "<div class='alert alert-danger'>Non se pudo borrar o usuario, proba de novo</div>";
 }
-
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>

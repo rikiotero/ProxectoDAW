@@ -1,6 +1,6 @@
 <?php
 session_start();
-if( !isset($_SESSION["rol"]) || $_SESSION["rol"] != "administrador") redirect("");
+if( !isset($_SESSION["rol"]) ) redirect("");
 
 require "../../vendor/autoload.php";
 
@@ -43,7 +43,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         $datos["email"] != "" ? strip_tags( trim($datos["email"]) ) : null,
         $datos["tlf"] != "" ? strip_tags( trim($datos["tlf"]) ) : null,
         strip_tags( trim($datos["alta"]) ),
-        $datos["activo"] == 1 ? true : false,
+        $datos["activo"] == 1 ? 1 : 0,
         strip_tags( trim($datos["rol"]) )
     );
 
@@ -87,7 +87,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         $datos["email"] != "" ? strip_tags( trim($datos["email"]) ) : null,
         $datos["tlf"] != "" ? strip_tags( trim($datos["tlf"]) ) : null,
         strip_tags( trim($datos["alta"]) ),
-        $datos["activo"] == 1 ? true : false,
+        $datos["activo"] == 1 ? 1 : 0,
         strip_tags( trim($datos["rol"]) ),
         strip_tags( trim($datos["curso"] ) ),
         $datos["asignaturas"]

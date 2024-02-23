@@ -50,7 +50,7 @@ class UserDB extends Conexion {
         
         $sql = "INSERT INTO usuarios VALUES (:id,:usuario,:pass,:nombre,:apellido1,:apellido2,:email,:telefono,:fecha_alta,:activo,:rol)";
         try {
-            if ( !$this->conexion->inTransaction()) $this->conexion->beginTransaction();
+            if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
                 ':id' => null,
@@ -169,7 +169,7 @@ class UserDB extends Conexion {
     /**
      * obtén todos os usuarios filtrados por unha query SQL
      * @param string $sql query
-     * @return statement PDOStatement cos resultados da consulta 
+     * @return object stament cos resultados da consulta 
      */
     public function getUsersFiltered($sql) {
 
@@ -215,7 +215,7 @@ class UserDB extends Conexion {
      * @return string O curso si é que ten algún asignado, false si non
      */
     public function getCurso($id) {
-        $sql = "SELECT cursos.id,cursos.nombre from cursos, alumno_curso where cursos.id=alumno_curso.curso_id and alumno_curso.usuario_id=:id";
+        $sql = "SELECT cursos.id,cursos.curso from cursos, alumno_curso where cursos.id=alumno_curso.curso_id and alumno_curso.usuario_id=:id";
         try {
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
@@ -225,7 +225,7 @@ class UserDB extends Conexion {
             if ( $stmt->rowCount() != 0 ) {        
                 $row = $stmt->fetch(PDO::FETCH_OBJ);
                 $stmt = null;
-                $curso [$row->id] = $row->nombre;
+                $curso [$row->id] = $row->curso;
                 return $curso;
             }
 

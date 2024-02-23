@@ -1,18 +1,21 @@
 <?php
 // require "./redirect.php";
-// if( !isset($_SESSION["rol"]) ) redirect("");
+// if( !isset($_SESSION["rol"]) ||  ( $_SESSION["rol"] != "administrador" || $_SESSION["rol"] != "profesor") ) redirect("");
 
 require "../../vendor/autoload.php";
 use Clases\UserDB;
 
 //columnas donde vamos a realizar a búsqueda
-$columnas = ["usuarios.id","usuario","nombre","apellido1","apellido2","email","telefono","fecha_alta","activo","roles.rol"];
+// $columnas = ["usuarios.id","usuario","cursos.nombre as curso","usuarios.nombre","apellido1","apellido2","email","telefono","fecha_alta","activo"];
+$columnas = ["usuarios.id","usuario","cursos.curso","usuarios.nombre","apellido1","apellido2","email","telefono","fecha_alta","activo"];
 
 //recollida dos campos para filtrar a búsqueda
-$filtro = isset($_POST["buscar"]) ? $_POST["buscar"] : null;  //input text de buscar...
-$activo = $_POST["activo"];                                   //chekbox de usuarios activos 
-$inactivo = $_POST["inactivo"];                               //chekbox de usuarios inactivos                   
-$rol = isset($_POST["rol"]) ? $_POST["rol"] : null;           //select de roles
+$datos = json_decode(file_get_contents('php://input'), true);
+
+$filtro = isset($_POST["buscar"]) ? $_POST["buscar"] : null;            //input text de buscar...
+$activo = $_POST["activo"];                                             //chekbox de estudiantes activos 
+$inactivo = $_POST["inactivo"];                                         //chekbox de estudiantes inactivos                   
+$curso = isset($_POST["curso"]) && $_POST["curso"] != "0" ? $_POST["curso"] : null;           //select de cursos
 
 //concatenamos a parte 'WHERE' da consulta SQL según os datos recibidos
 $where = "";
@@ -23,6 +26,7 @@ if($filtro != null) {
     $cont = count($columnas);
 
     for ($i=0; $i < $cont; $i++) {               //añadimos un filto 'LIKE' por cada columna
+       
         $where .= $columnas[$i] . " LIKE '%" . $filtro . "%' OR ";
     }
     $where = substr_replace($where, "", -3);    // elminamos o último OR
@@ -38,23 +42,32 @@ if($filtro != null) {
 if($filtro == null && !$activo && $inactivo) $where .= " WHERE activo=0";                                                                            
 if($filtro == null && $activo && !$inactivo) $where .= " WHERE activo=1";   
 
-//filtro según o rol recibido 
-if($rol != null) {
+//filtro según o curso recibido 
+if($curso != null) {
     // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
     if(($filtro == null && $activo && $inactivo) || ($filtro == null && !$activo && !$inactivo)) { 
-        $where .= " WHERE roles.rol='".$rol."'";
+        $where .= " WHERE cursos.id='".$curso."'";
     }else {
-        $where .= " AND roles.rol='".$rol."'";
+        $where .= " AND cursos.id='".$curso."'";
     }
 }
- // si todos os filtros están vacios añadimos un 'WHERE' si nn 'AND'
-if(($filtro == null && $rol == null && $activo && $inactivo) || ($filtro == null && $rol == null && !$activo && !$inactivo)) {              
-    $where .= " WHERE usuarios.rol=roles.id"; 
+//  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
+// if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
+//     $where .= " WHERE usuarios.id=alumno_curso.usuario_id AND alumno_curso.curso_id=cursos.id AND usuarios.rol=3"; 
+// }else{
+//     $where .= " AND usuarios.id=alumno_curso.usuario_id AND alumno_curso.curso_id=cursos.id AND usuarios.rol=3";
+// }
+
+ // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
+ if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
+    $where .= " WHERE usuarios.rol=3"; 
 }else{
-    $where .= " AND usuarios.rol=roles.id";
+    $where .= " AND usuarios.rol=3";
 }
 
-$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, roles". $where;
+// $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, alumno_curso, cursos". $where;
+$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
+LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id". $where;
 // var_dump($sql);
 // exit;
 
@@ -69,6 +82,7 @@ if ( $stmt->rowCount() != 0 ) {
         $html .= "<tr>";
         $html .= "<td>".$row['id']."</td>";
         $html .= "<td>".$row['usuario']."</td>";
+        $html .= "<td>".$row['curso']."</td>";
         $html .= "<td>".$row['nombre']."</td>";
         $html .= "<td>".$row['apellido1']."</td>";
         $html .= "<td>".$row['apellido2']."</td>";
@@ -81,7 +95,6 @@ if ( $stmt->rowCount() != 0 ) {
          
         // $html .= "<td>".($row['activo'] == "1") ?  '<i class="fa-solid fa-check" style="color: #098b43;"></i>' : ''  ."</td>";
         // $html .= "<td>".$row['activo']."</td>";
-        $html .= "<td>".$row['rol']."</td>";
         $html .= "<td><a href='' data-bs-toggle='modal'  title='editar usuario' id={$row['id']}><i class='fa-solid fa-pen-to-square' style='color: #e6b328;'></i></a></td>";
 
         $html .= "<td><a href='' data-bs-toggle='modal' title='borrar usuario' id=borrar-{$row['id']}><i class='fa-solid fa-trash' style='color: #ff2600;'></i></a></td>";

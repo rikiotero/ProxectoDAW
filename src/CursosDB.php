@@ -94,7 +94,7 @@ class CursosDB extends Conexion {
      * @param string $nomeNovo Nome novo do curso
      */
     public function updateCurso($id,$nomeNovo) {
-        $sql = "UPDATE cursos SET nombre=:nome WHERE id=:id";
+        $sql = "UPDATE cursos SET curso=:nome WHERE id=:id";
         try {
             $stmt = $this->conexion->prepare($sql);
             $isOk = $stmt->execute([                
@@ -139,7 +139,7 @@ class CursosDB extends Conexion {
      */
     public function getCurso($curso) {
         
-        $sql = "SELECT * FROM cursos WHERE nombre=:curso";
+        $sql = "SELECT * FROM cursos WHERE curso=:curso";
         try {
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
@@ -195,8 +195,8 @@ class CursosDB extends Conexion {
             $stmt->execute();
             if ( $stmt->rowCount() != 0 ) {
                 while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
-                    $cursos[$row->id] = $row->nombre;
-                    // array_push($cursos,$row->nombre);                
+                    $cursos[$row->id] = $row->curso;
+                    // array_push($cursos,$row->curso);                
                 }        
                 $stmt = null;
                 return $cursos;
@@ -215,9 +215,9 @@ class CursosDB extends Conexion {
     // public function getCursosAsignaturas() {
     //     $cursos = [];        
     //     $sql = "SELECT cursos.id 
-    //     as idCurso,cursos.nombre 
+    //     as idCurso,cursos.curso 
     //     as nomeCurso,asignaturas.id 
-    //     as idAsignatura ,asignaturas.nombre 
+    //     as idAsignatura ,asignaturas.curso 
     //     as nomeAsignatura 
     //     FROM cursos, asignaturas 
     //     WHERE cursos.id=asignaturas.curso";

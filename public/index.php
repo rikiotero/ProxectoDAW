@@ -19,16 +19,13 @@ if( isset($_SESSION["rol"]) ) redirect($_SESSION["rol"]);
 <body >
 <?php
 
-if (isset($_POST['login'])) {
+if ( isset($_POST['login']) ) {
     $user = trim($_POST['usuario']);
     $pass = trim($_POST['pass']);
- // if (strlen($nombre) == 0 || strlen($pass) == 0) {
-    //     error("Error, El nombre o la contraseña no pueden contener solo espacios en blancos.");
-    // }
 
     $usr = new UserDB();
 
-    if ( $usr->validateUserCredentials($user,$pass) ) {        //Validación de credenciales e comprobasción de que é usuario activo
+    if ( $usr->validateUserCredentials($user,$pass) ) {        //Validación de credenciales e comprobación de que é usuario activo
         if( $usr->isActive($user) ) {
             $_SESSION["user"] = $user;                         //gárdanse os datos do usuario na sesión
             $_SESSION["rol"] = $usr->getRole($user) ? $usr->getRole($user) : ""; 

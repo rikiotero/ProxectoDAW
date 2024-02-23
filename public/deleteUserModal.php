@@ -10,7 +10,7 @@
       <div class="modal-body">
         <input type="hidden" name="idUsuarioBorrar" id="idUsuarioBorrar" value="">
         <div class="container">
-          Vas a borrar o usuario, esta accion non se pode desfacer, realmente desexas eliminalo?
+          Vas a borrar o usuario <span id="usuarioBorrar" style="color:red"></span>, esta accion non se pode desfacer, realmente desexas eliminalo?
         </div>
       </div>
         <!-- Modal actualizar usuario footer-->
@@ -18,7 +18,7 @@
         <!-- onclick="window.location.reload()" -->
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <!-- <input type="submit" form="actualizaUsuario" class="btn btn-primary" name="enviar" id="enviar" value="Actualizar"></input> -->
-        <button class="btn btn-danger" name="borrar" id="borrar"  onclick="deleteUser()">Borrar usuario</button>
+        <button class="btn btn-danger" name="borrar" id="borrar"  onclick="deleteUser()" >Borrar usuario</button>
       </div>      
     </div>
   </div>

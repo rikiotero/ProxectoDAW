@@ -41,7 +41,7 @@ $usr->cerrarConexion();
                 <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
             </div> 
             <div class="p-2">
-                <a href="./php_functions/closeSession.php" title="cerrar sesión" class=''>
+                <a href="./php_functions/closeSession.php" title="cerrar sesión">
                     <span class="fa-solid fa-right-from-bracket fa-2xl" style="color: #d71919;"></span>
                 </a>
             </div>       
@@ -49,94 +49,93 @@ $usr->cerrarConexion();
     </header>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-usuario" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Datos de usuario</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-listaUsuarios" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Xestión de usuarios</button>
-            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-asignaturas" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Xestión de cursos e asignaturas</button>
+            <button class="nav-link active" id="nav-usuario-tab" data-bs-toggle="tab" data-bs-target="#nav-usuario" type="button" role="tab" aria-controls="nav-usuario" aria-selected="true">Datos de usuario</button>
+            <button class="nav-link" id="nav-listaUsuarios-tab" data-bs-toggle="tab" data-bs-target="#nav-listaUsuarios" type="button" role="tab" aria-controls="nav-listaUsuarios" aria-selected="false">Xestión de usuarios</button>
+            <button class="nav-link" id="nav-asignaturas-tab" data-bs-toggle="tab" data-bs-target="#nav-asignaturas" type="button" role="tab" aria-controls="nav-asignaturas" aria-selected="false">Xestión de cursos e asignaturas</button>
         </div>
     </nav>
 
     <div class="tab-content" id="nav-tabContent">
         <!-- contido da tab de usuario-->
         <div class="tab-pane fade show active" id="nav-usuario" role="tabpanel" aria-labelledby="nav-home-tab">
-
-            <div class="container row" id="1">
-                <div class="mt-5"></div>                
-                <div class="col-md-3 border-end">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        <!-- <img class="rounded-circle" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> -->
-                        <span class="font-weight-bold"><?php echo $datosUsuario->usuario?></span>
-                        <span class="text-black-50"><?php echo $datosUsuario->email?></span>
-                        <span class="text-black-50">Id de usuario: <?php echo $datosUsuario->id?></span>
-                        <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
-                        <span class="text-black-50">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+            <div class="container mt-3">
+                <div class="row mt-5" id="1">           
+                    <div class="col-md-3 border-end">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                            <!-- <img class="rounded-circle" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> -->
+                            <span class="font-weight-bold"><?php echo $datosUsuario->usuario?></span>
+                            <span class="text-black-50"><?php echo $datosUsuario->email?></span>
+                            <span class="text-black-50">Id de usuario: <?php echo $datosUsuario->id?></span>
+                            <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
+                            <span class="text-black-50">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-5 border-end">
-                    <div class="d-flex flex-column p-3 py-5">
-                        <div class="row g-3 border-bottom">
-                            <div class="col-md-3">
-                                <h6 class="mb-3 mt-3">Nome</h6>
+                    <div class="col-md-5 border-end">
+                        <div class="d-flex flex-column p-3 py-5">
+                            <div class="row g-3 border-bottom">
+                                <div class="col-md-3">
+                                    <h6 class="mb-3 mt-3">Nome</h6>
+                                </div>
+                                <div class="col-md-6 text-secondary">
+                                    <p class="mb-3 mt-3"><?php echo $datosUsuario->nombre." ".$datosUsuario->apellido1." ".$datosUsuario->apellido2 ?></p>
+                                </div>
                             </div>
-                            <div class="col-md-6 text-secondary">
-                                <p class="mb-3 mt-3"><?php echo $datosUsuario->nombre." ".$datosUsuario->apellido1." ".$datosUsuario->apellido2 ?></p>
+                        
+                            <div class="row g-3 border-bottom">
+                                <div class="col-md-3">
+                                    <h6 class="mb-3 mt-3">Email</h6>
+                                </div>
+                                <div class="col-md-6 text-secondary">
+                                    <p class="mb-3 mt-3"><?php echo $datosUsuario->email ?></p>
+                                </div>
                             </div>
+
+                            <div class="row g-3 border-bottom">
+                                <div class="col-md-3">
+                                    <h6 class="mb-3 mt-3">Teléfono</h6>
+                                </div>
+                                <div class="col-md-6 text-secondary">
+                                    <p class="mb-3 mt-3"><?php echo $datosUsuario->telefono ?></p>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 border-bottom">
+                                <div class="col-md-3">
+                                    <h6 class="mb-3 mt-3">rol</h6>
+                                </div>
+                                <div class="col-md-6 text-secondary">
+                                    <p class="mb-3 mt-3"><?php echo $_SESSION["rol"] ?></p>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 border-bottom">
+                                <div class="col-md-3">
+                                    <h6 class="mb-3 mt-3">Usuario activo</h6>
+                                </div>
+                                <div class="col-md-6 text-secondary">
+                                
+
+                                    <input class="form-check-input mb-3 mt-3" type="checkbox" id="activo" disabled <?php echo $activo?>>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary" id="updateUserModalButton"  data-bs-toggle="modal">
+                                        Actualizar datos        
+                                    </button>
+                                    <!-- <button type="button" class="btn btn-danger" id="updatePassModalButton" data-bs-toggle="modal">
+                                        Cambiar contrasinal        
+                                    </button> -->
+                                </div>
+                            </div>
+
                         </div>
-                    
-                        <div class="row g-3 border-bottom">
-                            <div class="col-md-3">
-                                <h6 class="mb-3 mt-3">Email</h6>
-                            </div>
-                            <div class="col-md-6 text-secondary">
-                                <p class="mb-3 mt-3"><?php echo $datosUsuario->email ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 border-bottom">
-                            <div class="col-md-3">
-                                <h6 class="mb-3 mt-3">Teléfono</h6>
-                            </div>
-                            <div class="col-md-6 text-secondary">
-                                <p class="mb-3 mt-3"><?php echo $datosUsuario->telefono ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 border-bottom">
-                            <div class="col-md-3">
-                                <h6 class="mb-3 mt-3">rol</h6>
-                            </div>
-                            <div class="col-md-6 text-secondary">
-                                <p class="mb-3 mt-3"><?php echo $_SESSION["rol"] ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 border-bottom">
-                            <div class="col-md-3">
-                                <h6 class="mb-3 mt-3">Usuario activo</h6>
-                            </div>
-                            <div class="col-md-6 text-secondary">
-                             
-
-                                <input class="form-check-input mb-3 mt-3" type="checkbox" id="activo" disabled <?php echo $activo?>>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mt-3">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-primary" id="updateUserModalButton"  data-bs-toggle="modal">
-                                    Actualizar datos        
-                                </button>
-                                <!-- <button type="button" class="btn btn-danger" id="updatePassModalButton" data-bs-toggle="modal">
-                                    Cambiar contrasinal        
-                                </button> -->
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- fin contido da tab de usuario-->
+        </div><!-- fin contido da tab de usuario-->
 
         <!-- contido da tab de xestión de usuarios-->
         <div class="tab-pane fade" id="nav-listaUsuarios" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -144,10 +143,10 @@ $usr->cerrarConexion();
                 <div class="row">
                     <div class="col">
                         <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">
-                            Crear novo usuario<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
+                            Crear novo usuario<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
                         </button>                         -->
                         <button type="button" class="btn btn-success" id="createUserModalButton">
-                            Crear novo usuario<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
+                            Crear novo usuario<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
                         </button> 
                     </div>
 
@@ -200,8 +199,7 @@ $usr->cerrarConexion();
                     </tbody>
                 </table>    
             </div>
-        </div>
-        <!-- fin contido da tab de xestión de usuarios-->
+        </div><!-- fin contido da tab de xestión de usuarios-->
 
         <!-- contido da tab de xestión de cursos-asignaturas-->
         <div class="tab-pane fade" id="nav-asignaturas" role="tabpanel" aria-labelledby="nav-contact-tab">
@@ -217,7 +215,7 @@ $usr->cerrarConexion();
                             <div class="ms-2">
                                 <button type="submit" class="btn btn-success" id="addCursoButton" onclick="addCurso()" 
                                 title="Escribe o nome do curso e pulsa para añadilo">
-                                    Añadir curso<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
+                                    Añadir curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
                                 </button>
                             </div>
                         </div>
@@ -247,19 +245,19 @@ $usr->cerrarConexion();
                             </div>
                             <div class="ms-2">
                                 <button type="submit" class="btn btn-success" id="addAsignButton" onclick="addAsignatura()" 
-                                title="Escribe o nome da asignatura e pulsa para añadila">
-                                    Añadir asignatura o curso<i class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></i>        
+                                    title="Escribe o nome da asignatura e pulsa para añadila">
+                                    Añadir asignatura o curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
                                 </button>
                             </div>                         
                         </div>
                         <div class="form-text">
-                                Para insertar unha asignatura nova selecciona primeiro o curso donde queres insertala
+                            Para insertar unha asignatura nova selecciona primeiro o curso donde queres insertala
                         </div>                    
                     </div>              
                 </div> 
 
                 <div class="row d-flex justify-content-between">
-                    <div class="col-md-5 mt-5">
+                    <div class="col-md-5 mt-2">
                         <table class="table table-striped table-light">
                         <caption>Cursos</caption>
                             <thead>
@@ -274,7 +272,7 @@ $usr->cerrarConexion();
                         </table> 
                     </div>
 
-                    <div class="col-md-5 mt-5">
+                    <div class="col-md-5 mt-2">
                         <table class="table table-striped table-light">
                         <caption>Asignaturas</caption>
                             <thead>
@@ -288,17 +286,13 @@ $usr->cerrarConexion();
                             </tbody>
                         </table>
                     </div>
-                    
-
                 </div>
 
-                </div>  
-            </div>
-
-
-        </div>
-        <!-- fin contido da tab de xestión de cursos-asignaturas-->
+            </div>  
+        </div><!-- fin contido da tab de xestión de cursos-asignaturas-->
     </div>
+        
+   
 <?php
 require "createUserModal.php";
 // require "updateUserModal.php";
@@ -308,9 +302,8 @@ require "updateCursosModal.php";
 
 ?>
 <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
-
 <script type="text/javascript" src="./js/validateForm.js" defer></script>
-<script src="../vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="./bootstrap/js/bootstrap.min.js"></script>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->
 </body>

@@ -65,9 +65,9 @@ class User {
         if ( !preg_match("/^[0-9a-zA-Z_\-\.]{2,}@[a-zA-Z_\-]+\.[a-zA-Z]{2,5}$/", $this->email) && $this->email != null) $error [] = "O email é incorrecto";
         if ( !preg_match("/^[0-9]{9}$/", $this->telefono) && $this->telefono != null) $error [] = "O teléfono só poder 9 números";
         if ( !preg_match("/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/", $this->fecha_alta) ) $error [] = "A fecha é incorrecta";
-        if ( !is_bool($this->activo) ) $error [] = "O valor de usuario activo é incorrecto";
+        if ( !preg_match("/^[01]$/", $this->activo) ) $error [] = "O valor de usuario activo é incorrecto";
         if ( !preg_match("/^[1-3]$/", $this->rol) ) $error [] = "O rol é incorrecto";
-        
+     
         return $error;
     }
 

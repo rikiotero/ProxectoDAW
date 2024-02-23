@@ -30,8 +30,8 @@ CREATE TABLE `academia`.`usuarios` (
     `apellido2` VARCHAR(50) NOT NULL , 
     `email` VARCHAR(50) NULL , 
     `telefono` VARCHAR(20) NULL , 
-    `fecha_alta` DATETIME NOT NULL , 
-    `activo` BOOLEAN NOT NULL DEFAULT TRUE , 
+    `fecha_alta` DATE NOT NULL , 
+    `activo` TINYINT(1) NOT NULL DEFAULT 1 , 
     `rol` INT NOT NULL , 
     PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
@@ -47,7 +47,7 @@ INSERT INTO roles (rol) VALUES ('administrador'),('profesor'),('estudiante');
 -- Creamos tabla de "cursos"
 CREATE TABLE `academia`.`cursos` (
     `id` INT NOT NULL AUTO_INCREMENT , 
-    `nombre` VARCHAR(50) NOT NULL UNIQUE, 
+    `curso` VARCHAR(50) NOT NULL UNIQUE, 
     PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 -- Creamos tabla asignaturas
@@ -68,7 +68,7 @@ CREATE TABLE `academia`.`exercicios` (
     `tema` VARCHAR(100) NOT NULL ,
     `enunciado` TEXT NOT NULL , 
     `asignatura` INT NOT NULL ,
-    `activo` BOOLEAN NOT NULL DEFAULT TRUE , 
+    `activo` TINYINT(1) NOT NULL DEFAULT 1 , 
     PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 -- Añadimos clave foránea "exercicio_asignatura"

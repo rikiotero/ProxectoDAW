@@ -1,8 +1,7 @@
 function deleteUser() {
-    //recuperamos o id do usuario a borrar, está en formato 'borrar-X', con slice bórranse as letras e o guión 
-    //e queda solo o id de usuario
+    //recuperamos o id do usuario a borrar, está gardado nun campo oculto do modal de borrar usuario
     let userId = document.getElementById("idUsuarioBorrar").value;  
-    userId = userId.slice(7,);
+    // userId = userId.slice(7,);
 
     let datos = {
         id: userId,
@@ -18,9 +17,16 @@ function deleteUser() {
     .then(response => response.json())
     .then(data => {
 
-        // deleteUserModal.hide();
-        getUsersData(); 
+        //execútase a funcion que carga as tablas de usuarios/estudiantes
+        //solo se executa si está definida, estará definida ou non según o panel que se cargue
+        if(typeof getUsersData === 'function') {
+            getUsersData();
+        } 
+        if(typeof getStudentTable === 'function') {
+            getStudentTable();
+        }
 
+        deleteUserModal.hide();
         notificacion = document.getElementById('notificacion');
         notificacion.innerHTML = data;
        

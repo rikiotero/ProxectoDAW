@@ -1,6 +1,7 @@
 <?php
 session_start();
-if( !isset($_SESSION["rol"])) redirect("");
+require "./redirect.php";
+if( !isset($_SESSION["rol"]) || ( $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor" ) ) redirect("");
 
 require "../../vendor/autoload.php";
 

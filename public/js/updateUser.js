@@ -52,7 +52,7 @@ function loadUserDataModal(userId) {
         document.getElementById("rol").value = data.rol;
         
         //activamos ou desactivamos controles según rol
-        if (data.rol != 3 ) {   //non é estudiante
+        if (data.rol != 3 ) {                                                   //non é estudiante
             document.getElementById("divCurso").style.display = "none";         //ocultar select de cursos
             document.getElementById("divAsignaturas").style.display = "none";   //ocultar select de asignaturas
         }else {

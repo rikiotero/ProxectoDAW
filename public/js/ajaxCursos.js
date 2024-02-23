@@ -25,7 +25,7 @@ function addCurso() {
         //engádese o curso novo ao select de curso no modal de actualizar usuario
         // document.getElementById("curso").add(new Option(cursoNovo,data[0]));
         getCursos("selectCurso");  //actualiza o select de curso da pestaña de editaradignaturas
-        getCursos("curso");        //actualiza o select de curso do nodal de editas usuario
+        getCursos("curso");        //actualiza o select de curso do nodal de editar usuario
       }else {
         notificacion.innerHTML = data; 
       }
@@ -172,7 +172,8 @@ function updateCurso(id,nomeNovo) {
     notificacion = document.getElementById("msgUpdateCursos");
     notificacion.innerHTML = data;
     getTablaCursos();
-
+    getCursos("selectCurso");
+    
     setTimeout(function() {
       notificacion.innerHTML = "";
     }, 5000);    

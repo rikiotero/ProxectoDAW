@@ -1,6 +1,6 @@
 
 function  createUser() {
- // event.preventDefault();
+
     //recollida dos datos
     let usuario = document.getElementById("novoUsuario").value;
     let pass = document.getElementById("novoPassword").value;
@@ -47,8 +47,8 @@ function  createUser() {
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById("msgNovoUsuario").innerHTML = data; //móstrase a mensaxe de todo ben ou non
 
+        document.getElementById("msgNovoUsuario").innerHTML = data; //móstrase a mensaxe de todo ben ou non
             
         //reseteo dos campos do formulario
         document.getElementById("novoUsuario").value = "";
@@ -59,6 +59,15 @@ function  createUser() {
         document.getElementById("novoApellido2").value = "";
         document.getElementById("novoEmail").value = "";
         document.getElementById("novoTlf").value = "";
+
+        //execútase a funcion que carga as tablas de usuarios/estudiantes
+        //solo se executa si está definida
+        if( typeof getUsersData === 'function' ) {
+            getUsersData();
+        } 
+        if( typeof getStudentTable === 'function' ) {
+            getStudentTable();
+        }
 
             // setTimeout(function() {
             //     document.getElementById("msgNovoUsuario").innerHTML = ""; //despois de cinco segundos bórrase a mensaxe

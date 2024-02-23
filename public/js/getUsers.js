@@ -78,6 +78,7 @@ function getUsersData() {
         //gardo o id do usuario nun campo oculto do modal
         let id = element.childNodes[0].innerHTML;
         document.getElementById("idUsuarioBorrar").value = id;
+        document.getElementById("usuarioBorrar").innerHTML = element.childNodes[1].innerHTML;
       })
     })
 

@@ -1,13 +1,7 @@
 
-// const myModal = new bootstrap.Modal(document.getElementById("staticBackdrop"),{});
-// or
-// const createUserModal = new bootstrap.Modal("#createUserModal", {});
-
-// const createUserModal = document.getElementById("createUserModal");
-// const updateUserModal = document.getElementById("updateUserModal");
-// const updatePassModal = document.getElementById("updatePassModal");
-// const updateUserModal = new bootstrap.Modal("#updateUserModal", {});
-// const updatePassModal = new bootstrap.Modal("#updatePassModal", {});
+/**----------------------PANEL DE PROFESOR----------------------------------
+ * ----------------------------------------------------------------------------------
+ */
 
 //definición de ventanas modales
 const createUserModal = new bootstrap.Modal(document.getElementById("createUserModal"), {});
@@ -20,15 +14,25 @@ const updateAsignModal = new bootstrap.Modal(document.getElementById("updateAsin
 
 
 
-/**----------------------PANEL DE ADMINISTRADOR----------------------------------
- * ----------------------------------------------------------------------------------
- */
-//Botóns panel de administrador
+//Botons panel de profesor
 const createUserModalButton = document.getElementById("createUserModalButton");
-const updateUserModalButton = document.getElementById("updateUserModalButton");
-const updateUsersListModalButton = document.getElementById("updateUsersListModalButton");
+const updaTeacherModalButton = document.getElementById("updateTeacherModalButton");
 const updatePassModalButton = document.getElementById("updatePassListModalButton");
-const updatePassListModalButton = document.getElementById("updatePassListModalButton");
+
+
+//Listeners panel de profesor
+
+//listener para abrir o modal de editar usuario da pantalla de datos de usuario
+updaTeacherModalButton.addEventListener("click", () => {
+    // updateUserModal.show();
+    updateUsersListModal.show();
+    loadUserDataModal(document.getElementById("idUsuario").value);  
+})
+
+//listener para abrir o modal de modificar o contrasinal de usuario
+updatePassModalButton.addEventListener("click", () => {
+    updatePasswModal.show();
+})
 
 //listener para abrir o modal de crear novo usuario
 createUserModalButton.addEventListener("click", () => {          
@@ -59,28 +63,11 @@ createUserModalButton.addEventListener("click", () => {
     document.getElementById("novoEmail").value = "";
     document.getElementById("novoTlf").value = "";
     document.getElementById("novoRol").options[2].selected = true;
+    document.getElementById("novoRol").disabled = true;
     document.getElementById("novoCurso").options[0].selected = true;
     document.getElementById("novoAsignaturas").innerHTML = "<option value='0'>Selección de asignaturas</option>"
     document.getElementById("divCursoNovo").style.display = "";             
     document.getElementById("divNovoAsignaturas").style.display = "";
 })
 
-//listener para abrir o modal de editar usuario da pantalla de datos de usuario
-updateUserModalButton.addEventListener("click", () => {
-    // updateUserModal.show();
-    updateUsersListModal.show();
-    loadUserDataModal(document.getElementById("idUsuario").value);  
-})
-
-//listener para abrir o modal de modificar o contrasinal de usuario
-updatePassModalButton.addEventListener("click", () => {
-    updatePasswModal.show();
-})
-
-//listener para abrir o modal de modificar o contrasinal de usuario na pantalla de lista de usuarios
-updatePassListModalButton.addEventListener("click", () => {
-    updatePasswModal.show();
-})
-
-
-
+getCursos("filtroCurso"); //carga a lista no select da pestaña de listar alumnos no panel de profesor
