@@ -68,14 +68,19 @@ CREATE TABLE `academia`.`exercicios` (
     `tema` VARCHAR(100) NOT NULL ,
     `enunciado` TEXT NOT NULL , 
     `asignatura` INT NOT NULL ,
-    `activo` TINYINT(1) NOT NULL DEFAULT 1 , 
+    `activo` TINYINT(1) NOT NULL DEFAULT 1 ,
+    `creador` INT NOT NULL ,
+    `fecha_creacion` DATE NOT NULL , 
     PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
--- Añadimos clave foránea "exercicio_asignatura"
+-- Añadimos claves foráneas tabla "exercicios"
 ALTER TABLE `exercicios` 
 ADD CONSTRAINT `exercicio_asignatura` 
-FOREIGN KEY (`asignatura`) REFERENCES `asignaturas`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+FOREIGN KEY (`asignatura`) REFERENCES `asignaturas`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
+ALTER TABLE `exercicios` 
+ADD CONSTRAINT `exercicio_usuario` 
+FOREIGN KEY (`creador`) REFERENCES `usuarios`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- Creamos tabla "alumno_curso"
 CREATE TABLE `academia`.`alumno_curso` (
@@ -119,7 +124,7 @@ INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `ape
 INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `fecha_alta`, `activo`, `rol`) VALUES (NULL, 'estudiante2', '$2y$10$9GVTENGTt2LK4eK0UuvP4edu4ndvjcOcYfPCZb3P/kKiGvbh7lkFm', 'Ángela', 'Prol', 'Vidal', 'angelaprol@gmail.com', NULL, '2024-01-30 18:56:53.000000', '1', '3');
 
 -- Insertamos cursos
-INSERT INTO `cursos` (`id`, `nombre`) VALUES 
+INSERT INTO `cursos` (`id`, `curso`) VALUES 
 (NULL, '1º Educación Primaria'), 
 (NULL, '2º Educación Primaria'), 
 (NULL, '3º Educación Primaria'), 

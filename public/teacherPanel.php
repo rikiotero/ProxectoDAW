@@ -28,6 +28,7 @@ $usr->cerrarConexion();
     <script type="text/javascript" src="./js/createUser.js" defer></script>
     <script type="text/javascript" src="./js/updateUser.js" defer></script>
     <script type="text/javascript" src="./js/getStudent.js" defer></script>
+    <script type="text/javascript" src="./js/ajaxExercicios.js" defer></script>
     <script type="text/javascript" src="./js/deleteUser.js" defer></script>
     
 </head>
@@ -188,7 +189,7 @@ $usr->cerrarConexion();
                             <th scope="col">Segundo apelido</th>
                             <th scope="col">E-mail</th>
                             <th scope="col">Teléfono</th>
-                            <th scope="col">Data de alta</th></th>
+                            <th scope="col">Data de alta</th>
                             <th scope="col">Activo</th>                            
                             <th scope="col" colspan="2" class="text-center">Accións</th>
                         </tr>
@@ -289,12 +290,65 @@ $usr->cerrarConexion();
             </div>  
         </div><!-- fin contido da tab de xestión de cursos-asignaturas-->
 
-                <!-- contido da tab de xestión de exercícios-->
+        <!-- contido da tab de xestión de exercícios-->
         <div class="tab-pane fade" id="nav-exercicios" role="tabpanel" aria-labelledby="nav-exercicios">
-            <div class="container mt-3">
-                
+            <div class="container mt-3">                
+                <!-- fila do botón crear exercicio -->
+                <div class="row">
+                    <div class="col">
+                        <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                            Crear novo usuario<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
+                        </button> -->
+                        <a href="./exercicio.php" target="_blank" rel="noopener noreferrer" class="btn btn-success" id="novoExercicio">
+                            Crear exercicio<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>
+                        </a>
+                        <!-- <button type="button" class="btn btn-success" id="novoExercicio">
+                            Crear exercicio<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
+                        </button>  -->
+                    </div>
+                    <div class="col" id="notificacionExercicio"></div>
+                </div>
 
-            </div>  
+                <!-- fila de filtros de exercicios -->
+                <div class="row align-items-center">                    
+                    <div class="col-md-2 mt-3">
+                        <input type="checkbox" name="ExActivado" id="ExActivado" class="form-check-input" checked>
+                        <label for="ExActivado" class="form-check-label">Exercicios activos</label>
+                    </div>  
+                    <div class="col-md-2 mt-3">
+                        <input type="checkbox" name="ExInactivo" id="ExInactivo" class="form-check-input" checked>
+                        <label for="ExInactivo" class="form-check-label">Exercicios inactivos</label>
+                    </div>
+                    
+                    <div class="col-md-2 mt-3">
+                        <select name="filtroCursoEx" id="filtroCursoEx" class="form-select">
+                            <option value="0" selected>Curso...</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 offset-md-2">
+                        <input type="text" name="buscarEx" id="buscarEx" placeholder="Buscar" class="form-control mt-3">
+                    </div>
+                </div>
+                
+                <table class="table table-striped table-light mt-3">
+                    <thead>
+                        <tr >
+                            <th scope="col">Id</th>
+                            <th scope="col">Tema</th>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Asignatura</th>                                                    
+                            <th scope="col">creador</th>
+                            <th scope="col">Activo</th>                            
+                            <th scope="col">fecha</th>                            
+                            <th scope="col" colspan="2" class="text-center">Accións</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaExercicios">
+                    </tbody>
+                </table>    
+            </div>            
+            <!-- </div>   -->
         </div><!-- fin contido da tab de xestión de exercícios-->
     </div>
         
@@ -304,6 +358,7 @@ require "createUserModal.php";
 // require "updateUserModal.php";
 require "updateUsersListModal.php";
 require "deleteUserModal.php";
+require "deleteExercicioModal.php";
 require "updateCursosModal.php";
 
 ?>

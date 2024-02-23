@@ -2,9 +2,7 @@
 namespace Clases;
 
 class RoleDB extends Conexion {
-    private $id;
-    private $role;
-    
+   
     public function __construct() {
         parent::__construct();
     }

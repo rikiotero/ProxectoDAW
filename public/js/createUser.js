@@ -61,7 +61,7 @@ function  createUser() {
         document.getElementById("novoTlf").value = "";
 
         //execútase a funcion que carga as tablas de usuarios/estudiantes
-        //solo se executa si está definida
+        //solo se executa si está definida, estará definida ou non según o panel que se cargue
         if( typeof getUsersData === 'function' ) {
             getUsersData();
         } 

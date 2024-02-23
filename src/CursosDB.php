@@ -49,9 +49,9 @@ class CursosDB extends Conexion {
 
 
     /**
-     * Elimina un curso
-     * @param string Id do curso a elminar
-     */
+    * Elimina un curso
+    * @param string Id do curso a elminar
+    */
     public function deleteCurso($id) {
         $sql = "DELETE FROM cursos WHERE id=:id";
         try {
@@ -69,9 +69,9 @@ class CursosDB extends Conexion {
     }
 
     /**
-     * Elimina unha asignatura
-     * @param string Id da asignatura a elminar
-     */
+    * Elimina unha asignatura
+    * @param string Id da asignatura a elminar
+    */
     public function deleteAsignatura($id) {
         $sql = "DELETE FROM asignaturas WHERE id=:id";
         try {
@@ -83,7 +83,7 @@ class CursosDB extends Conexion {
             if( $isOk ) return true;
 
         } catch (\PDOException $ex) {
-            die("Error borrando o curso: ".$ex->getMessage());
+            die("Error borrando a asignatura: ".$ex->getMessage());
         }
         return false;
     }

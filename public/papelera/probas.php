@@ -1,9 +1,11 @@
 <?php
 session_start();
-require "../vendor/autoload.php";
+require "../../vendor/autoload.php";
 use Clases\Student;
 use Clases\UserDB;
 use Clases\User;
+use Clases\ExercicioDB;
+use Clases\Exercicio;
 // require "load.php";
 
 
@@ -15,9 +17,7 @@ use Clases\User;
 // $activo = $user->isActive("profesor1");
 // echo "Activo: ".$activo;
 
-$usuario = new User("riki", "pass", "rikiNick", "otero","Gonzalez", "lellamaban@gmail.com", "222333444", "02-04-2018", "1", "estudiante");
-$estudiante = new Student($usuario);
-var_dump($estudiante);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +41,17 @@ var_dump($estudiante);
     </style>
 </head>
 <body>
+  <h1>Probas</h1>
+
+      <?php
+      $db = new ExercicioDB();
+      $sql = "SELECT * FROM exercicios";
+      $exercicios = $db->getExerciciosFiltered($sql);
+      var_dump($exercicios);
+      $db->cerrarConexion();
+      ?>
+
+
   <!-- <h2>Empleados</h2>
 
   <form action="" method="post">

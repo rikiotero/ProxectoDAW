@@ -2,7 +2,6 @@
 namespace Clases;
 use \PDO;
 
-
 class UserDB extends Conexion {
 
     public function __construct() {

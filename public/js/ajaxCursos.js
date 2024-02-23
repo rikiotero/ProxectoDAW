@@ -24,8 +24,9 @@ function addCurso() {
         notificacion.innerHTML = data[1];  
         //engádese o curso novo ao select de curso no modal de actualizar usuario
         // document.getElementById("curso").add(new Option(cursoNovo,data[0]));
-        getCursos("selectCurso");  //actualiza o select de curso da pestaña de editaradignaturas
-        getCursos("curso");        //actualiza o select de curso do nodal de editar usuario
+        getCursos("selectCurso");           //actualiza o select de curso da pestaña de editaradignaturas
+        getCursos("filtroCursoEx");         //actualiza o select de curso da pestaña de exercicios
+        getCursos("curso");                 //actualiza o select de curso do nodal de editar usuario
       }else {
         notificacion.innerHTML = data; 
       }
@@ -104,6 +105,7 @@ function deleteCurso(id) {
     notificacion.innerHTML = data;
     getCursos("selectCurso");  //actualiza o select de curso da pestaña de editar asignaturas
     getCursos("curso");        //actualiza o select de curso do nodal de editar usuario
+    getCursos("filtroCursoEx");        //actualiza o select de curso da pestaña de exercicios
     //bórrase o curso do select de curso no modal de actualizar usuario
     // let select = document.getElementById("curso");
     // let options = Array.from( select.options );
@@ -171,10 +173,12 @@ function updateCurso(id,nomeNovo) {
   .then(data => {      
     notificacion = document.getElementById("msgUpdateCursos");
     notificacion.innerHTML = data;
-    getTablaCursos();
-    getCursos("selectCurso");
+    getTablaCursos();                   //recarga a a tabla de cursos da pestaña de xestión de cursos
+    getCursos("selectCurso");           //actualiza o select de curso da pestaña de editar asignaturas
+    getCursos("curso");                 //actualiza o select de curso do nodal de editar usuario
+    getCursos("filtroCursoEx");         //actualiza o select de curso da pestaña de exercicios    
     
-    setTimeout(function() {
+    setTimeout(function() {             //borrar notificación
       notificacion.innerHTML = "";
     }, 5000);    
 
@@ -322,9 +326,9 @@ function cargarAsignaturas(idCurso,idSelectInput) {
 }
 
 /**
- * Carga a tabla de asignaturas
- * @param {string} idCurso Id do curso
- */
+* Carga a tabla de asignaturas
+* @param {string} idCurso Id do curso
+*/
 function loadAsignaturasTable(idCurso) {
   let tablaAsignaturas = document.getElementById("tablaAsignaturas");
   let idCursoAsig = document.getElementById("selectCurso").value;
@@ -371,6 +375,7 @@ function loadAsignaturasTable(idCurso) {
   });
 }
 
+//listener para o select de curso pa pestaña de xestión de cursos e asignaturas
 let selectCurso = document.getElementById("selectCurso");
 
 selectCurso.addEventListener("change", () => {

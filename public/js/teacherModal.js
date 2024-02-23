@@ -11,6 +11,7 @@ const updateUsersListModal = new bootstrap.Modal(document.getElementById("update
 const updatePasswModal = new bootstrap.Modal(document.getElementById("updatePassModal"), {});
 const updateCursoModal = new bootstrap.Modal(document.getElementById("updateCursoModal"), {});          //modal actualizar nome de curso
 const updateAsignModal = new bootstrap.Modal(document.getElementById("updateAsingModal"), {});          //modal actualizar nome de asignatura
+const deleteExercModal = new bootstrap.Modal(document.getElementById("deleteExercModal"), {});          //modal confirmación borrar exercicio
 
 
 
@@ -70,4 +71,5 @@ createUserModalButton.addEventListener("click", () => {
     document.getElementById("divNovoAsignaturas").style.display = "";
 })
 
-getCursos("filtroCurso"); //carga a lista no select da pestaña de listar alumnos no panel de profesor
+getCursos("filtroCurso"); //carga a lista de cursos no select da pestaña de listar alumnos no panel de profesor
+getCursos("filtroCursoEx"); //carga a lista de cursos no select da pestaña de listar exercicios
