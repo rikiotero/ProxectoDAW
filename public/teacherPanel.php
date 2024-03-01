@@ -354,12 +354,12 @@ $usr->cerrarConexion();
         
    
 <?php
-require "createUserModal.php";
+require "./ventanas_modales/createUserModal.php";
 // require "updateUserModal.php";
-require "updateUsersListModal.php";
-require "deleteUserModal.php";
-require "deleteExercicioModal.php";
-require "updateCursosModal.php";
+require "./ventanas_modales/updateUsersListModal.php";
+require "./ventanas_modales/deleteUserModal.php";
+require "./ventanas_modales/deleteExercicioModal.php";
+require "./ventanas_modales/updateCursosModal.php";
 
 ?>
 <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
@@ -371,6 +371,7 @@ require "updateCursosModal.php";
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->
 </body>
+
 </html>
 
 

@@ -1,5 +1,10 @@
 <?php
+session_start();
+require "./redirect.php";
+if( !isset($_SESSION["rol"]) || ( $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor" ) ) redirect("");
+
 require "../../vendor/autoload.php";
+
 use Clases\UserDB;
 use Clases\User;
 use Clases\Student;

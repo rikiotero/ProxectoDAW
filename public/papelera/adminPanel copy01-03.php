@@ -179,50 +179,27 @@ $usr->cerrarConexion();
                         <input type="text" name="buscar" id="buscar" placeholder="Buscar" class="form-control mt-3">
                     </div>
                 </div>
-
-                <div class="row"> <!--fila de numero de rexistros-->
-                    <div class="col-md-auto mt-3">
-                        <label for="numRexistros" class="col-form-label">Mostrar:</label>
-                    </div>
-                    <div class="col-md-auto mt-3">    
-                        <select name="numRexistros" id="numRexistros" class="form-select">
-                            <option value="10" selected>10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>                   
-                </div>
-                <div class="row"><!--fila da tabla de usuarios-->
-                    <div class="col-md-12 mt-3">
-                        <table class="table table-striped table-light mt-3">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Primer apelido</th>
-                                    <th scope="col">Segundo apelido</th>
-                                    <th scope="col">E-mail</th>
-                                    <th scope="col">Teléfono</th>
-                                    <th scope="col">Data de alta</th></th>
-                                    <th scope="col">Activo</th>
-                                    <th scope="col">Rol</th>
-                                    <th scope="col" colspan="2" class="text-center">Accións</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaUsuarios">
-                            </tbody>
-                        </table>
-                    </div>    
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="" id="labelTotal"></label>
-                    </div>
-                    <div class="col-md-6" id="botonsPaxinas">
-                    </div>
-                </div>
-
+                
+                <table class="table table-striped table-light mt-3">
+                    <thead>
+                        <tr >
+                            <th scope="col">Id</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Primer apelido</th>
+                            <th scope="col">Segundo apelido</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Data de alta</th></th>
+                            <th scope="col">Activo</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col" colspan="2" class="text-center">Accións</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaUsuarios">
+                    </tbody>
+                </table>    
             </div>
         </div><!-- fin contido da tab de xestión de usuarios-->
 

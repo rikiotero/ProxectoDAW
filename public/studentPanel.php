@@ -151,7 +151,7 @@ $usr->cerrarConexion();
                                 </div>
                                 <?php
                                 if( !empty($asignaturas) ) {
-                                    echo "<div class='col-md-6 mt-5'>";
+                                    echo "<div class='col-md-8 mt-5'>";
                                     echo "<ul class='mt-3'>";
                                     foreach ($asignaturas as $key => $value) {
                                         echo "<li class='text-secondary'>$value</li>";
@@ -159,7 +159,7 @@ $usr->cerrarConexion();
                                     echo "</ul>";
                                     echo "</diV>";
                                 }else {
-                                    echo "<div class='col-md-7 text-secondary'>";
+                                    echo "<div class='col-md-8 text-secondary'>";
                                     echo "<p class='mb-3 mt-3'>Sin asignaturas asignadas</p>";
                                     echo "</diV>";
                                 }
@@ -202,7 +202,7 @@ $usr->cerrarConexion();
 
     </div>
 <?php
-require "updateUsersListModal.php";
+require "./ventanas_modales/updateUsersListModal.php";
 ?>
 <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>  
 <script type="text/javascript" src="./js/ajaxUser.js" defer></script>

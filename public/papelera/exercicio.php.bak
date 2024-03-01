@@ -31,7 +31,7 @@ if( !isset($_SESSION["rol"]) ) redirect("");
         selector: '#enunciado',
         language: 'es',
         width: '100%',
-        height:600,
+        height: 350,
         plugins: ['fullscreen','save','table','code','searchreplace','eqneditor'],
         toolbar: 'fullscreen | undo redo | searchreplace | eqneditor | styles | fontfamily |' + 
         '| fontsizeinput | forecolor | backcolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
@@ -136,33 +136,30 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
     <div class="row mt-1" id="msgExercicio"></div>
     <div class="row mt-1">
       <!-- <form class="row g-3 align-items-center"  method="post" >    -->
-      <div class="col-md-4"><!--columna datos exercicio-->
-        <input type="hidden" name="idExerc" id="idExerc" value="<?php echo isset($_GET["id"]) ? $_GET["id"] : ""?>">
+      <input type="hidden" name="idExerc" id="idExerc" value="<?php echo isset($_GET["id"]) ? $_GET["id"] : ""?>">
 
-        <div class="row g-3"><!--Autor,fecha-->
-          <div class="form-group col-md-6">
-            <label for="creador" class="form-label">Autor:</label>
+        <div class="row g-3">
+          <div class="form-group col-md-3">
+            <label for="creador" class="form-label">Creado por:</label>
             <input type="text" name="creador" id="creador" class="form-control" placeholder="Creador" 
               value="<?php echo $exercicio->getCreador()?>"  readonly>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
             <label for="fechaCreacion" class="form-label">Fecha de creción:</label>
             <input type="text" name="fechaCreacion" id="fechaCreacion" class="form-control" placeholder="Fecha de creacion" 
               value="<?php echo date('d-m-Y', strtotime($exercicio->getFechaCreacion()) )?>" readonly>
           </div>
         </div>
 
-        <div class="row g-3 mt-3"><!--tema-->
-          <div class="form-group col-md-12">
+        <div class="row g-3 align-items-center">
+          <div class="form-group col-md-4">
             <label for="tema" class="form-label">Tema: </label>
             <input type="text" name="tema" id="tema" class="form-control" placeholder="Escribe o tema do exercicio" 
               value="<?php echo $exercicio->getTema()?>" 
             <?php echo $_SESSION["rol"] == "estudiante" ? "readonly" : ""?> required>
           </div>
-        </div>
 
-        <div class="row g-3 mt-3"><!--Curso-->
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-3">
             <label for="curso" class="form-label">Curso:</label>
             <select id="curso" name="curso" class="form-select" <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
               <option value="0">Selecciona curso...</option>
@@ -182,10 +179,8 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
               ?>
             </select>
           </div>
-        </div> 
 
-        <div class="row g-3 mt-3"><!--Asignatura-->
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-3">
             <label for="asignatura" class="form-label">Asignatura:</label>
             <select id="asignatura" name="asignatura" class="form-select" <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
               <option value="0">Sin asignaturas</option>
@@ -204,53 +199,46 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
               ?>
             </select>
           </div>
-        </div>
-            
-        <div class="row g-3 align-items-center"><!--Exercicio visible-->
-          <div class="form-group col-md-12 mt-5">
-            <input class="form-check-input" type="checkbox" name="exercActivo" id="exercActivo" 
-            title="Exercicio visible para os estudiantes" value="1" <?php echo $exercicio->getActivo() == 1 ? "checked" : ""?>
+
+          <div class="form-group col-md-2 mt-5">
+            <input class="form-check-input" type="checkbox" name="exercActivo" id="exercActivo" value="1" 
+            <?php echo $exercicio->getActivo() == 1 ? "checked" : ""?>
             <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
-            <label class="form-check-label" for="exercActivo">Exercicio visible</label>
+            <label class="form-check-label" for="exercActivo">Activo</label>
           </div>
+
         </div>
 
-        <div class="row g-3 mt-3"><!--boton crear-->
-          <?php
-            if ( $_SESSION["rol"] != "estudiante" ) {
-              if( isset($_GET["id"]) ) {
-                ?>
-                <div class="row g-3">
-                  <div class="form-group col-md mt-0">
-                    <button type="submit" class="btn btn-success" name="crearEx" id="crearEx" value="enviado" onclick="updateExercicio()">Actualizar exercicio
-                    <span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span></button>
-                  </div>
-                </div>
-                <?php
-              }else { 
-                ?>
-                <div class="row g-3">
-                  <div class="form-group col-md mt-0">
-                    <button type="submit" class="btn btn-success" name="crearEx" id="crearEx" value="enviado" onclick="saveExercicio()">Crear exercicio
-                    <span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span></button>
-                  </div>
-                </div>
-                <?php
-              }        
-            }
-            ?>
-        </div>
-      </div>
-
-      <div class="col-md-8"><!--columna Enunciado-->
         <div class="row g-3">
           <div class="form-group col-md mb-3">
             <label for="enunciado" class="form-label">Enunciado: </label>
             <textarea class="form-control" aria-label="With textarea" name="enunciado" id="enunciado" ></textarea>
           </div>
         </div>
-      </div>
-        
+
+        <?php
+        if ( $_SESSION["rol"] != "estudiante" ) {
+          if( isset($_GET["id"]) ) {
+            ?>
+            <div class="row g-3">
+              <div class="form-group col-md mt-0">
+                <button type="submit" class="btn btn-success" name="crearEx" id="crearEx" value="enviado" onclick="updateExercicio()">Actualizar exercicio
+                <span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span></button>
+              </div>
+            </div>
+            <?php
+          }else { 
+            ?>
+            <div class="row g-3">
+              <div class="form-group col-md mt-0">
+                <button type="submit" class="btn btn-success" name="crearEx" id="crearEx" value="enviado" onclick="saveExercicio()">Crear exercicio
+                <span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span></button>
+              </div>
+            </div>
+            <?php
+          }        
+        }
+        ?>
       <!-- </form> -->
     </div>
   </div>
@@ -290,7 +278,7 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
      
   });
   </script>
-   
+
 </body>
 </html>
 

@@ -1,12 +1,13 @@
 <?php
-// require "./redirect.php";
-// if( !isset($_SESSION["rol"]) ||  ( $_SESSION["rol"] != "administrador" || $_SESSION["rol"] != "profesor") ) redirect("");
+session_start();
+require "./redirect.php";
+if( !isset($_SESSION["rol"]) ||  ( $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor") ) redirect("");
 
 require "../../vendor/autoload.php";
 use Clases\ExercicioDB;
 
 //columnas donde vamos a realizar a búsqueda
-$columnas = ["exercicios.id","tema","cursos.curso","asignaturas.nombre ","exercicios.activo","usuarios.usuario","fecha_creacion"];
+$columnas = ["exercicios.id","tema","cursos.curso","asignaturas.nombre ","exercicios.activo","enunciado","usuarios.usuario","fecha_creacion"];
 
 //recollida dos campos para filtrar a búsqueda
 $datos = json_decode(file_get_contents('php://input'), true);

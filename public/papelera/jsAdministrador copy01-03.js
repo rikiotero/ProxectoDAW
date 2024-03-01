@@ -5,10 +5,9 @@
 /*
  * Carga a tabla de todos os usuarios
  */
-function getUsersData(paxina) {
+function getUsersData() {
 
     let filtro = document.getElementById("buscar").value;
-    let numRexistros = document.getElementById("numRexistros").value;
     let rol = document.getElementById("roles").value;
     let formData = new FormData();
   
@@ -48,18 +47,16 @@ function getUsersData(paxina) {
     formData.append("buscar", filtro);
     formData.append("activo", activoCkecked);
     formData.append("inactivo", inactivoCkecked);
-    formData.append("numRexistros", numRexistros);
-    formData.append("paxina", paxina);
-    
+  
+  
     fetch( url, {
       method: "POST",
       body: formData
     })
     .then(response => response.json())
     .then(data => {
-      tablaUsuarios.innerHTML = data.html
-      document.getElementById("botonsPaxinas").innerHTML = data.paxinacion;
-
+      tablaUsuarios.innerHTML = data
+  
       // añadir listener os botóns de editar usuario da tabla de usuarios, recorrense os nodos fillos da tabla
       // e engádese o listener 
       tablaUsuarios.childNodes.forEach( element => {
@@ -86,37 +83,21 @@ function getUsersData(paxina) {
   
     })
     .catch(err => console.log(err))
-}
+  }
 
-
-getUsersData(1); //carga a tabla de usuarios
-
-//listeners para filtrar a tabla de usuarios, filtra dinámicamente cada vez que hai algún cambio
-document.getElementById("buscar").addEventListener("keyup", () => {      //filtro por búsqueda
-  getUsersData(1);
-});           
-
-document.getElementById("activado").addEventListener("change", () => {  //filtro usuario activo
-  getUsersData(1);
-});
-document.getElementById("inactivo").addEventListener("change", () => {  //filtro usuario inactivo
-  getUsersData(1);
-});
-
-document.getElementById("roles").addEventListener("change", () => {     //filtro por rol de usuario 
-  getUsersData(1);
-});
-
-document.getElementById("numRexistros").addEventListener("change", () => {     //listener cantidade de rexistros a mostrar
-  getUsersData(1);
-}); 
-
+getUsersData(); //carga a tabla de usuarios
 
 //carga de datos do usuario logueado na pantalla modal de editar o seu perfil
 loadUserDataModal(document.getElementById("idUsuario").value);  //definida en ajaxUser.js
 
 getTablaCursos(); //carga a tabla de cursos
 getCursos("selectCurso");
+
+//listeners para filtrar a tabla de usuarios, filtra dinámicamente cada vez que hai algún cambio
+document.getElementById("buscar").addEventListener("keyup", getUsersData);     //filtro por búsqueda
+document.getElementById("activado").addEventListener("change", getUsersData);  //filtro usuario activo
+document.getElementById("inactivo").addEventListener("change", getUsersData);  //filtro usuario inactivo
+document.getElementById("roles").addEventListener("change", getUsersData);     //filtro por rol de usuario 
 
 //definición de ventanas modales
 const createUserModal = new bootstrap.Modal(document.getElementById("createUserModal"), {});            //modal de crear novo usuario

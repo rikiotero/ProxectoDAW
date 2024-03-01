@@ -1,12 +1,13 @@
 <?php
 session_start();
+require "./redirect.php";
+if( !isset($_SESSION["rol"]) ||  ( $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor") ) redirect("");
+
 require "../../vendor/autoload.php";
 
 use Clases\ExercicioDB;
 use Clases\UserDB;
 use Clases\Exercicio;
-
-if( !isset($_SESSION["rol"]) ) redirect(""); 
 
 $datos = json_decode(file_get_contents("php://input"), true);
 

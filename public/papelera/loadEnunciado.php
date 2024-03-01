@@ -1,5 +1,8 @@
 <?php
 session_start();
+require "./redirect.php";
+if( !isset($_SESSION["rol"]) ) redirect("");
+
 require "../../vendor/autoload.php";
 require "./redirect.php";
 use Clases\UserDB;

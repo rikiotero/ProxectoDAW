@@ -16,7 +16,7 @@ function redirect($rol) {
             header('Location:studentPanel.php');
             break;
         default:
-            header('Location:index.php');
+            header('Location:../index.php');
             break;
     }
 }

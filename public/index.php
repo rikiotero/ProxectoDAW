@@ -1,10 +1,11 @@
 <?php
 session_start();
-require "../vendor/autoload.php";
 require "./php_functions/redirect.php";
-use Clases\UserDB;
-
 if( isset($_SESSION["rol"]) ) redirect($_SESSION["rol"]);
+
+require "../vendor/autoload.php";
+
+use Clases\UserDB;
 
 ?>
 <!DOCTYPE html>
@@ -46,13 +47,12 @@ if ( isset($_POST['login']) ) {
 
 }else {
 ?>
-
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">                
                 <div class="card my-5">
                     <div class="card-header">
-                        <h2 class="text-center text-dark mt-5">INICIO DE SESIÓN</h2>
+                        <h2 class="text-center p-3">INICIO DE SESIÓN</h2>
                     </div>
                     <form name="login" method='POST' action="<?php echo $_SERVER['PHP_SELF']; ?>" class="card-body cardbody-color p-lg-5">
                         <div class="mb-3">
