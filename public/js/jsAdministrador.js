@@ -2,8 +2,9 @@
  * ----------------------------------------------------------------------------------
  */
 
-/*
+/**
  * Carga a tabla de todos os usuarios
+ * @param {int} paxina número de páxina desde a cal facer a búsqueda
  */
 function getUsersData(paxina) {
 

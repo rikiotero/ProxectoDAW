@@ -13,10 +13,21 @@ $columnas = ["usuarios.id","usuario","cursos.curso","usuarios.nombre","apellido1
 //recollida dos campos para filtrar a búsqueda
 $datos = json_decode(file_get_contents('php://input'), true);
 
-$filtro = isset($_POST["buscar"]) ? $_POST["buscar"] : null;            //input text de buscar...
-$activo = $_POST["activo"];                                             //chekbox de estudiantes activos 
-$inactivo = $_POST["inactivo"];                                         //chekbox de estudiantes inactivos                   
-$curso = isset($_POST["curso"]) && $_POST["curso"] != "0" ? $_POST["curso"] : null;           //select de cursos
+$filtro = isset($_POST["buscar"]) ? $_POST["buscar"] : null;                            //input text de buscar...
+$activo = $_POST["activo"];                                                             //chekbox de estudiantes activos 
+$inactivo = $_POST["inactivo"];                                                         //chekbox de estudiantes inactivos                   
+$curso = isset($_POST["curso"]) && $_POST["curso"] != "0" ? $_POST["curso"] : null;     //select de cursos
+$numRexistros = isset($_POST["numRexistros"]) ? $_POST["numRexistros"] : 10;            //select de número de rexistros a mostrar
+$paxina = isset($_POST["paxina"]) ? $_POST["paxina"] : 0;                               //paxina de resultados
+
+
+//cálculo do rexistro de inicio desde donde se fai a consulta en caso de que a páxina non sexa a primeira
+if ( $paxina == 0 ) {
+    $inicio = 0;
+    $paxina = 1;
+}else {
+    $inicio = ($paxina - 1) * $numRexistros;  
+}
 
 //concatenamos a parte 'WHERE' da consulta SQL según os datos recibidos
 $where = "";
@@ -66,45 +77,85 @@ if($curso != null) {
     $where .= " AND usuarios.rol=3";
 }
 
+//limite de rexistros
+$limit = "LIMIT $inicio , $numRexistros";
+
 // $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, alumno_curso, cursos". $where;
 $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
-LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id". $where;
+LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id"."$where $limit";
 // var_dump($sql);
 // exit;
 
 $db = new UserDB();
 $stmt = $db->getUsersFiltered($sql);
+
+//consulta para obter o número de rexistros que devolve a consulta filtrada
+$sqlFiltro = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columnas) . " FROM usuarios 
+LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id"."$where $limit";
+$resultadoFiltrado = $db->getUsersFiltered($sqlFiltro);
+
+$sqlNumRows = "SELECT FOUND_ROWS()";                     //número de rexistros que devolveu a consulta con "SQL_CALC_FOUND_ROWS"
+$resultado = $db->getUsersFiltered($sqlNumRows);
+$numRows = $resultado->fetch(PDO::FETCH_NUM);
+if ( $numRows ) $totalFiltro =  $numRows[0];
+else $totalFiltro = 0;
+
 $db->cerrarConexion();
-$html = "";
+
+$output = [];                                       //array que se vai retornar
+$output["numRexistrosFiltrados"] = $totalFiltro;    //núme de rexistros devoltos pola consulta
+$output["html"] = "";                               //html para pintar  a tabla de usuarios
+$output["paxinacion"] = "";                         //html para pintar os botóns de paxinación
 
 if ( $stmt->rowCount() != 0 ) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $html .= "<tr>";
-        $html .= "<td>".$row['id']."</td>";
-        $html .= "<td>".$row['usuario']."</td>";
-        $html .= "<td>".$row['curso']."</td>";
-        $html .= "<td>".$row['nombre']."</td>";
-        $html .= "<td>".$row['apellido1']."</td>";
-        $html .= "<td>".$row['apellido2']."</td>";
-        $html .= "<td>".$row['email']."</td>";
-        $html .= "<td>".$row['telefono']."</td>";       
-        $html .= "<td>".date('d-m-Y', strtotime($row['fecha_alta']))."</td>";
+        $output["html"] .= "<tr>";
+        $output["html"] .= "<td>".$row['id']."</td>";
+        $output["html"] .= "<td>".$row['usuario']."</td>";
+        $output["html"] .= "<td>".$row['curso']."</td>";
+        $output["html"] .= "<td>".$row['nombre']."</td>";
+        $output["html"] .= "<td>".$row['apellido1']."</td>";
+        $output["html"] .= "<td>".$row['apellido2']."</td>";
+        $output["html"] .= "<td>".$row['email']."</td>";
+        $output["html"] .= "<td>".$row['telefono']."</td>";       
+        $output["html"] .= "<td>".date('d-m-Y', strtotime($row['fecha_alta']))."</td>";
 
-        if ( $row['activo'] == "1" ) $html .= "<td><i class='fa-solid fa-check' style='color: #098b43;'></i></td>";
-        else $html .= "<td><i class='fa-solid fa-x' style='color: #f03333;'></i></td>";
+        if ( $row['activo'] == "1" ) $output["html"] .= "<td><i class='fa-solid fa-check' style='color: #098b43;'></i></td>";
+        else $output["html"] .= "<td><i class='fa-solid fa-x' style='color: #f03333;'></i></td>";
          
-        // $html .= "<td>".($row['activo'] == "1") ?  '<i class="fa-solid fa-check" style="color: #098b43;"></i>' : ''  ."</td>";
-        // $html .= "<td>".$row['activo']."</td>";
-        $html .= "<td><a href='' data-bs-toggle='modal'  title='editar usuario' id={$row['id']}><i class='fa-solid fa-pen-to-square' style='color: #e6b328;'></i></a></td>";
+        // $output["html"] .= "<td>".($row['activo'] == "1") ?  '<i class="fa-solid fa-check" style="color: #098b43;"></i>' : ''  ."</td>";
+        // $output["html"] .= "<td>".$row['activo']."</td>";
+        $output["html"] .= "<td><a href='' data-bs-toggle='modal'  title='editar usuario' id={$row['id']}><i class='fa-solid fa-pen-to-square' style='color: #e6b328;'></i></a></td>";
 
-        $html .= "<td><a href='' data-bs-toggle='modal' title='borrar usuario' id=borrar-{$row['id']}><i class='fa-solid fa-trash' style='color: #ff2600;'></i></a></td>";
-        $html .= "</tr>";
+        $output["html"] .= "<td><a href='' data-bs-toggle='modal' title='borrar usuario' id=borrar-{$row['id']}><i class='fa-solid fa-trash' style='color: #ff2600;'></i></a></td>";
+        $output["html"] .= "</tr>";
     }
 }else {
-    $html .= "<tr>"; 
-    $html .= "<td colspan='11' class='text-center'>Nada que mostrar</td>"; 
-    $html .= "</tr>"; 
+    $output["html"] .= "<tr>"; 
+    $output["html"] .= "<td colspan='11' class='text-center'>Nada que mostrar</td>"; 
+    $output["html"] .= "</tr>"; 
 }
+
 $stmt = null;
-echo json_encode($html, JSON_UNESCAPED_UNICODE);
+//creación do "nav" para a paxinación
+if ( $output["numRexistrosFiltrados"] > 0 ) {
+
+    //cálculo do número de páxinas según o número de usuarios que se mostran
+    $numPaxinas =  ceil( $output["numRexistrosFiltrados"] / $numRexistros ) ;   
+
+    $output["paxinacion"] .= "<nav class='d-flex justify-content-end'>";
+    $output["paxinacion"] .= "<ul class='pagination'>";
+
+    for ($i=1; $i<=$numPaxinas ; $i++) {  //marcar seleccionada a páxina activa
+        if( $paxina == $i ) {
+            $output["paxinacion"] .= "<li class='page-item active'><a class='page-link' href='#'>$i</a></li>";
+        } else {
+            $output["paxinacion"] .= "<li class='page-item'><a class='page-link' href='#' onclick='getStudentTable($i)'>$i</a></li>";
+        }        
+    }
+    $output["paxinacion"] .= "</ul>";
+    $output["paxinacion"] .= "</nav>";
+}
+
+echo json_encode($output, JSON_UNESCAPED_UNICODE);
