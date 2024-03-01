@@ -24,9 +24,9 @@ function addCurso() {
         notificacion.innerHTML = data[1];  
         //engádese o curso novo ao select de curso no modal de actualizar usuario
         // document.getElementById("curso").add(new Option(cursoNovo,data[0]));
-        getCursos("selectCurso");           //actualiza o select de curso da pestaña de editaradignaturas
+        getCursos("selectCurso");           //actualiza o select de curso da pestaña de editar asignaturas
         getCursos("filtroCursoEx");         //actualiza o select de curso da pestaña de exercicios
-        getCursos("curso");                 //actualiza o select de curso do nodal de editar usuario
+        getCursos("curso");                 //actualiza o select de curso do modal de editar usuario
       }else {
         notificacion.innerHTML = data; 
       }
@@ -186,12 +186,7 @@ function updateCurso(id,nomeNovo) {
   .catch(err => console.log(err))
 }
 
-//listener botón actualizar curso
-document.getElementById("actualizarCurso").addEventListener("click", () => { 
-  let nomeNovo = document.getElementById("cursoUpdate").value;
-  let id = document.getElementById("IdcursoUpdate").value;
-  updateCurso(id,nomeNovo);
-});
+
 
 /**
  * Actualiza o nome duha asignatura
@@ -227,15 +222,6 @@ function updateAsignatura(idAsignatura,idCurso,nomeNovo) {
   })
   .catch(err => console.log(err))
 }
-
-//listener botón actualizar a asignatura
-document.getElementById("actualizarAsign").addEventListener("click", () => { 
-  let nomeNovo = document.getElementById("asignUpdate").value;
-  let idAsignatura = document.getElementById("IdAsignUpdate").value;
-  let idCurso = document.getElementById("IdCursoAsign").value;
-  updateAsignatura(idAsignatura,idCurso,nomeNovo);
-});
-
 
 /**
  * Obten os cursos da base de datos e mostraos en forma de tabla
@@ -278,11 +264,11 @@ function getTablaCursos() {
   .catch(err => console.log(err))
 }
 
-getTablaCursos();
+
 
 /**
  * Obten os cursos da base de datos e cargaos en un input de tipo select
- * @param {string} id Id do select donde se cargan os cursos 
+ * @param {string} selectId Id do select donde se cargan os cursos 
  */
 function getCursos(selectId) {
   fetch( "./php_functions/loadCursosOption.php", {
@@ -299,7 +285,7 @@ function getCursos(selectId) {
   })
   .catch(err => console.log(err))
 }
-getCursos("selectCurso");
+
 
 /**
  * Carga as asignaturas do curso correspondente no "input select" de asignaturas
@@ -374,12 +360,3 @@ function loadAsignaturasTable(idCurso) {
       console.error("ERROR: ", err.message);
   });
 }
-
-//listener para o select de curso pa pestaña de xestión de cursos e asignaturas
-let selectCurso = document.getElementById("selectCurso");
-
-selectCurso.addEventListener("change", () => {
-  idCurso = selectCurso.value;
-  loadAsignaturasTable(idCurso);
-})
-

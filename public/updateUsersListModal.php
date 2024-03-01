@@ -19,7 +19,7 @@ use Clases\CursosDB;
             <input type="hidden" name="currentUserRol" id="currentUserRol" value="<?php echo $_SESSION['rol']?>">
             <input type="hidden" name="idUsuarioActualizar" id="idUsuarioActualizar">
             <input type="hidden" name="usuarioVello" id="usuarioVello">
-            <input type="hidden" name="passw" id="passw">
+            <!-- <input type="hidden" name="passw" id="passw"> -->
 
             <div class="row g-3">
                 <div class="col-md-4">
@@ -84,7 +84,7 @@ use Clases\CursosDB;
                 ?>
                 <div class="col-md-4" id="divCurso">
                   <label for="curso" class="form-label">Curso</label>
-                  <select id="curso" name="curso" class="form-select">
+                  <select id="curso" name="curso" class="form-select" <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
                     <option value="0">Seleción de curso</option>
                     <?php                        
                       // foreach ($cursos as $key => $value) {
@@ -101,7 +101,8 @@ use Clases\CursosDB;
 
                   <div class="col-md-4" id="divAsignaturas">
                     <label for="asignaturas" class="form-label">Asignaturas</label>
-                    <select id="asignaturas" name="asignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple>
+                    <select id="asignaturas" name="asignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple 
+                    <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
                           <?php
                           
                             // foreach ($cursosAsignaturas as $key => $value) { 

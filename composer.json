@@ -15,12 +15,15 @@
         }
     ],
     "require": {
-        "twbs/bootstrap": "v5.3.2"
+        "twbs/bootstrap": "v5.3.2",
+        "tinymce/tinymce": "*"
     },
     "scripts": {
         "post-update-cmd": [
             "rm -rf public/bootstrap",
-            "cp -R vendor/twbs/bootstrap/dist public/bootstrap"
+            "cp -R vendor/twbs/bootstrap/dist public/bootstrap",
+            "rm -rf public/tinymce",
+            "cp -R vendor/tinymce/tinymce/ public/tinymce"
         ]
     }
     

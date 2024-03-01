@@ -73,3 +73,29 @@
   </div>
 </div>
 <!-- Fin Modal asignatura-->
+
+<script>
+
+//listener botón actualizar curso
+document.getElementById("actualizarCurso").addEventListener("click", () => { 
+  let nomeNovo = document.getElementById("cursoUpdate").value;
+  let id = document.getElementById("IdcursoUpdate").value;
+  updateCurso(id,nomeNovo);
+});
+
+//listener botón actualizar a asignatura
+document.getElementById("actualizarAsign").addEventListener("click", () => { 
+  let nomeNovo = document.getElementById("asignUpdate").value;
+  let idAsignatura = document.getElementById("IdAsignUpdate").value;
+  let idCurso = document.getElementById("IdCursoAsign").value;
+  updateAsignatura(idAsignatura,idCurso,nomeNovo);
+});
+
+//listener para o select de curso da pestaña de xestión de cursos e asignaturas
+let selectCurso = document.getElementById("selectCurso");
+
+selectCurso.addEventListener("change", () => {
+  idCurso = selectCurso.value;
+  loadAsignaturasTable(idCurso);
+});
+</script>

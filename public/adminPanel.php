@@ -25,11 +25,12 @@ $usr->cerrarConexion();
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script type="text/javascript" src="./js/createUser.js" defer></script>
-    <script type="text/javascript" src="./js/updateUser.js" defer></script>
-    <script type="text/javascript" src="./js/getUsers.js" defer></script>
-    <script type="text/javascript" src="./js/deleteUser.js" defer></script>
-    <script type="text/javascript" src="./js/modal.js" defer></script>
+    
+    <!-- <script type="text/javascript" src="./js/createUser.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./js/updateUser.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./js/getUsers.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./js/deleteUser.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./js/modal.js" defer></script> -->
 </head>
 <body>
     <header>
@@ -58,7 +59,7 @@ $usr->cerrarConexion();
     <div class="tab-content" id="nav-tabContent">
         <!-- contido da tab de usuario-->
         <div class="tab-pane fade show active" id="nav-usuario" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <div class="row mt-5" id="1">           
                     <div class="col-md-3 border-end">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -139,7 +140,7 @@ $usr->cerrarConexion();
 
         <!-- contido da tab de xestión de usuarios-->
         <div class="tab-pane fade" id="nav-listaUsuarios" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <div class="row">
                     <div class="col">
                         <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">
@@ -203,7 +204,7 @@ $usr->cerrarConexion();
 
         <!-- contido da tab de xestión de cursos-asignaturas-->
         <div class="tab-pane fade" id="nav-asignaturas" role="tabpanel" aria-labelledby="nav-contact-tab">
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <div class="row d-flex justify-content-between">
                     <div class="col-md-5 mt-5">
                         <div class="d-flex justify-content-end">
@@ -301,7 +302,10 @@ require "deleteUserModal.php";
 require "updateCursosModal.php";
 
 ?>
+<script type="text/javascript" src="./js/ajaxUser.js" defer></script>
 <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
+<script type="text/javascript" src="./js/jsAdministrador.js" defer></script>
+
 <script type="text/javascript" src="./js/validateForm.js" defer></script>
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 

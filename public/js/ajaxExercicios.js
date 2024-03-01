@@ -1,9 +1,9 @@
-getExerciciosTabla();
+// getExerciciosTabla();
 
-document.getElementById("buscarEx").addEventListener("keyup", getExerciciosTabla);
-document.getElementById("ExActivado").addEventListener("change", getExerciciosTabla);
-document.getElementById("ExInactivo").addEventListener("change", getExerciciosTabla);
-document.getElementById("filtroCursoEx").addEventListener("change", getExerciciosTabla);
+// document.getElementById("buscarEx").addEventListener("keyup", getExerciciosTabla);
+// document.getElementById("ExActivado").addEventListener("change", getExerciciosTabla);
+// document.getElementById("ExInactivo").addEventListener("change", getExerciciosTabla);
+// document.getElementById("filtroCursoEx").addEventListener("change", getExerciciosTabla);
 
 /**
  * Recupera os exercicios filtrados según elixa o usuario e mostraos nunha tabla
@@ -45,22 +45,11 @@ function getExerciciosTabla() {
   .then(data => {
     tablaExercicios.innerHTML = data
 
-    // añadir listener os botóns de editar usuario da tabla de estudiantes, recorrense os nodos fillos da tabla
-    // e engádese o listener 
-    // tablaExercicios.childNodes.forEach( element => {
-    //   element.childNodes[10].childNodes[0].addEventListener("click", () => {
-    //     updateUsersListModal.show();                //abre o modal "updateUsersListModal" declarado en modal.js         
-    //     // let id = element.childNodes[10].childNodes[0].id;
-    //     let id = element.childNodes[0].innerHTML;
-    //     loadUserDataModal(id);                      //definida en updateUser.js, carga os datos do usuario
-    //   })
-    // })
-
-    // añadir listener os botóns de borrar usuario da tabla de estudiantes, recorrense os nodos fillos da tabla
+    // añadir listener os botóns de borrar exercicio da tabla de exercicios, recorrense os nodos fillos da tabla
     // e engádese o listener
     tablaExercicios.childNodes.forEach( element => {
       element.childNodes[8].childNodes[0].addEventListener("click", () => {
-        deleteExercModal.show();                          //abre o modal "deleteExercModal" de copnfirmación                         
+        deleteExercModal.show();                          //abre o modal "deleteExercModal" de confirmación de borrado                         
         let id = element.childNodes[0].innerHTML;         //gardo o id do exercicio nun campo oculto do modal
         document.getElementById("idExercBorrar").value = id;
       })
@@ -69,7 +58,6 @@ function getExerciciosTabla() {
   })
   .catch(err => console.log(err))
 }
-
 
 /**
  * Borra un exercicio 
@@ -99,3 +87,130 @@ function deleteExercicio() {
     })
     .catch(err => console.log(err))
   }
+
+  /**
+   * Garda un exercicio
+   */
+  function saveExercicio() {
+
+    //recollida de datos
+    let creador = document.getElementById("creador").value;
+    let fechaCreacion = document.getElementById("fechaCreacion").value;
+    let tema = document.getElementById("tema").value;
+    let curso = document.getElementById("curso").value;
+    let asignatura = document.getElementById("asignatura").value;
+    let exercActivo = document.getElementById("exercActivo").checked;
+    let enunciado = tinymce.activeEditor.getContent();
+    
+    let datos = {
+      creador: creador,
+      fechaCreacion: fechaCreacion,
+      tema: tema,
+      curso: curso,
+      asignatura: asignatura,
+      exercActivo: exercActivo,
+      enunciado: enunciado
+    };
+
+    fetch("./php_functions/createExercicio.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos),
+      })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("msgExercicio").innerHTML = data;
+     
+      setTimeout(function() {        //borrado da notificación
+        document.getElementById("msgExercicio").innerHTML = "";
+      }, 10000);
+
+    }).catch(err => {
+        console.error("ERROR: ", err.message)
+      }); 
+  }
+
+  /**
+   * Actualiza os datos de un exercicio
+   */
+  function updateExercicio() {
+
+    //recollida de datos
+    
+    let idExerc = document.getElementById("idExerc").value;
+    let creador = document.getElementById("creador").value;
+    let fechaCreacion = document.getElementById("fechaCreacion").value;
+    let tema = document.getElementById("tema").value;
+    let curso = document.getElementById("curso").value;
+    let asignatura = document.getElementById("asignatura").value;
+    let exercActivo = document.getElementById("exercActivo").checked;
+    let enunciado = tinymce.activeEditor.getContent();
+    
+    let datos = {
+      idExerc: idExerc,
+      creador: creador,
+      fechaCreacion: fechaCreacion,
+      curso: curso,
+      tema: tema,
+      asignatura: asignatura,
+      exercActivo: exercActivo,
+      enunciado: enunciado
+    };
+
+    fetch("./php_functions/updateExercicio.php", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos),
+      })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("msgExercicio").innerHTML = data;
+
+      setTimeout(function() {           //borrado da notificación
+        document.getElementById("msgExercicio").innerHTML = "";
+      }, 5000);
+      
+    }).catch(err => {
+        console.error("ERROR: ", err.message)
+      });
+  }
+
+/**
+* Recupera os exercicios activos de un estudiante filtrados por curso e polo cuadro de búsqueda, 
+* pinta a tabla de exercicios dos estudiantes
+*/
+function getExerciciosStudent() {
+
+  let filtro = document.getElementById("buscarEx").value;     //campo de búsqueda 
+
+  // let curso = document.getElementById("curso").value;         //curso
+
+  // let asignaturaSelect = document.getElementById("asignaturas").selectedOptions;
+  // let asignaturas = [];                                       //asignaturas
+  // [...asignaturaSelect].forEach( element => { 
+  //   asignaturas.push(element.value);
+  // });
+
+  let tablaExercicios = document.getElementById("tablaExercicios");
+
+  let data = {
+    filtro: filtro,
+  }
+
+ fetch( './php_functions/loadExerciciosStudent.php', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    tablaExercicios.innerHTML = data;
+  })
+  .catch(err => console.log(err))
+}

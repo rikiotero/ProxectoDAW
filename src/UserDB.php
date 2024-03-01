@@ -2,6 +2,9 @@
 namespace Clases;
 use \PDO;
 
+/**
+ * Sirve para xestionar todo o CRUD da tabla de usuarios
+ */
 class UserDB extends Conexion {
 
     public function __construct() {
@@ -34,7 +37,6 @@ class UserDB extends Conexion {
             $stmt = null;
             if( $isOk ) return true;
         } catch (\PDOException $ex) {
-
             die("Error insertando usuario na base de datos: ".$ex->getMessage());
         }
         return false;
@@ -101,7 +103,8 @@ class UserDB extends Conexion {
     
 
     /**
-     * Consulta os datos de un usuario
+     * Consulta os datos de un usuario buscando por nome de usuario
+     * @param string nome de usuario
      * @return object obxeto co resultado da consulta 
      */
     public function getUser($user) {
@@ -124,7 +127,8 @@ class UserDB extends Conexion {
     }
 
     /**
-     * Consulta os datos de un usuario
+     * Consulta os datos de un usuario buscando polo sei id
+     * @param string id do usuario
      * @return object obxeto co resultado da consulta 
      */
     public function getUserById($id) {
@@ -181,7 +185,7 @@ class UserDB extends Conexion {
         return $stmt;
     }
 
-      /**
+    /**
      * Obtén o hash do contrasinal dun usuario
      * @param string nome do usuario
      * @return string O hash do password
@@ -205,8 +209,6 @@ class UserDB extends Conexion {
         $stmt = null;                
         return  false;
     }
-
-
 
     /**
      * Obtén o curso asignado a un usuario
@@ -241,7 +243,10 @@ class UserDB extends Conexion {
      * @return array array coas asignaturas asignadas o usuario
      */
     public function getAsignaturas($id) {
-        $sql = "SELECT asignaturas.nombre FROM asignaturas, usuario_asignatura WHERE asignaturas.id=usuario_asignatura.asignatura_id AND usuario_asignatura.usuario_id=:id";
+        $sql = "SELECT asignaturas.id,asignaturas.nombre 
+                FROM asignaturas, usuario_asignatura 
+                WHERE asignaturas.id=usuario_asignatura.asignatura_id 
+                AND usuario_asignatura.usuario_id=:id";
         $resultado = [];
         try {
             $stmt = $this->conexion->prepare($sql);
@@ -251,7 +256,8 @@ class UserDB extends Conexion {
             
             if ( $stmt->rowCount() != 0 ) {
                 while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
-                    array_push($resultado,$row->nombre);                
+                    // array_push($resultado,$row->nombre);
+                    $resultado[$row->id] = $row->nombre;                
                 }        
                 $stmt = null;
                 return $resultado;
@@ -263,6 +269,35 @@ class UserDB extends Conexion {
         $stmt = null;
         return $resultado;
     }
+
+    // /**
+    // * Obtén as asignaturas asignadas a un usuario
+    // * @param string Id do usuario
+    // * @return array array coas asignaturas asignadas o usuario
+    // */
+    // public function getAsignaturas($id) {
+    //     $sql = "SELECT asignaturas.nombre FROM asignaturas, usuario_asignatura WHERE asignaturas.id=usuario_asignatura.asignatura_id AND usuario_asignatura.usuario_id=:id";
+    //     $resultado = [];
+    //     try {
+    //         $stmt = $this->conexion->prepare($sql);
+    //         $stmt->execute([
+    //                 ':id' => $id
+    //                 ]);
+            
+    //         if ( $stmt->rowCount() != 0 ) {
+    //             while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
+    //                 array_push($resultado,$row->nombre);                
+    //             }        
+    //             $stmt = null;
+    //             return $resultado;
+    //         }
+
+    //     } catch (\PDOException $ex) {
+    //         die("Error consultando a base de datos: ".$ex->getMessage());
+    //     }
+    //     $stmt = null;
+    //     return $resultado;
+    // }
 
     /**
      * Actualiza os datos de un usuario
@@ -277,7 +312,7 @@ class UserDB extends Conexion {
         try {
             //inténtase borrar datos de curso e asignaturas por si antes o usuario era estudiante e tiña algo asignado
             //sería o caso no que se fixera un cambio de rol de estudiante a outro rol
-            $userId = self::getUserId( $user->getUsuario() );
+            $userId = self::getUserId( $userName );
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([                
                 ':id' => $userId
@@ -301,6 +336,32 @@ class UserDB extends Conexion {
                 ':rol' => $user->getRol(),
                 ':u' => $userName               
                 ]);
+
+            if ( $user instanceof Student ) {    //si estamos actualizano un estudiante, insértase curso e asignaturas
+                
+                $curso = $user->getCurso();
+                if( $curso != "0" ) {                
+                    $sql = "INSERT INTO alumno_curso VALUES (:idUsr, :idCurso)";
+                    $stmt = $this->conexion->prepare($sql);
+                    $stmt->execute([
+                        ':idUsr' => $userId,
+                        ':idCurso' => $curso       
+                        ]);
+                }
+
+                $asignaturas = $user->getAsignaturas();
+                if( !empty($asignaturas) && $asignaturas[0] != "0" ) {
+                    $sql = "INSERT INTO usuario_asignatura VALUES (:idUsr, :idAsign)";
+                    foreach ($asignaturas as $key => $value) {
+                        $stmt = $this->conexion->prepare($sql);
+                        $stmt->execute([
+                            ':idUsr' => $userId,
+                            ':idAsign' => $value       
+                            ]);
+                    }
+                } 
+            }
+
             $stmt = null;
             $this->conexion->commit();
             return true;
@@ -313,32 +374,70 @@ class UserDB extends Conexion {
     }
 
 
-    /**
-     * Actualiza os datos de un usuario
-     * @param string $userName Nome do usuario que se vai actualizar
-     * @param object $user datos novos que se van gardar
-     * @return boolean True si actualiza os datos con éxito ou False si non
-     */
-    public function updateStudent($userName,$student) {
+//     /**
+//      * Actualiza os datos de un usuario
+//      * @param string $userName Nome do usuario que se vai actualizar
+//      * @param object $user datos novos que se van gardar
+//      * @return boolean True si actualiza os datos con éxito ou False si non
+//      */
+//     public function updateStudent($userName,$student) {
         
-        try {
-            if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
-            //primeiro borro o usuario por si tiña outro curso ou asignaturas asignadas
-            $sql = "DELETE FROM usuarios WHERE usuario=:u";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([                
-                ':u' => $userName
-            ]);
+//         try {
+//             if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
+//             $userId = self::getUserId( $userName );
+//             //primeiro borro as asignaturas e o curso que tiña asignado
+//             $sql = "DELETE FROM usuario_asignauta WHERE usuario_id=:id";
+//             $stmt = $this->conexion->prepare($sql);
+//             $stmt->execute([                
+//                 ':id' => $userId
+//             ]);
 
-            $stmt = null;
-            if ( self::insertStudent($student) ) return true;                                
+//             $sql = "DELETE FROM alumno_curso WHERE usuario_id=:id";
+//             $stmt = $this->conexion->prepare($sql);
+//             $stmt->execute([                
+//                 ':id' => $userId
+//             ]);
+
+//             $sql = 
+
+
+//             $stmt = null;
+//             if ( self::insertStudent($student) ) return true;                                
           
-        } catch (\PDOException $ex) {
-            if ( !$this->conexion->inTransaction() ) $this->conexion->rollback();
-            die("Error actualizando a base de datos: ".$ex->getMessage());
-        }
-        return false;
-}
+//         } catch (\PDOException $ex) {
+//             if ( !$this->conexion->inTransaction() ) $this->conexion->rollback();
+//             die("Error actualizando a base de datos: ".$ex->getMessage());
+//         }
+//         return false;
+// } 
+
+// /**
+// * Actualiza os datos de un usuario
+// * @param string $userName Nome do usuario que se vai actualizar
+// * @param object $user datos novos que se van gardar
+// * @return boolean True si actualiza os datos con éxito ou False si non
+// */
+// public function updateStudent($userName,$student) {
+   
+//    try {
+//        if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
+//        //primeiro borro o usuario por si tiña outro curso ou asignaturas asignadas
+//        $sql = "DELETE FROM usuarios WHERE usuario=:u";
+//        $stmt = $this->conexion->prepare($sql);
+//        $stmt->execute([                
+//            ':u' => $userName
+//        ]);
+
+//        $stmt = null;
+//        if ( self::insertStudent($student) ) return true;                                
+     
+//    } catch (\PDOException $ex) {
+//        if ( !$this->conexion->inTransaction() ) $this->conexion->rollback();
+//        die("Error actualizando a base de datos: ".$ex->getMessage());
+//    }
+//    return false;
+// }
+
     /**
      * Borra un usuario
      * @param string Id do usuario a borrar
@@ -359,8 +458,7 @@ class UserDB extends Conexion {
             die("Error borrando usuario: ".$ex->getMessage());
         }
         return false;
-    }
-    
+    }    
 
     /**
      * Actualiza o password de un usuario
@@ -440,7 +538,6 @@ class UserDB extends Conexion {
         $stmt = null;                
         return  false;
     }
-
 
     /**
      * Devolve o rol de un usuario

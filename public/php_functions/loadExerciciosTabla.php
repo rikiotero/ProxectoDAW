@@ -59,13 +59,26 @@ if($curso != null) {
 // }
 
  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
- if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
-    $where .= " WHERE exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id"; 
-}else{
-    $where .= " AND exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id";
-}
+//  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
+//     $where .= " WHERE exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id"; 
+// }else{
+//     $where .= " AND exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id";
+// }
 
-$sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios, usuarios, asignaturas,cursos". $where;
+$sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios LEFT JOIN usuarios ON exercicios.creador=usuarios.id
+JOIN asignaturas ON exercicios.asignatura=asignaturas.id
+JOIN cursos ON asignaturas.curso=cursos.id". $where;
+
+ // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
+//  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
+//     $where .= " WHERE exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id"; 
+// }else{
+//     $where .= " AND exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id";
+// }
+
+// $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios, usuarios, asignaturas,cursos". $where;
+
+
 // var_dump($sql);
 // exit;
 
@@ -89,7 +102,7 @@ if ( $stmt->rowCount() != 0 ) {
         $html .= "<td>".date('d-m-Y', strtotime($row['fecha_creacion']))."</td>";
         // $html .= "<td>".($row['activo'] == "1") ?  '<i class="fa-solid fa-check" style="color: #098b43;"></i>' : ''  ."</td>";
         // $html .= "<td>".$row['activo']."</td>";
-        $html .= "<td><a href='./exercicio.php?{$row['id']}' target='_blank' title='editar exercicio' id=editar-{$row['id']}><span class='fa-solid fa-pen-to-square' style='color: #e6b328;'></span></a></td>";
+        $html .= "<td><a href='./exercicio.php?id={$row['id']}' target='_blank' title='editar exercicio' id=editar-{$row['id']}><span class='fa-solid fa-pen-to-square' style='color: #e6b328;'></span></a></td>";
 
         $html .= "<td><a href='' data-bs-toggle='modal' title='borrar exercicio' id=borrar-{$row['id']}><span class='fa-solid fa-trash' style='color: #ff2600;'></span></a></td>";
         $html .= "</tr>";

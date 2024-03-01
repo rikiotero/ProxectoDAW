@@ -13,7 +13,7 @@ $db = new ExercicioDB();
 
 if ( $db->deleteExercicio($id) ) {    
     $db->cerrarConexion();
-    $output = "<div class='alert alert-success'Exercicio borrado correctamente</div>";    
+    $output = "<div class='alert alert-success'>Exercicio borrado correctamente</div>";    
 }else {
     $db->cerrarConexion();
     $output = "<div class='alert alert-danger'>Non se pudo borrar o exercicio</div>";

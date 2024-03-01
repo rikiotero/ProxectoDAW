@@ -25,11 +25,11 @@ $usr->cerrarConexion();
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script type="text/javascript" src="./js/createUser.js" defer></script>
-    <script type="text/javascript" src="./js/updateUser.js" defer></script>
-    <script type="text/javascript" src="./js/getStudent.js" defer></script>
-    <script type="text/javascript" src="./js/ajaxExercicios.js" defer></script>
-    <script type="text/javascript" src="./js/deleteUser.js" defer></script>
+    <script type="text/javascript" src="./js/ajaxUser.js" defer></script>
+    <!-- <script type="text/javascript" src="./js/createUser.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./js/updateUser.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./js/getStudent.js" defer></script> -->    
+    <!-- <script type="text/javascript" src="./js/deleteUser.js" defer></script> -->
     
 </head>
 <body>
@@ -60,7 +60,7 @@ $usr->cerrarConexion();
     <div class="tab-content" id="nav-tabContent">
         <!-- contido da tab de usuario-->
         <div class="tab-pane fade show active" id="nav-usuario" role="tabpanel" aria-labelledby="nav-usuario">
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <div class="row mt-5" id="1">           
                     <div class="col-md-3 border-end">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -141,7 +141,7 @@ $usr->cerrarConexion();
 
         <!-- contido da tab de xestión de alumnos-->
         <div class="tab-pane fade" id="nav-listaAlumnos" role="tabpanel" aria-labelledby="nav-listaAlumnos">
-            <div class="container mt-3">
+            <div class="container mt-5">
                 <!-- fila do botón crear alumno -->
                 <div class="row">
                     <div class="col">
@@ -292,7 +292,7 @@ $usr->cerrarConexion();
 
         <!-- contido da tab de xestión de exercícios-->
         <div class="tab-pane fade" id="nav-exercicios" role="tabpanel" aria-labelledby="nav-exercicios">
-            <div class="container mt-3">                
+            <div class="container mt-5">                
                 <!-- fila do botón crear exercicio -->
                 <div class="row">
                     <div class="col">
@@ -302,9 +302,9 @@ $usr->cerrarConexion();
                         <a href="./exercicio.php" target="_blank" rel="noopener noreferrer" class="btn btn-success" id="novoExercicio">
                             Crear exercicio<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>
                         </a>
-                        <!-- <button type="button" class="btn btn-success" id="novoExercicio">
-                            Crear exercicio<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
-                        </button>  -->
+                        <button type="button" class="btn btn-success ms-3" id="actualiLista" name="actualiLista" onclick="getExerciciosTabla()">
+                            Aztualizar lista<span class="ms-1 fa-solid fa-arrows-rotate" style="color: #ffffff;"></span>        
+                        </button> 
                     </div>
                     <div class="col" id="notificacionExercicio"></div>
                 </div>
@@ -338,9 +338,9 @@ $usr->cerrarConexion();
                             <th scope="col">Tema</th>
                             <th scope="col">Curso</th>
                             <th scope="col">Asignatura</th>                                                    
-                            <th scope="col">creador</th>
+                            <th scope="col">Autor</th>
                             <th scope="col">Activo</th>                            
-                            <th scope="col">fecha</th>                            
+                            <th scope="col">Fecha</th>                            
                             <th scope="col" colspan="2" class="text-center">Accións</th>
                         </tr>
                     </thead>
@@ -363,8 +363,10 @@ require "updateCursosModal.php";
 
 ?>
 <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
-<script type="text/javascript" src="./js/teacherModal.js" defer></script>
+<script type="text/javascript" src="./js/ajaxExercicios.js" defer></script>
+<!-- <script type="text/javascript" src="./js/teacherModal.js" defer></script> -->
 <script type="text/javascript" src="./js/validateForm.js" defer></script>
+<script type="text/javascript" src="./js/jsTeacher.js" defer></script>
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->

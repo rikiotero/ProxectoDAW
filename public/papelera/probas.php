@@ -10,8 +10,8 @@ use Clases\Exercicio;
 
 
 
-// $hash = password_hash('estudiante2', PASSWORD_DEFAULT, [15]);
-// echo "HASH: ".$hash."<br>";
+$hash = password_hash('estudiante1', PASSWORD_DEFAULT, [15]);
+echo "HASH: ".$hash."<br>";
 
 // $user = new UserDB();
 // $activo = $user->isActive("profesor1");

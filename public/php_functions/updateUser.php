@@ -22,10 +22,7 @@ if ( $datos["usuarioVello"] != $datos["usuario"] ) {
         $db->cerrarConexion();
         $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    }else {
-        if ( $_SESSION["user"] == $datos["usuarioVello"] ) //si é o usuario logueado o que modifica o seu nome de usuario actualizase a sesion
-            $_SESSION["user"] = $datos["usuario"];
-    }
+    } 
 }
 
 // $sesion = $_SESSION["user"];
@@ -76,7 +73,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
 
 }else { // é estudiante    
         
-    $passw = $db->getPassword($datos["usuario"]);
+    $passw = $db->getPassword($datos["usuarioVello"]);
 
     $estudiante = new Student(
         strip_tags( trim($datos["usuario"]) ),
@@ -120,10 +117,15 @@ if ( $datos["rol"] != 3) {   // non é estudiante
 
     if ( empty($erroresValidacion) ) {
 
-        $actualizado = $db->updateStudent($datos["usuarioVello"],$estudiante);
+        // $actualizado = $db->updateStudent($datos["usuarioVello"],$estudiante);
+        $actualizado = $db->updateUser($datos["usuarioVello"],$estudiante);
         $db->cerrarConexion();
         
         if( $actualizado ){
+
+            if ( $_SESSION["user"] == $datos["usuarioVello"] ) //si é o usuario logueado o que modifica o seu nome de usuario actualizase a sesion
+                $_SESSION["user"] = $datos["usuario"];
+    
             $output = "<div class='alert alert-success'>Usuario actualizado correctamente</div>";
         }else {
             $output = "<div class='alert alert-danger'>Non se pudo crear o actualizar o usuario, proba de novo</div>";

@@ -2,7 +2,6 @@
 namespace Clases;
 use \JsonSerializable;
 
-
 class Student extends User implements JsonSerializable {
 
     private $curso;

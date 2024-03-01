@@ -56,7 +56,7 @@ function validarCampo(id,expresionR,error,divErr) {
         if (expresionR.test(campo.value) == false) {
             divError.innerHTML = error;
             divError.classList.add("alert","alert-danger");
-            campo.value = "";
+            campo.focus();
             return false;
         }
     }    
