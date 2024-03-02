@@ -10,7 +10,7 @@ use Clases\CursosDB;
 use Clases\Exercicio;
 
 $datos = json_decode(file_get_contents('php://input'), true);
-var_dump($datos);
+// var_dump($datos);
 // //validación de datos
 // $erroresValidacion = [];
 // if ( $datos["tema"] == "" ) $erroresValidacion[] = "O tema non pode estar vacío";
@@ -45,7 +45,15 @@ var_dump($datos);
 // if ( !preg_match("/^[01]$/", $datos["exercActivo"]) ) $erroresValidacion [] = "O valor de exercicio activo é incorrecto";
 // //fin validación
 $db = new UserDB();
-$exercicio = new Exercicio(null,$datos["tema"],$datos["enunciado"],$datos["asignatura"],$datos["exercActivo"],$db->getUserId($datos["creador"]),$datos["fechaCreacion"]);
+$exercicio = new Exercicio(
+            null,
+            strip_tags( trim($datos["tema"] ) ),
+            $datos["enunciado"],
+            $datos["asignatura"],
+            $datos["exercActivo"] == true ? 1 : 0,
+            $db->getUserId($datos["creador"]),
+            $datos["fechaCreacion"]
+        );
 
 $erroresValidacion = $exercicio->validaExercicio($datos["curso"]);
 

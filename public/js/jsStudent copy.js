@@ -6,14 +6,8 @@
 loadUserDataModal(document.getElementById("idUsuario").value);  //definida en ajaxUser.js
 
 //listeners para filtrar a tabla de estudiantes
-document.getElementById("buscarEx").addEventListener("keyup", () => {  //filtro por búsqueda
-    getExerciciosStudent(1);
-  });
-document.getElementById("numRexistrosEX").addEventListener("change", () => {     //listener cantidade de rexistros a mostrar
-    getExerciciosStudent(1);
-});
-let paxinaActualEx = 1;   //páxina actual da tabla de exercicios    
-getExerciciosStudent(1); //carga a tabla de exercicios. definida en ajaxExercicios.js
+document.getElementById("buscarEx").addEventListener("keyup", getExerciciosStudent);
+getExerciciosStudent(); //carga a tabla de exercicios. definida en ajaxExercicios.js
 
 //definición de ventanas modales
 const updateUsersListModal = new bootstrap.Modal(document.getElementById("updateUsersListModal"), {});

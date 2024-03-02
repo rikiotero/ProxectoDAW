@@ -111,25 +111,13 @@ getCursos("filtroCursoEx");  //carga a lista de cursos no select da pestaña de 
 
 
 //listeners para filtrar a búsqueda de exercicios
-document.getElementById("buscarEx").addEventListener("keyup", () => {  //filtro por búsqueda
-  getExerciciosTabla(1);
-});  
-document.getElementById("ExActivado").addEventListener("change", () => {   //filtro usuario activo
-  getExerciciosTabla(1);
-});  
-document.getElementById("ExInactivo").addEventListener("change", () => {  //filtro usuario inactivo
-  getExerciciosTabla(1);
-});  
-document.getElementById("filtroCursoEx").addEventListener("change", () => {  //filtro por curso 
-  getExerciciosTabla(1);
-});
-document.getElementById("numRexistrosEX").addEventListener("change", () => {     //listener cantidade de rexistros a mostrar
-  getExerciciosTabla(1);
-});
+document.getElementById("buscarEx").addEventListener("keyup", getExerciciosTabla);
+document.getElementById("ExActivado").addEventListener("change", getExerciciosTabla);
+document.getElementById("ExInactivo").addEventListener("change", getExerciciosTabla);
+document.getElementById("filtroCursoEx").addEventListener("change", getExerciciosTabla);
 
-let paxinaActualEx = 1;   //páxina actual da tabla de exercicios
-getExerciciosTabla(1);    //carga a tabla de exercicios. definida en ajaxExercicios.js
-
+       
+getExerciciosTabla(); //carga a tabla de exercicios. definida en ajaxExercicios.js
 //definición de ventanas modales
 const createUserModal = new bootstrap.Modal(document.getElementById("createUserModal"), {});
 const deleteUserModal = new bootstrap.Modal(document.getElementById("deleteUserModal"), {});

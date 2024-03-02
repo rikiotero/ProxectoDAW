@@ -46,7 +46,7 @@ $usr->cerrarConexion();
                 </a>
             </div>       
         </div> 
-    </header>
+</header>
 
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -58,7 +58,7 @@ $usr->cerrarConexion();
     
     <div class="tab-content" id="nav-tabContent">
        <!-- contido da tab de usuario-->
-       <div class="tab-pane fade show active" id="nav-usuario" role="tabpanel" aria-labelledby="nav-usuario">
+        <div class="tab-pane fade show active" id="nav-usuario" role="tabpanel" aria-labelledby="nav-usuario">
             <div class="container mt-5">
                 <div class="row mt-5" id="1">           
                     <div class="col-md-3 border-end">
@@ -171,30 +171,52 @@ $usr->cerrarConexion();
             </div>
         </div><!-- fin contido da tab de usuario-->
 
-        <!-- contido da tab de xestión de exercícios-->
+        <!-- contido da tab de lista de exercícios-->
         <div class="tab-pane fade" id="nav-exercicios" role="tabpanel" aria-labelledby="nav-exercicios">
             <div class="container mt-5">            
                 <!-- fila de filtros de exercicios -->
-                <div class="row d-flex align-items-end">
-                    <div class="col-md-6">
+                <div class="row">
+
+                    <div class="col-md-auto mt-3"><!--numero de rexistros-->
+                        <label for="numRexistrosEX" class="col-form-label">Mostrar:</label>
+                    </div>
+                    <div class="col-md-auto mt-3">    
+                        <select name="numRexistrosEX" id="numRexistrosEX" class="form-select">
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 ms-auto"><!--cuadro de búsqueda-->
                         <input type="text" name="buscarEx" id="buscarEx" placeholder="Buscar" class="form-control mt-3">
                     </div>
                 </div>
                 
-                <table class="table table-striped table-light mt-5">
-                    <thead>
-                        <tr >
-                            <th scope="col">Id</th>
-                            <th scope="col">Tema</th>
-                            <th scope="col">Asignatura</th>                                                    
-                            <th scope="col">Autor</th>                           
-                            <th scope="col">Fecha</th>                            
-                            <th scope="col">Ver</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaExercicios">
-                    </tbody>
-                </table>    
+                <div class="row"><!--fila da tabla de exercicios-->
+                    <div class="col-md-12 mt-3">
+                        <table class="table table-striped table-light mt-5">
+                            <thead>
+                                <tr class="table-success">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Tema</th>
+                                    <th scope="col">Asignatura</th>                                                    
+                                    <th scope="col">Autor</th>                           
+                                    <th scope="col">Fecha</th>                            
+                                    <th scope="col">Ver</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaExercicios">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="row"><!--fila botóns de paxinación-->
+                    <div class="col-md-6" id="botonsPaxinasEx">
+                    </div>
+                </div>
+                
             </div>            
             <!-- </div>   -->
         </div><!-- fin contido da tab de xestión de exercícios-->

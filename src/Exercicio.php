@@ -69,10 +69,7 @@ class Exercicio implements JsonSerializable {
         return $erroresValidacion;
     }
 
- 
-
-
-
+    
     public function jsonSerialize() {
         return [
             'id' => $this->id,

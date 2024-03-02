@@ -196,7 +196,7 @@ $usr->cerrarConexion();
                     <div class="col-md-12 mt-3">
                         <table class="table table-striped table-light mt-3">
                             <thead>
-                                <tr>
+                                <tr class="table-success">
                                     <th scope="col">Id</th>
                                     <th scope="col">Usuario</th>
                                     <th scope="col">Nome</th>
@@ -216,9 +216,6 @@ $usr->cerrarConexion();
                     </div>    
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="" id="labelTotal"></label>
-                    </div>
                     <div class="col-md-6" id="botonsPaxinas">
                     </div>
                 </div>
@@ -286,7 +283,7 @@ $usr->cerrarConexion();
                         <table class="table table-striped table-light">
                         <caption>Cursos</caption>
                             <thead>
-                                <tr>
+                                <tr class="table-success">
                                     <th scope="col">Id</th>
                                     <th scope="col">Curso</th>
                                     <th scope="col" colspan="2" class="text-center">Accións</th>
@@ -301,7 +298,7 @@ $usr->cerrarConexion();
                         <table class="table table-striped table-light">
                         <caption>Asignaturas</caption>
                             <thead>
-                                <tr>
+                                <tr class="table-success">
                                     <th scope="col">Id</th>
                                     <th scope="col">Asignatura</th>
                                     <th scope="col" colspan="2" class="text-center">Accións</th>

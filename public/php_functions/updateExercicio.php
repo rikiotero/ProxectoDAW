@@ -14,10 +14,10 @@ $datos = json_decode(file_get_contents("php://input"), true);
 $db = new UserDB();
 $exercicio = new Exercicio(
             $datos["idExerc"],
-            $datos["tema"],
+            strip_tags( trim($datos["tema"] ) ),
             $datos["enunciado"],
             $datos["asignatura"],
-            $datos["exercActivo"],
+            $datos["exercActivo"] == true ? 1 : 0,
             $db->getUserId($datos["creador"]),
             $datos["fechaCreacion"]
             );

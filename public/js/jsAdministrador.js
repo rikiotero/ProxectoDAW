@@ -11,8 +11,12 @@ function getUsersData(paxina) {
     let filtro = document.getElementById("buscar").value;
     let numRexistros = document.getElementById("numRexistros").value;
     let rol = document.getElementById("roles").value;
-    let formData = new FormData();
-  
+    let formData = new FormData();  
+
+    if(paxina != null) {
+      paxinaActual = paxina;
+    }
+
     if( document.getElementById("activado").checked )
     {
       activoCkecked = "1";
@@ -50,7 +54,7 @@ function getUsersData(paxina) {
     formData.append("activo", activoCkecked);
     formData.append("inactivo", inactivoCkecked);
     formData.append("numRexistros", numRexistros);
-    formData.append("paxina", paxina);
+    formData.append("paxina", paxinaActual);
     
     fetch( url, {
       method: "POST",
@@ -89,8 +93,8 @@ function getUsersData(paxina) {
     .catch(err => console.log(err))
 }
 
-
-getUsersData(1); //carga a tabla de usuarios
+let paxinaActual = 1;    
+getUsersData(1);      //carga a tabla de usuarios
 
 //listeners para filtrar a tabla de usuarios, filtra dinámicamente cada vez que hai algún cambio
 document.getElementById("buscar").addEventListener("keyup", () => {      //filtro por búsqueda

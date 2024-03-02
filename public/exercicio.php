@@ -207,12 +207,18 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
         </div>
             
         <div class="row g-3 align-items-center"><!--Exercicio visible-->
+        <?php  
+        if ( $_SESSION["rol"] != "estudiante" ) {
+        ?>  
           <div class="form-group col-md-12 mt-5">
             <input class="form-check-input" type="checkbox" name="exercActivo" id="exercActivo" 
             title="Exercicio visible para os estudiantes" value="1" <?php echo $exercicio->getActivo() == 1 ? "checked" : ""?>
             <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
             <label class="form-check-label" for="exercActivo">Exercicio visible</label>
           </div>
+        <?php  
+        }
+        ?>
         </div>
 
         <div class="row g-3 mt-3"><!--boton crear-->

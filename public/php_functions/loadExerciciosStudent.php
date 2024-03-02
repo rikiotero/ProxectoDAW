@@ -15,9 +15,19 @@ $datos = json_decode(file_get_contents('php://input'), true);
 // $curso = isset($_POST["curso"]) && $_POST["curso"] != "0" ? $_POST["curso"] : null;          //select de curso
 // $asignaturas = isset($_POST["asignaturas"]) ? $_POST["asignaturas"] : null;
 
-$filtro = $datos["filtro"] != "" ? $datos["filtro"] : null;  //input text de buscar...
-// $curso = array_keys($_SESSION["curso"])[0];                   //curso
-$asignaturas = $_SESSION["asignaturas"];                      //array de asignaturas
+$filtro = $datos["filtro"] != "" ? $datos["filtro"] : null;         //input text de buscar...
+// $curso = array_keys($_SESSION["curso"])[0];                      //curso
+$asignaturas = $_SESSION["asignaturas"];                            //array de asignaturas
+$numRexistros = $datos["numRexistros"] != 10 ? $datos["numRexistros"] : 10;            //select de número de rexistros a mostrar
+$paxina = $datos["paxina"] ? $datos["paxina"] : 0;
+
+//cálculo do rexistro de inicio desde donde se fai a consulta en caso de que a páxina non sexa a primeira
+if ( $paxina == 0 ) {
+    $inicio = 0;
+    $paxina = 1;
+}else {
+    $inicio = ($paxina - 1) * $numRexistros;  
+}
 
 //concatenamos a parte 'AND' da consulta SQL según as asignaturas do usuario
 $andAsignaturas = "";
@@ -51,33 +61,70 @@ if ( $filtro != null ) {
     $andFiltro .= ") ";                                 // cerre do where
 }
 
+$limit = "LIMIT $inicio , $numRexistros";
+
 $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios, asignaturas, usuarios 
                                                 WHERE exercicios.asignatura=asignaturas.id 
                                                 AND exercicios.creador=usuarios.id ".$andAsignaturas."".$andFiltro.
-                                                " AND exercicios.activo=1";
+                                                " AND exercicios.activo=1 ".$limit;
 
 $db = new ExercicioDB();
 $stmt = $db->getExerciciosFiltered($sql);
+
+//obtemos o número total de rexistros da consulta para facer a paxinación
+$sql = $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios, asignaturas, usuarios 
+WHERE exercicios.asignatura=asignaturas.id 
+AND exercicios.creador=usuarios.id ".$andAsignaturas."".$andFiltro.
+" AND exercicios.activo=1";
+
+$rexistros = $db->getExerciciosFiltered($sql);
+$numRows = $rexistros->rowCount();
+
 $db->cerrarConexion();
-$html = "";
+
+$output = [];                                           //array que se vai retornar
+$output["numRexistrosFiltrados"] = $numRows;            //número de rexistros devoltos pola consulta
+$output["html"] = "";                                   //html para pintar  a tabla de usuarios
+$output["paxinacion"] = "";                             //html para pintar os botóns de paxinación
+
 
 if ( $stmt->rowCount() != 0 ) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $html .= "<tr>";
-        $html .= "<td>".$row['id']."</td>";
-        $html .= "<td>".$row['tema']."</td>";
-        $html .= "<td>".$row['nombre']."</td>";
-        $html .= "<td>".$row['usuario']."</td>";
-        $html .= "<td>".date('d-m-Y', strtotime($row['fecha_creacion']))."</td>";
-        $html .= "<td><a href='./exercicio.php?id={$row['id']}' target='_blank' title='ver exercicio' id=ver-{$row['id']}>
+        $output["html"] .= "<tr>";
+        $output["html"] .= "<td>".$row['id']."</td>";
+        $output["html"] .= "<td>".$row['tema']."</td>";
+        $output["html"] .= "<td>".$row['nombre']."</td>";
+        $output["html"] .= "<td>".$row['usuario']."</td>";
+        $output["html"] .= "<td>".date('d-m-Y', strtotime($row['fecha_creacion']))."</td>";
+        $output["html"] .= "<td><a href='./exercicio.php?id={$row['id']}' target='_blank' title='ver exercicio' id=ver-{$row['id']}>
                     <span class='fa-regular fa-eye' style='color: #e6b328;'></span></a></td>";
-        $html .= "</tr>";
+        $output["html"] .= "</tr>";
     }
 }else {
-    $html .= "<tr>"; 
-    $html .= "<td colspan='6' class='text-center'>Nada que mostrar</td>"; 
-    $html .= "</tr>"; 
+    $output["html"] .= "<tr>"; 
+    $output["html"] .= "<td colspan='6' class='text-center'>Nada que mostrar</td>"; 
+    $output["html"] .= "</tr>"; 
 }
 $stmt = null;
-echo json_encode($html, JSON_UNESCAPED_UNICODE);
+
+//creación do "nav" para a paxinación
+if ( $output["numRexistrosFiltrados"] > 0 ) {
+
+    //cálculo do número de páxinas según o número de usuarios que se mostran
+    $numPaxinas =  ceil( $output["numRexistrosFiltrados"] / $numRexistros ) ;   
+
+    $output["paxinacion"] .= "<nav class='d-flex justify-content-end'>";
+    $output["paxinacion"] .= "<ul class='pagination'>";
+
+    for ($i=1; $i<=$numPaxinas ; $i++) {  //marcar seleccionada a páxina activa
+        if( $paxina == $i ) {
+            $output["paxinacion"] .= "<li class='page-item active'><a class='page-link' href='#'>$i</a></li>";
+        } else {
+            $output["paxinacion"] .= "<li class='page-item'><a class='page-link' href='#' onclick='getExerciciosStudent($i)'>$i</a></li>";
+        }        
+    }
+    $output["paxinacion"] .= "</ul>";
+    $output["paxinacion"] .= "</nav>";
+}
+echo json_encode($output, JSON_UNESCAPED_UNICODE);

@@ -8,17 +8,15 @@
 /**
  * Recupera os exercicios filtrados según elixa o usuario e mostraos nunha tabla, carga os exercicios para os profesores
  */
-function getExerciciosTabla(paxina) {
+function getExerciciosTabla() {
 
   let filtro = document.getElementById("buscarEx").value;
   let curso = document.getElementById("filtroCursoEx").value;
-  let numRexistros = document.getElementById("numRexistrosEX").value;
+ 
   let activoCkecked;
   let inactivoCkecked;
 
-  if(paxina != null) {      //si non recibe páxina manten a actual
-    paxinaActual = paxina;
-  }
+
 
   if( document.getElementById("ExActivado").checked )
   {
@@ -40,9 +38,7 @@ function getExerciciosTabla(paxina) {
   formData.append("activo", activoCkecked);
   formData.append("inactivo", inactivoCkecked);
   formData.append("curso", curso);
-  formData.append("buscar", filtro);  
-  formData.append("numRexistros", numRexistros);
-  formData.append("paxina", paxinaActual);
+  formData.append("buscar", filtro);
 
  fetch( './php_functions/loadExerciciosTabla.php', {
     method: "POST",
@@ -50,8 +46,7 @@ function getExerciciosTabla(paxina) {
   })
   .then(response => response.json())
   .then(data => {
-    tablaExercicios.innerHTML = data.html;
-    document.getElementById("botonsPaxinasEx").innerHTML = data.paxinacion;
+    tablaExercicios.innerHTML = data
 
     // añadir listener os botóns de borrar exercicio da tabla de exercicios, recorrense os nodos fillos da tabla
     // e engádese o listener
@@ -71,10 +66,10 @@ function getExerciciosTabla(paxina) {
 * Recupera os exercicios activos de un estudiante filtrados por curso e polo cuadro de búsqueda, 
 * pinta a tabla de exercicios dos estudiantes
 */
-function getExerciciosStudent(paxina) {
+function getExerciciosStudent() {
 
   let filtro = document.getElementById("buscarEx").value;     //campo de búsqueda 
-  let numRexistros = document.getElementById("numRexistrosEX").value;
+
   // let curso = document.getElementById("curso").value;         //curso
 
   // let asignaturaSelect = document.getElementById("asignaturas").selectedOptions;
@@ -83,16 +78,10 @@ function getExerciciosStudent(paxina) {
   //   asignaturas.push(element.value);
   // });
 
-  if(paxina != null) {      //si non recibe páxina manten a actual
-    paxinaActual = paxina;
-  }
-
   let tablaExercicios = document.getElementById("tablaExercicios");
 
   let data = {
     filtro: filtro,
-    numRexistros: numRexistros,
-    paxina: paxinaActual,
   }
 
  fetch( './php_functions/loadExerciciosStudent.php', {
@@ -104,8 +93,7 @@ function getExerciciosStudent(paxina) {
   })
   .then(response => response.json())
   .then(data => {
-    tablaExercicios.innerHTML = data.html;
-    document.getElementById("botonsPaxinasEx").innerHTML = data.paxinacion;
+    tablaExercicios.innerHTML = data;
   })
   .catch(err => console.log(err))
 }

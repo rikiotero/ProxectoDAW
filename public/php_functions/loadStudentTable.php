@@ -89,23 +89,35 @@ LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos
 $db = new UserDB();
 $stmt = $db->getUsersFiltered($sql);
 
-//consulta para obter o número de rexistros que devolve a consulta filtrada
-$sqlFiltro = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columnas) . " FROM usuarios 
-LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id"."$where $limit";
-$resultadoFiltrado = $db->getUsersFiltered($sqlFiltro);
+//obtemos o número total de rexistros da consulta para facer a paxinación
+$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
+LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id".$where;
+$rexistros = $db->getUsersFiltered($sql);
+$numRows = $rexistros->rowCount();
 
-$sqlNumRows = "SELECT FOUND_ROWS()";                     //número de rexistros que devolveu a consulta con "SQL_CALC_FOUND_ROWS"
-$resultado = $db->getUsersFiltered($sqlNumRows);
-$numRows = $resultado->fetch(PDO::FETCH_NUM);
-if ( $numRows ) $totalFiltro =  $numRows[0];
-else $totalFiltro = 0;
+
+
+// if ( $numRows ) $totalFiltro =  $numRows[0];
+// else $totalFiltro = 0;
+
+//consulta para obter o número de rexistros que devolve a consulta filtrada
+// $sqlFiltro = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columnas) . " FROM usuarios 
+// LEFT JOIN alumno_curso ON usuarios.id = alumno_curso.usuario_id LEFT JOIN cursos ON alumno_curso.curso_id = cursos.id"."$where $limit";
+// $resultadoFiltrado = $db->getUsersFiltered($sqlFiltro);
+
+// $sqlNumRows = "SELECT FOUND_ROWS()";                     //número de rexistros que devolveu a consulta con "SQL_CALC_FOUND_ROWS"
+// $resultado = $db->getUsersFiltered($sqlNumRows);
+// $numRows = $resultado->fetch(PDO::FETCH_NUM);
+// if ( $numRows ) $totalFiltro =  $numRows[0];
+// else $totalFiltro = 0;
 
 $db->cerrarConexion();
 
-$output = [];                                       //array que se vai retornar
-$output["numRexistrosFiltrados"] = $totalFiltro;    //núme de rexistros devoltos pola consulta
-$output["html"] = "";                               //html para pintar  a tabla de usuarios
-$output["paxinacion"] = "";                         //html para pintar os botóns de paxinación
+$output = [];                                           //array que se vai retornar
+// $output["numRexistrosFiltrados"] = $totalFiltro;     //número de rexistros devoltos pola consulta
+$output["numRexistrosFiltrados"] = $numRows;            //número de rexistros devoltos pola consulta
+$output["html"] = "";                                   //html para pintar  a tabla de usuarios
+$output["paxinacion"] = "";                             //html para pintar os botóns de paxinación
 
 if ( $stmt->rowCount() != 0 ) {
 
@@ -138,6 +150,7 @@ if ( $stmt->rowCount() != 0 ) {
 }
 
 $stmt = null;
+
 //creación do "nav" para a paxinación
 if ( $output["numRexistrosFiltrados"] > 0 ) {
 
