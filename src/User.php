@@ -13,9 +13,10 @@ class User {
     protected $fecha_alta;
     protected $activo;
     protected $rol;
+    protected $curso;
 
 
-    public function __construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol) {
+    public function __construct($usuario, $password, $nombre, $apellido1, $apellido2, $email=null, $telefono=null, $fecha_alta, $activo, $rol, $curso=null) {
         
         $this->usuario = $usuario;
         $this->password = $password;
@@ -27,6 +28,7 @@ class User {
         $this->fecha_alta = $fecha_alta;
         $this->activo = $activo;
         $this->rol = $rol;
+        $this->curso = $curso;
     }
 
     // /**
@@ -172,5 +174,15 @@ class User {
     public function setRol($rol)
     {
         $this->rol = $rol;
+    }
+
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+    public function setCurso($curso)
+    {
+        $this->rol = $curso;
     }
 }

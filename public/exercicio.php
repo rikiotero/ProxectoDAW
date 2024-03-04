@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
-require "./php_functions/redirect.php";
+require "../src/php_functions/redirect.php";
 use Clases\UserDB;
 use Clases\ExercicioDB;
 use Clases\CursosDB;
@@ -18,11 +18,11 @@ if( !isset($_SESSION["rol"]) ) redirect("");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editor de exercicios</title>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- <script type="text/javascript" src="./js/modal.js" defer></script> -->
-    <script type="text/javascript" src="./js/ajaxCursos.js" defer></script>
-    <script type="text/javascript" src="./js/ajaxExercicios.js" defer></script>
+    <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>
+    <script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>
     <script src="./tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript" src="./js/TinyMCE_eqneditor.js" defer></script>        
     <script>
@@ -116,21 +116,28 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
 
 
 <body>
-  <header>
-    <div class="d-flex flex-row mb-3 align-items-center">
-        <div class="p-2 flex-fill ">
-            <h1>Editor de exercicios</h1>
-        </div>
-        <div class="p-2">
-            <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
-        </div> 
-        <div class="p-2">
-            <a href="./php_functions/closeSession.php" title="cerrar sesión">
-                <span class="fa-solid fa-right-from-bracket fa-2xl" style="color: #d71919;"></span>
+  <header class="headerExerc">
+        <div class="d-flex flex-row align-items-center justify-content-between">
+        <div>
+            <a class="navbar-brand" href="index.php">
+                <img src="src/img/logo_256.png" alt="Logo" loading="lazy" />
             </a>
-        </div>       
-    </div> 
-  </header>
+        </div>
+        
+            <div class="me-auto p-2">
+                <h1>Editor de exercicios</h1>
+            </div>
+            <!-- <div class="p-2">
+                <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
+            </div>  -->
+            <div class="p-2 d-flex flex-row align-items-center align-self-start headerUsuario">
+                <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
+                <a href="./php_functions/closeSession.php" title="cerrar sesión">
+                    <span class="fa-solid fa-right-from-bracket fa-xl" style="color: #d71919;"></span>
+                </a>
+            </div>       
+        </div> 
+    </header>
 
   <div class="container mt-3">
     <div class="row mt-1" id="msgExercicio"></div>
@@ -296,7 +303,14 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
      
   });
   </script>
-   
+<footer class="text-center py-1 fixed-bottom">
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col">2024 TaskVaultAcademy
+            </div>
+        </div>
+    </div>
+</footer>   
 </body>
 </html>
 

@@ -4,34 +4,13 @@ use \JsonSerializable;
 
 class Student extends User implements JsonSerializable {
 
-    private $curso;
     private $asignaturas;
 
     public function __construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol, $curso=null, $asignaturas=null) {
         
-        parent::__construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol);
-        $this->curso = $curso;
+        parent::__construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol,$curso);
         $this->asignaturas = $asignaturas;
     }
-
-    // public function __construct($usuario, $curso=null, $asignaturas=null) {
-        
-    //     parent::__construct($usuario->usuario, $usuario->password, $usuario->nombre, $usuario->apellido1, $usuario->apellido2, $usuario->email, $usuario->telefono, $usuario->fecha_alta, $usuario->activo, $usuario->rol);
-    //     $this->curso = $curso;
-    //     $this->asignaturas = $asignaturas;
-    // }
-
-
-    // /**
-    //  * Validación de datos de estudiante
-    //  * @return array Array cos erros de validación
-    //  */
-    // public function validaStudent() {
-       
-    //     $error = parent::validaUsuario();
-        
-    //     return $error;
-    // }
 
     public function jsonSerialize() {
         return [
@@ -62,21 +41,21 @@ class Student extends User implements JsonSerializable {
     }
 
 
-    /**
-     * Get the value of curso
-     */
-    public function getCurso()
-    {
-        return $this->curso;
-    }
+    // /**
+    //  * Get the value of curso
+    //  */
+    // public function getCurso()
+    // {
+    //     return $this->curso;
+    // }
 
-    /**
-     * Set the value of curso
-     */
-    public function setCurso($curso)
-    {
-        $this->curso = $curso;
-    }
+    // /**
+    //  * Set the value of curso
+    //  */
+    // public function setCurso($curso)
+    // {
+    //     $this->curso = $curso;
+    // }
 
     /**
      * Get the value of asignaturas

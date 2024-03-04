@@ -18,7 +18,7 @@ class UserDB extends Conexion {
      */
     public function insertUser($user) {
 
-        $sql = "INSERT INTO usuarios VALUES (:id,:usuario,:pass,:nombre,:apellido1,:apellido2,:email,:telefono,:fecha_alta,:activo,:rol)";
+        $sql = "INSERT INTO usuarios VALUES (:id,:usuario,:pass,:nombre,:apellido1,:apellido2,:email,:telefono,:fecha_alta,:activo,:rol,:curso)";
         try {
             $stmt = $this->conexion->prepare($sql);
             $isOk = $stmt->execute([
@@ -32,7 +32,8 @@ class UserDB extends Conexion {
                     ':telefono' => $user->getTlf(),
                     ':fecha_alta' => date('Y-m-d',strtotime($user->getFechaAlta())),//formateo da fecha en formato compatible con MySQL
                     ':activo' => $user->getActivo(),
-                    ':rol' => $user->getRol()
+                    ':rol' => $user->getRol(),
+                    ':curso' => $user->getCurso()
                 ]);
             $stmt = null;
             if( $isOk ) return true;
@@ -49,7 +50,7 @@ class UserDB extends Conexion {
      */
     public function insertStudent($student) {
         
-        $sql = "INSERT INTO usuarios VALUES (:id,:usuario,:pass,:nombre,:apellido1,:apellido2,:email,:telefono,:fecha_alta,:activo,:rol)";
+        $sql = "INSERT INTO usuarios VALUES (:id,:usuario,:pass,:nombre,:apellido1,:apellido2,:email,:telefono,:fecha_alta,:activo,:rol,:curso)";
         try {
             if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
             $stmt = $this->conexion->prepare($sql);
@@ -64,19 +65,11 @@ class UserDB extends Conexion {
                 ':telefono' => $student->getTlf(),
                 ':fecha_alta' => date('Y-m-d',strtotime($student->getFechaAlta())),//formateo da fecha en formato compatible con MySQL
                 ':activo' => $student->getActivo(),
-                ':rol' => $student->getRol()
+                ':rol' => $student->getRol(),
+                ':curso' => $student->getCurso()
                 ]);
             
             $id = $this->conexion->lastInsertId();
-            $curso = $student->getCurso();
-            if( $curso != "0" ) {                
-                $sql = "INSERT INTO alumno_curso VALUES (:idUsr, :idCurso)";
-                $stmt = $this->conexion->prepare($sql);
-                $stmt->execute([
-                    ':idUsr' => $id,
-                    ':idCurso' => $curso       
-                    ]);
-            }
 
             $asignaturas = $student->getAsignaturas();
             if( !empty($asignaturas) && $asignaturas[0] != "0" ) {
@@ -216,7 +209,7 @@ class UserDB extends Conexion {
      * @return string O curso si é que ten algún asignado, false si non
      */
     public function getCurso($id) {
-        $sql = "SELECT cursos.id,cursos.curso from cursos, alumno_curso where cursos.id=alumno_curso.curso_id and alumno_curso.usuario_id=:id";
+        $sql = "SELECT cursos.id,cursos.curso from cursos, usuarios where cursos.id=usuarios.curso and usuarios.id=:id";
         try {
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
@@ -308,22 +301,17 @@ class UserDB extends Conexion {
     public function updateUser($userName,$user) {        
         
         if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
-            $sql = "DELETE FROM alumno_curso WHERE usuario_id=:id";
-        try {
-            //inténtase borrar datos de curso e asignaturas por si antes o usuario era estudiante e tiña algo asignado
-            //sería o caso no que se fixera un cambio de rol de estudiante a outro rol
-            $userId = self::getUserId( $userName );
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([                
-                ':id' => $userId
-            ]);
             $sql = "DELETE FROM usuario_asignatura WHERE usuario_id=:id";
+        try {
+            //inténtase borrar datos de asignaturas por si antes o usuario era estudiante e tiña algo asignado
+            //sería o caso no que se fixera un cambio de rol de estudiante a outro rol
+            $userId = self::getUserId( $userName );           
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([                
                 ':id' => $userId
             ]);
 
-            $sql="UPDATE usuarios SET usuario=:usuario, nombre=:nome, apellido1=:apellido1, apellido2=:apellido2 ,email=:email,telefono=:telefono, activo=:activo, rol=:rol WHERE usuario=:u";
+            $sql="UPDATE usuarios SET usuario=:usuario, nombre=:nome, apellido1=:apellido1, apellido2=:apellido2 ,email=:email,telefono=:telefono, activo=:activo, rol=:rol, curso=:curso WHERE usuario=:u";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([                
                 ':usuario' => $user->getUsuario(),
@@ -334,21 +322,12 @@ class UserDB extends Conexion {
                 ':telefono' => $user->getTlf(),
                 ':activo' => $user->getActivo(),
                 ':rol' => $user->getRol(),
+                ':curso' => $user->getCurso(),
                 ':u' => $userName               
                 ]);
 
-            if ( $user instanceof Student ) {    //si estamos actualizano un estudiante, insértase curso e asignaturas
+            if ( $user instanceof Student ) {    //si estamos actualizano un estudiante  insértase  asignaturas
                 
-                $curso = $user->getCurso();
-                if( $curso != "0" ) {                
-                    $sql = "INSERT INTO alumno_curso VALUES (:idUsr, :idCurso)";
-                    $stmt = $this->conexion->prepare($sql);
-                    $stmt->execute([
-                        ':idUsr' => $userId,
-                        ':idCurso' => $curso       
-                        ]);
-                }
-
                 $asignaturas = $user->getAsignaturas();
                 if( !empty($asignaturas) && $asignaturas[0] != "0" ) {
                     $sql = "INSERT INTO usuario_asignatura VALUES (:idUsr, :idAsign)";
@@ -372,71 +351,6 @@ class UserDB extends Conexion {
         }
         return false;
     }
-
-
-//     /**
-//      * Actualiza os datos de un usuario
-//      * @param string $userName Nome do usuario que se vai actualizar
-//      * @param object $user datos novos que se van gardar
-//      * @return boolean True si actualiza os datos con éxito ou False si non
-//      */
-//     public function updateStudent($userName,$student) {
-        
-//         try {
-//             if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
-//             $userId = self::getUserId( $userName );
-//             //primeiro borro as asignaturas e o curso que tiña asignado
-//             $sql = "DELETE FROM usuario_asignauta WHERE usuario_id=:id";
-//             $stmt = $this->conexion->prepare($sql);
-//             $stmt->execute([                
-//                 ':id' => $userId
-//             ]);
-
-//             $sql = "DELETE FROM alumno_curso WHERE usuario_id=:id";
-//             $stmt = $this->conexion->prepare($sql);
-//             $stmt->execute([                
-//                 ':id' => $userId
-//             ]);
-
-//             $sql = 
-
-
-//             $stmt = null;
-//             if ( self::insertStudent($student) ) return true;                                
-          
-//         } catch (\PDOException $ex) {
-//             if ( !$this->conexion->inTransaction() ) $this->conexion->rollback();
-//             die("Error actualizando a base de datos: ".$ex->getMessage());
-//         }
-//         return false;
-// } 
-
-// /**
-// * Actualiza os datos de un usuario
-// * @param string $userName Nome do usuario que se vai actualizar
-// * @param object $user datos novos que se van gardar
-// * @return boolean True si actualiza os datos con éxito ou False si non
-// */
-// public function updateStudent($userName,$student) {
-   
-//    try {
-//        if ( !$this->conexion->inTransaction() ) $this->conexion->beginTransaction();
-//        //primeiro borro o usuario por si tiña outro curso ou asignaturas asignadas
-//        $sql = "DELETE FROM usuarios WHERE usuario=:u";
-//        $stmt = $this->conexion->prepare($sql);
-//        $stmt->execute([                
-//            ':u' => $userName
-//        ]);
-
-//        $stmt = null;
-//        if ( self::insertStudent($student) ) return true;                                
-     
-//    } catch (\PDOException $ex) {
-//        if ( !$this->conexion->inTransaction() ) $this->conexion->rollback();
-//        die("Error actualizando a base de datos: ".$ex->getMessage());
-//    }
-//    return false;
-// }
 
     /**
      * Borra un usuario

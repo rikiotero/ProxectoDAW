@@ -1,12 +1,12 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
-require "./php_functions/redirect.php";
+require "../src/php_functions/redirect.php";
 
 use Clases\UserDB;
 use Clases\RoleDB;
 
-if( !isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "estudiante") redirect("");
+if( !isset($_SESSION["rol"]) ) redirect("");
 
 //recuperamos os datos do usuario
 $usr = new UserDB();
@@ -27,26 +27,30 @@ $usr->cerrarConexion();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de estudiante</title>
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">   
     <!-- <script type="text/javascript" src="./js/deleteUser.js" defer></script> -->    
 </head>
 <body>
-<header>
-        <div class="d-flex flex-row mb-3 align-items-center">
-            <div class="p-2 flex-fill ">
-                <h1>Panel de estudiante</h1>
+    <header>
+        <div class="d-flex flex-row align-items-center justify-content-between">
+        <div>
+            <a class="navbar-brand" href="index.php">
+                <img src="src/img/logo_256.png" alt="Logo" loading="lazy" />
+            </a>
+        </div>
+        
+            <div class="me-auto p-2">
+                <h1>Panel de Estudiante</h1>
             </div>
-            <div class="p-2">
+            <div class="p-2 d-flex flex-row align-items-center align-self-start headerUsuario">
                 <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
-            </div> 
-            <div class="p-2">
-                <a href="./php_functions/closeSession.php" title="cerrar sesión">
-                    <span class="fa-solid fa-right-from-bracket fa-2xl" style="color: #d71919;"></span>
+                <a href="../src/php_functions/closeSession.php" title="cerrar sesión">
+                    <span class="fa-solid fa-right-from-bracket fa-xl" style="color: #d71919;"></span>
                 </a>
             </div>       
         </div> 
-</header>
+    </header>
 
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -60,7 +64,7 @@ $usr->cerrarConexion();
        <!-- contido da tab de usuario-->
         <div class="tab-pane fade show active" id="nav-usuario" role="tabpanel" aria-labelledby="nav-usuario">
             <div class="container mt-5">
-                <div class="row mt-5" id="1">           
+                <div class="row d-flex justify-content-center mt-5">           
                     <div class="col-md-3 border-end">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                             <!-- <img class="rounded-circle" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> -->
@@ -197,7 +201,7 @@ $usr->cerrarConexion();
                     <div class="col-md-12 mt-3">
                         <table class="table table-striped table-light mt-5">
                             <thead>
-                                <tr class="table-success">
+                                <tr>
                                     <th scope="col">Id</th>
                                     <th scope="col">Tema</th>
                                     <th scope="col">Asignatura</th>                                                    
@@ -216,7 +220,7 @@ $usr->cerrarConexion();
                     <div class="col-md-6" id="botonsPaxinasEx">
                     </div>
                 </div>
-                
+
             </div>            
             <!-- </div>   -->
         </div><!-- fin contido da tab de xestión de exercícios-->
@@ -226,13 +230,20 @@ $usr->cerrarConexion();
 <?php
 require "./ventanas_modales/updateUsersListModal.php";
 ?>
-<script type="text/javascript" src="./js/ajaxCursos.js" defer></script>  
-<script type="text/javascript" src="./js/ajaxUser.js" defer></script>
-<script type="text/javascript" src="./js/ajaxExercicios.js" defer></script>     
-<script type="text/javascript" src="./js/validateForm.js" defer></script>
-<script type="text/javascript" src="./js/jsStudent.js" defer></script>   
+<script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>  
+<script type="text/javascript" src="./src/js/ajaxUser.js" defer></script>
+<script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>     
+<script type="text/javascript" src="./src/js/validateForm.js" defer></script>
+<script type="text/javascript" src="./src/js/jsStudent.js" defer></script>   
 <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<footer class="text-center py-1 fixed-bottom">
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col">2024 TaskVaultAcademy
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
 
