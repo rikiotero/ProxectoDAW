@@ -48,7 +48,7 @@ function getUsersData(paxina) {
     }
   
     let tablaUsuarios = document.getElementById("tablaUsuarios");
-    let url = '../src/php_functions/loadUsersTable.php';
+    let url = './php_functions/loadUsersTable.php';
     
     formData.append("buscar", filtro);
     formData.append("activo", activoCkecked);

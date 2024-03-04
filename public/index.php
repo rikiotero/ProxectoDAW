@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../src/php_functions/redirect.php";
+require "./php_functions/redirect.php";
 if( isset($_SESSION["rol"]) ) redirect($_SESSION["rol"]);
 
 require "../vendor/autoload.php";

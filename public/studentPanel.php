@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
-require "../src/php_functions/redirect.php";
+require "./php_functions/redirect.php";
 
 use Clases\UserDB;
 use Clases\RoleDB;
@@ -45,7 +45,7 @@ $usr->cerrarConexion();
             </div>
             <div class="p-2 d-flex flex-row align-items-center align-self-start headerUsuario">
                 <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
-                <a href="../src/php_functions/closeSession.php" title="cerrar sesión">
+                <a href="./php_functions/closeSession.php" title="cerrar sesión">
                     <span class="fa-solid fa-right-from-bracket fa-xl" style="color: #d71919;"></span>
                 </a>
             </div>       

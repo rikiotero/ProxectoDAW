@@ -40,7 +40,7 @@ function  createUser() {
     //validación dos datos, función definida en validateForm.js 
     if ( validaCreateUser () ) {
 
-        fetch("../src/php_functions/createUser.php", {
+        fetch("./php_functions/createUser.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -94,7 +94,7 @@ function deleteUser() {
         id: userId,
     };
 
-    fetch('../src/php_functions/deleteUser.php', {
+    fetch('./php_functions/deleteUser.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ function updateUser() {
 
     if ( validaUpdateUser() ) {  
 
-        fetch("../src/php_functions/updateUser.php", {
+        fetch("./php_functions/updateUser.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -207,7 +207,7 @@ function updatePassw() {
             usuario: usuario,
             pass: pass
         }
-        fetch("../src/php_functions/updatePassw.php", {
+        fetch("./php_functions/updatePassw.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -259,7 +259,7 @@ function loadUserDataModal(userId) {
      id: userId,
  };
 
- fetch("../src/php_functions/getUser.php", {
+ fetch("./php_functions/getUser.php", {
      method: "POST",
      headers: {
          "Content-Type": "application/json",

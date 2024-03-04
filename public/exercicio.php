@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../vendor/autoload.php";
-require "../src/php_functions/redirect.php";
+require "./php_functions/redirect.php";
 use Clases\UserDB;
 use Clases\ExercicioDB;
 use Clases\CursosDB;

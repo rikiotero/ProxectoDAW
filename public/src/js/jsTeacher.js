@@ -42,7 +42,7 @@ function getStudentTable(paxina) {
   formData.append("numRexistros", numRexistros);
   formData.append("paxina", paxinaActual);  
  
-  fetch( '../src/php_functions/loadStudentTable.php', {
+  fetch( "./php_functions/loadStudentTable.php", {
     method: "POST",
     body: formData
   })

@@ -44,7 +44,7 @@ function getExerciciosTabla(paxina) {
   formData.append("numRexistros", numRexistros);
   formData.append("paxina", paxinaActual);
 
- fetch( '../src/php_functions/loadExerciciosTabla.php', {
+ fetch( './php_functions/loadExerciciosTabla.php', {
     method: "POST",
     body: formData
   })
@@ -95,7 +95,7 @@ function getExerciciosStudent(paxina) {
     paxina: paxinaActual,
   }
 
- fetch( '../src/php_functions/loadExerciciosStudent.php', {
+ fetch( './php_functions/loadExerciciosStudent.php', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -116,7 +116,7 @@ function getExerciciosStudent(paxina) {
 function deleteExercicio() {
 
     let id = document.getElementById("idExercBorrar").value;
-    fetch( "../src/php_functions/deleteExercicio.php", {
+    fetch( "./php_functions/deleteExercicio.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -163,7 +163,7 @@ function deleteExercicio() {
       enunciado: enunciado
     };
 
-    fetch("../src/php_functions/createExercicio.php", {
+    fetch("./php_functions/createExercicio.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -210,7 +210,7 @@ function deleteExercicio() {
       enunciado: enunciado
     };
 
-    fetch("../src/php_functions/updateExercicio.php", {
+    fetch("./php_functions/updateExercicio.php", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",

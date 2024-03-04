@@ -95,7 +95,7 @@ function validaUsuario(id,expresionR,divErr) {
             usuario: user.value
         }
 
-        fetch('../src/php_functions/checkUser.php', {
+        fetch('./php_functions/checkUser.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

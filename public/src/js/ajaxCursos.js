@@ -6,7 +6,7 @@ function addCurso() {
   let cursoNovo = document.getElementById("addCurso").value;
   if ( cursoNovo != "" ) {
 
-    fetch( "../src/php_functions/addCurso.php", {
+    fetch( "./php_functions/addCurso.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function addAsignatura() {
 
   if ( asignNova != "" && curso != "0" ) {
 
-    fetch( "../src/php_functions/addAsinatura.php", {
+    fetch( "./php_functions/addAsinatura.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ function addAsignatura() {
  */
 function deleteCurso(id) {
 
-  fetch( "../src/php_functions/deleteCurso.php", {
+  fetch( "./php_functions/deleteCurso.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -128,7 +128,7 @@ function deleteCurso(id) {
 function deleteAsignatura(id) {
 
   // if ( confirm("Desexas borrar a asignatura?") ){
-    fetch( "../src/php_functions/deleteAsignatura.php", {
+    fetch( "./php_functions/deleteAsignatura.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -162,7 +162,7 @@ function updateCurso(id,nomeNovo) {
     id: id,
     nomeNovo: nomeNovo
   }
-  fetch( "../src/php_functions/updateCurso.php", {
+  fetch( "./php_functions/updateCurso.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -201,7 +201,7 @@ function updateAsignatura(idAsignatura,idCurso,nomeNovo) {
     nomeNovo: nomeNovo
   }
 
-  fetch( "../src/php_functions/updateAsignatura.php", {
+  fetch( "./php_functions/updateAsignatura.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -228,7 +228,7 @@ function updateAsignatura(idAsignatura,idCurso,nomeNovo) {
  */
 function getTablaCursos() {
 
-  fetch( "../src/php_functions/loadCursosTable.php", {
+  fetch( "./php_functions/loadCursosTable.php", {
     method: "POST"
   })
   .then(response => response.json())
@@ -271,7 +271,7 @@ function getTablaCursos() {
  * @param {string} selectId Id do select donde se cargan os cursos 
  */
 function getCursos(selectId) {
-  fetch( "../src/php_functions/loadCursosOption.php", {
+  fetch( "./php_functions/loadCursosOption.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -294,7 +294,7 @@ function getCursos(selectId) {
  */
 function cargarAsignaturas(idCurso,idSelectInput) {
                           
-  fetch("../src/php_functions/getAsignaturas.php", {
+  fetch("./php_functions/getAsignaturas.php", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
@@ -319,7 +319,7 @@ function loadAsignaturasTable(idCurso) {
   let tablaAsignaturas = document.getElementById("tablaAsignaturas");
   let idCursoAsig = document.getElementById("selectCurso").value;
 
-  fetch("../src/php_functions/loadAsignaturasTable.php", {
+  fetch("./php_functions/loadAsignaturasTable.php", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
