@@ -1,7 +1,5 @@
 <?php
 session_start();
-var_dump(dirname(__FILE__));
-var_dump(__DIR__);
 require "./php_functions/redirect.php";
 if( isset($_SESSION["rol"]) ) redirect($_SESSION["rol"]);
 
