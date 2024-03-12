@@ -144,9 +144,7 @@ use Clases\CursosDB;
       <!-- Modal crear usuario footer-->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick=<?php echo $_SESSION["rol"] == "administrador" ? "getUsersData()" : "getStudentTable()"?>>Cerrar</button>
-        <!-- <input type="submit" form="crearUsuario" class="btn btn-primary" name="enviar" id="enviar" value="Rexistrar usuario" onclick="createUser()"></input> -->
         <button class="btn btn-primary" name="enviar" id="enviar"  onclick="createUser()">Rexistrar usuario</button>
-
       </div>
       
     </div>

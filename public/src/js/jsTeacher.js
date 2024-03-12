@@ -56,7 +56,6 @@ function getStudentTable(paxina) {
     tablaAlumnos.childNodes.forEach( element => {
       element.childNodes[10].childNodes[0].addEventListener("click", () => {
         updateUsersListModal.show();                //abre o modal "updateUsersListModal" declarado en modal.js         
-        // let id = element.childNodes[10].childNodes[0].id;
         let id = element.childNodes[0].innerHTML;
         loadUserDataModal(id);                      //definida en updateUser.js, carga os datos do usuario
       })
@@ -67,7 +66,6 @@ function getStudentTable(paxina) {
     tablaAlumnos.childNodes.forEach( element => {
       element.childNodes[11].childNodes[0].addEventListener("click", () => {
         deleteUserModal.show();               //abre o modal "deleteUserModal"
-        // alert("pulsado id:"+element.childNodes[11].childNodes[0].id+" evenTarget:"+event.target)
         //gardo o id do usuario nun campo oculto do modal
         let id = element.childNodes[0].innerHTML;
         document.getElementById("idUsuarioBorrar").value = id;
@@ -99,15 +97,11 @@ document.getElementById("numRexistros").addEventListener("change", () => {     /
   getStudentTable(1);
 });   
 
-//carga de datos do usuario logueado na pantalla modal de editar o seu perfil
-// loadUserDataModal(document.getElementById("idUsuario").value);   //definida en ajaxUser.js
 
 getTablaCursos();           //carga a tabla de cursos
 getCursos("selectCurso");   //carga os cursos no select da pestaña de "xestión de cursos e asignaturas"
 getCursos("filtroCurso");   //carga a lista de cursos no select da pestaña de listar alumnos no panel de profesor
 getCursos("filtroCursoEx");  //carga a lista de cursos no select da pestaña de listar exercicios
-
-
 
 
 //listeners para filtrar a búsqueda de exercicios

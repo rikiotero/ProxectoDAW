@@ -106,11 +106,6 @@ function deleteCurso(id) {
     getCursos("selectCurso");  //actualiza o select de curso da pestaña de editar asignaturas
     getCursos("curso");        //actualiza o select de curso do nodal de editar usuario
     getCursos("filtroCursoEx");        //actualiza o select de curso da pestaña de exercicios
-    //bórrase o curso do select de curso no modal de actualizar usuario
-    // let select = document.getElementById("curso");
-    // let options = Array.from( select.options );
-    // let index = options.findIndex( (opt) => opt.value == id );
-    // select.remove(index);
 
     setTimeout(function() {
       notificacion.innerHTML = "";
@@ -185,8 +180,6 @@ function updateCurso(id,nomeNovo) {
   })
   .catch(err => console.log(err))
 }
-
-
 
 /**
  * Actualiza o nome duha asignatura
@@ -335,7 +328,6 @@ function loadAsignaturasTable(idCurso) {
     // e engádese o listener 
     tablaAsignaturas.childNodes.forEach( element => {
       element.childNodes[2].childNodes[0].addEventListener("click", (e) => {
-        // alert("pulsado id:"+element.childNodes[2].childNodes[0].id+" evenTarget:"+e.target)    
         let idAsign = element.childNodes[0].innerHTML;
         updateAsignModal.show();                                                         //abrir modal de editar nome de asignatura
         document.getElementById("asignUpdate").value = element.childNodes[1].innerHTML;  //engadir o input text o nome da asignatura
@@ -349,8 +341,6 @@ function loadAsignaturasTable(idCurso) {
     // e engádese o listener 
     tablaAsignaturas.childNodes.forEach( element => {
       element.childNodes[3].childNodes[0].addEventListener("click", (e) => {
-        // id = element.childNodes[3].childNodes[0].id;
-        // cursoId = id.slice(12,);
         let id = element.childNodes[0].innerHTML;
         deleteAsignatura(id);
       });

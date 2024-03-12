@@ -21,7 +21,6 @@ if( !isset($_SESSION["rol"]) ) redirect("");
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- <script type="text/javascript" src="./js/modal.js" defer></script> -->
     <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>
     <script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>
     <script src="./tinymce/tinymce.min.js" referrerpolicy="origin"></script>
@@ -97,12 +96,9 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
   $exercicio->setCreador( $row->usuario );
   $exercicio->setEnunciado( $exercicio->getEnunciado() ); 
   $row = null;  
-
-  // var_dump($exercicio);
   $db->cerrarConexion();
 }
 ?>
-
 
 <body>
   <header class="headerExerc pb-3">

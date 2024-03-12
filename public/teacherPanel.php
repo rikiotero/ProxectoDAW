@@ -2,6 +2,7 @@
 session_start();
 require "../vendor/autoload.php";
 require "./php_functions/redirect.php";
+// require "./php_functions/redirect.php";
 
 use Clases\UserDB;
 use Clases\RoleDB;
@@ -409,7 +410,6 @@ require "./ventanas_modales/updateCursosModal.php";
 ?>
 <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>
 <script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>
-<!-- <script type="text/javascript" src="./js/teacherModal.js" defer></script> -->
 <script type="text/javascript" src="./src/js/validateForm.js" defer></script>
 <script type="text/javascript" src="./src/js/jsTeacher.js" defer></script>
 <script src="./bootstrap/js/bootstrap.min.js"></script>

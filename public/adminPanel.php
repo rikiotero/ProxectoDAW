@@ -323,7 +323,6 @@ require "./ventanas_modales/updateCursosModal.php";
 <script type="text/javascript" src="./src/js/validateForm.js" defer></script>
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
         <div class="row">

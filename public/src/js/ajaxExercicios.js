@@ -1,9 +1,3 @@
-// getExerciciosTabla();
-
-// document.getElementById("buscarEx").addEventListener("keyup", getExerciciosTabla);
-// document.getElementById("ExActivado").addEventListener("change", getExerciciosTabla);
-// document.getElementById("ExInactivo").addEventListener("change", getExerciciosTabla);
-// document.getElementById("filtroCursoEx").addEventListener("change", getExerciciosTabla);
 
 /**
  * Recupera os exercicios filtrados según elixa o usuario e mostraos nunha tabla, carga os exercicios para os profesores
@@ -221,7 +215,7 @@ function deleteExercicio() {
     .then(data => {
       document.getElementById("msgExercicio").innerHTML = data;
 
-      setTimeout(function() {           //borrado da notificación
+      setTimeout(function() {          
         document.getElementById("msgExercicio").innerHTML = "";
       }, 5000);
       

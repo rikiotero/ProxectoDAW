@@ -15,9 +15,7 @@
       </div>
         <!-- Modal actualizar usuario footer-->
       <div class="modal-footer">
-        <!-- onclick="window.location.reload()" -->
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <!-- <input type="submit" form="actualizaUsuario" class="btn btn-primary" name="enviar" id="enviar" value="Actualizar"></input> -->
         <button class="btn btn-danger" name="borrar" id="borrar"  onclick="deleteUser()" >Borrar usuario</button>
       </div>      
     </div>

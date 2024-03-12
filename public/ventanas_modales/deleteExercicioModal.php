@@ -15,9 +15,7 @@
       </div>
         <!-- Modal actualizar exercicio footer-->
       <div class="modal-footer">
-        <!-- onclick="window.location.reload()" -->
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="getExerciciosTabla()">Cerrar</button>
-        <!-- <input type="submit" form="actualizaexercicio" class="btn btn-primary" name="enviar" id="enviar" value="Actualizar"></input> -->
         <button class="btn btn-danger" name="borrar" id="borrarExerc" onclick="deleteExercicio();">Borrar exercicio</button>
       </div>      
     </div>

@@ -24,7 +24,6 @@ const updaStudentModalButton = document.getElementById("updateStudentModalButton
 const updatePassModalButton = document.getElementById("updatePassListModalButton");
 
 
-
 //listener para abrir o modal de editar usuario da pantalla de datos de usuario
 updaStudentModalButton.addEventListener("click", () => {
     // updateUserModal.show();

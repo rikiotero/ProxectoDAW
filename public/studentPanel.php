@@ -30,7 +30,6 @@ $usr->cerrarConexion();
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">   
-    <!-- <script type="text/javascript" src="./js/deleteUser.js" defer></script> -->    
 </head>
 <body>
     <header>
@@ -130,9 +129,6 @@ $usr->cerrarConexion();
                                     <button type="button" class="btn btn-primary" id="updateStudentModalButton"  data-bs-toggle="modal">
                                         Actualizar datos        
                                     </button>
-                                    <!-- <button type="button" class="btn btn-danger" id="updatePassModalButton" data-bs-toggle="modal">
-                                        Cambiar contrasinal        
-                                    </button> -->
                                 </div>
                             </div>
 
@@ -236,6 +232,7 @@ require "./ventanas_modales/updateUsersListModal.php";
 <script type="text/javascript" src="./src/js/validateForm.js" defer></script>
 <script type="text/javascript" src="./src/js/jsStudent.js" defer></script>   
 <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
         <div class="row">

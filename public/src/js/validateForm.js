@@ -260,36 +260,3 @@ function validaUpdateUser() {
 
 
 
-// document.getElementById("usuario").addEventListener("blur", () => {
-    
-//     usuarioNovo = document.getElementById("usuario");
-//     if( usuarioVello != usuarioNovo.value) {
-//         validaUsuario("usuario",regExpUsuario,"msgUpdate");
-//     }else {
-//         usuarioNovo.style.borderColor = "rgb(233,236,239)";
-//         usuarioNovo.classList.remove("redText"); 
-//     }
-   
-// });
-
-// document.getElementById("nome").addEventListener("blur", () => {
-//     validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate");
-// });
-
-// document.getElementById("apellido1").addEventListener("blur", () => {
-//     validarCampoObligatorio("apellido1",regExpNombre,"Os apelidos só poden ter letras","msgUpdate");
-// });
-
-// document.getElementById("apellido2").addEventListener("blur", () => {
-//     validarCampoObligatorio("apellido2",regExpNombre,"Os apelidos só poden ter letras","msgUpdate");
-// });
-
-// document.getElementById("email").addEventListener("blur", () => {
-//     validarCampo("email",regExpMail,"Formato de email incorrecto","msgUpdate");
-// });
-
-// document.getElementById("tlf").addEventListener("blur", () => {
-//     validarCampo("tlf",regExpTlf,"O teléfono ten que ter 9 números","msgUpdate");
-// });
-
-

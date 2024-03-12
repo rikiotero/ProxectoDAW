@@ -220,7 +220,7 @@ function updatePassw() {
             document.getElementById("msgUpdatepassw").innerHTML = data; //móstrase a mensaxe de todo ben ou non
             
             setTimeout(function(){
-                document.getElementById("msgUpdatepassw").innerHTML = ""; //despois de tres segundos bórrase a mensaxe e cérrase a sesión
+                document.getElementById("msgUpdatepassw").innerHTML = ""; //despois de tres segundos bórrase a mensaxe
                 // location.href ="./closeSession.php";
             }, 3000);
         })
@@ -235,25 +235,22 @@ function updatePassw() {
  */
 function loadUserDataModal(userId) {
 
-    //borrar mensaxes de error
-    const divError = document.getElementById("msgUpdate");
-    divError.innerHTML = "";
-    divError.classList.remove("alert","alert-danger");
+//borrar mensaxes de error
+const divError = document.getElementById("msgUpdate");
+divError.innerHTML = "";
+divError.classList.remove("alert","alert-danger");
 
-    //reseteo dos estilos dos campos
-    document.getElementById("usuario").style.borderColor = "rgb(233,236,239)";
-    document.getElementById("usuario").classList.remove("redText");
-    document.getElementById("nome").style.borderColor = "rgb(233,236,239)";
-    document.getElementById("nome").classList.remove("redText");
- 
-    document.getElementById("apellido1").style.borderColor = "rgb(233,236,239)";
-    document.getElementById("apellido1").classList.remove("redText");
-    
-    document.getElementById("apellido2").style.borderColor = "rgb(233,236,239)";
-    document.getElementById("apellido2").classList.remove("redText");
+//reseteo dos estilos dos campos
+document.getElementById("usuario").style.borderColor = "rgb(233,236,239)";
+document.getElementById("usuario").classList.remove("redText");
+document.getElementById("nome").style.borderColor = "rgb(233,236,239)";
+document.getElementById("nome").classList.remove("redText"); 
+document.getElementById("apellido1").style.borderColor = "rgb(233,236,239)";
+document.getElementById("apellido1").classList.remove("redText");    
+document.getElementById("apellido2").style.borderColor = "rgb(233,236,239)";
+document.getElementById("apellido2").classList.remove("redText");
 
-
- const userRol = document.getElementById("currentUserRol").value;
+// const userRol = document.getElementById("currentUserRol").value;
 
  let id = {
      id: userId,
@@ -313,7 +310,7 @@ function loadUserDataModal(userId) {
              
              for (const key in data.asignaturas) {
               if( option.label == data.asignaturas[key] )  option.selected = true;                
-              }           
+              }         
                 
               // data.asignaturas.forEach( asig => {
               //   if( option.label == asig )  option.selected = true;
