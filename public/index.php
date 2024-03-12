@@ -1,5 +1,7 @@
 <?php
 session_start();
+var_dump(dirname(__FILE__));
+var_dump(__DIR__);
 require "./php_functions/redirect.php";
 if( isset($_SESSION["rol"]) ) redirect($_SESSION["rol"]);
 
@@ -28,6 +30,7 @@ if ( isset($_POST['login']) ) {
     $usr = new UserDB();
 
     if ( $usr->validateUserCredentials($user,$pass) ) {        //Validación de credenciales e comprobación de que é usuario activo
+        
         if( $usr->isActive($user) ) {
             $_SESSION["user"] = $user;                         //gárdanse os datos do usuario na sesión
             $_SESSION["rol"] = $usr->getRole($user) ? $usr->getRole($user) : ""; 
