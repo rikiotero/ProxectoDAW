@@ -9,7 +9,7 @@ use Clases\CursosDB;
     <div class="modal-content">
         <!-- Modal actualizar usuario header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateUsersListModalLabel">Actualizar datos de usuario</h1>
+        <h1 class="modal-title fs-4" id="updateUsersListModalLabel">Actualizar datos de usuario</h1>
       </div>
         <!-- Modal actualizar usuario body-->
       <div class="modal-body">
@@ -57,7 +57,9 @@ use Clases\CursosDB;
                   <input type="text" id="alta" name="alta" class="form-control" disabled readonly>
               </div>
             </div>
-      
+            <?php
+            if ( $_SESSION["rol"] != "estudiante" ) {
+            ?>
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="rol" class="form-label">Rol de usuario</label>
@@ -78,48 +80,23 @@ use Clases\CursosDB;
                 <?php
                   $db = new CursosDB();  //obtemos os cursos da db
                   $cursos = $db->getCursos();
-                  // $cursosAsignaturas = $db->getCursosAsignaturas();
-                  // var_dump($cursosAsignaturas);
                   $db->cerrarConexion();
                 ?>
                 <div class="col-md-4" id="divCurso">
                   <label for="curso" class="form-label">Curso</label>
                   <select id="curso" name="curso" class="form-select" <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
                     <option value="0">Seleción de curso</option>
-                    <?php                        
-                      // foreach ($cursos as $key => $value) {
-                      //   echo "<option value='$key'>".$value."</option>";
-                      // }
-                      // foreach ($cursos as $key => $value) { 
-                      //   foreach ($value as $curso => $asignaturas) {
-                      //     echo "<option value='$key'>".$curso."</option>";
-                      //   }                          
-                      // }
-                    ?>
                   </select>
                 </div>
 
                   <div class="col-md-4" id="divAsignaturas">
-                    <label for="asignaturas" class="form-label">Asignaturas</label>
+                    <label for="asignaturas" class="form-label">Materias</label>
                     <select id="asignaturas" name="asignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple 
-                    <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
-                          <?php
-                          
-                            // foreach ($cursosAsignaturas as $key => $value) { 
-                            //   foreach ($value as $curso => $asignaturas) {
-                            //     foreach ($asignaturas as $idAsig => $nomeAsig) {
-
-                            //       echo "<option value='$idAsig'>".$nomeAsig."</option>";
-                            //     }                                
-                            //   }                          
-                            // }
-                          ?>
+                      <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
                     </select>
                     <div class="form-text">
-                      Manten "Ctrl" pulsado para seleccionar varias
+                      Manten "Ctrl" pulsado para seleccionar varias materias
                     </div>
-
-
                     
                     <script>
                         //mostrar ou ocultar select de curso e asignaturas según rol seleccionado      
@@ -143,22 +120,31 @@ use Clases\CursosDB;
                         }); 
                     </script>
 
-
                   </div>
-              
+                  
               <div class="col-md-12">
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox" name="updateActivo" id="updateActivo" value="1" 
                     <?php echo $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor" ? "style='display:none' disabled" : "" ?>>
-                    <label class="form-check-label" for="updateActivo">Usuario activo</label>
+                    <label class="form-check-label" for="updateActivo" 
+                    <?php echo $_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "profesor" ? "style='display:none' disabled" : "" ?>>Usuario activo</label>
                 </div>
-              </div>
-              
-              <div class="col-md-12">
-                * Campos obligatorios.
-              </div>
-              <div id="msgUpdate"></div>
+              </div>              
+
             </div>
+            <?php
+            }
+            ?>
+
+
+            <div class="row g-3">
+              <div class="col-md-12">
+                  * Campos obligatorios.
+              </div>
+            </div>
+            <div class="row g-3">  
+              <div id="msgUpdate"></div>
+            </div>  
           </form>  
           <!-- fin formulario -->  
         </div>
@@ -187,7 +173,7 @@ use Clases\CursosDB;
     <div class="modal-content">
         <!-- Modal actualizar contrasinal header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updatePassModalLabel">Actualizar contrasinal</h1>
+        <h1 class="modal-title fs-4" id="updatePassModalLabel">Actualizar contrasinal</h1>
       </div>
         <!-- Modal actualizar contrasinal body-->
       <div class="modal-body">

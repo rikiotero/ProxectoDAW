@@ -24,7 +24,7 @@ if( !empty($datos) ) {
     }
 }else {
     $html .= "<tr>";
-    $html .= "<td colspan='3' class='text-center'>Sin Asignaturas</td>";
+    $html .= "<td colspan='3' class='text-center'>Sen materias</td>";
     $html .= "</tr>";
 }
 

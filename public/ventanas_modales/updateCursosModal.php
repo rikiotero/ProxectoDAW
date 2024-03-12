@@ -8,7 +8,7 @@
     <div class="modal-content">
         <!-- Modal actualizar cursos header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateCursoModalLabel">Editar nome do curso</h1>
+        <h1 class="modal-title fs-4" id="updateCursoModalLabel">Editar nome do curso</h1>
       </div>
         <!-- Modal actualizar cursos body-->
       <div class="modal-body">
@@ -44,7 +44,7 @@
     <div class="modal-content">
         <!-- Modal actualizar asignatura header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateAsingModalLabel">Editar nome da asignatura</h1>
+        <h1 class="modal-title fs-4" id="updateAsingModalLabel">Editar nome da materia</h1>
       </div>
         <!-- Modal actualizar asignatura body-->
       <div class="modal-body">
@@ -67,7 +67,7 @@
         <!-- Modal actualizar asignatura footer-->
       <div class="modal-footer mt-4">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" name="sairActAsign" id="sairActAsign">Cerrar</button>
-        <button class="btn btn-primary" name="actualizarAsign" id="actualizarAsign">Actualizar asignatura</button>
+        <button class="btn btn-primary" name="actualizarAsign" id="actualizarAsign">Actualizar materia</button>
       </div>      
     </div>
   </div>

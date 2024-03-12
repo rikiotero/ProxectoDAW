@@ -22,26 +22,22 @@ $usr->cerrarConexion();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de profesor</title>
+    <link rel="icon" href="./src/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script type="text/javascript" src="./src/js/ajaxUser.js" defer></script>
-    <!-- <script type="text/javascript" src="./js/createUser.js" defer></script> -->
-    <!-- <script type="text/javascript" src="./js/updateUser.js" defer></script> -->
-    <!-- <script type="text/javascript" src="./js/getStudent.js" defer></script> -->    
-    <!-- <script type="text/javascript" src="./js/deleteUser.js" defer></script> -->
-    
+    <script type="text/javascript" src="./src/js/ajaxUser.js" defer></script>    
 </head>
 <body>
     <header>
         <div class="d-flex flex-row align-items-center justify-content-between">
-        <div>
-            <a class="navbar-brand" href="index.php">
-                <img src="src/img/logo_256.png" alt="Logo" loading="lazy" />
-            </a>
+        <div class="d-flex flex-row align-items-center p-3 headerLogo">
+            <a class="navbar-brand" href="index.php"><img src="src/img/logo.png" alt="Logo" loading="lazy"/></a>
+            <h1 class="ms-2">Task Vault</h1>
         </div>
         
-            <div class="me-auto p-2">
+            <div class="p-2 headerTitle">
+            <!-- <div class="me-auto p-2"> -->
                 <h1>Panel de profesor</h1>
             </div>
             <div class="p-2 d-flex flex-row align-items-center align-self-start headerUsuario">
@@ -56,7 +52,7 @@ $usr->cerrarConexion();
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-usuario-tab" data-bs-toggle="tab" data-bs-target="#nav-usuario" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Datos de usuario</button>
             <button class="nav-link" id="nav-listaAlumnos-tab" data-bs-toggle="tab" data-bs-target="#nav-listaAlumnos" type="button" role="tab" aria-controls="nav-listaAlumnos" aria-selected="false">Xestión de alumnos</button>
-            <button class="nav-link" id="nav-asignaturas-tab" data-bs-toggle="tab" data-bs-target="#nav-asignaturas" type="button" role="tab" aria-controls="nav-asignaturas" aria-selected="false">Xestión de cursos e asignaturas</button>
+            <button class="nav-link" id="nav-asignaturas-tab" data-bs-toggle="tab" data-bs-target="#nav-asignaturas" type="button" role="tab" aria-controls="nav-asignaturas" aria-selected="false">Xestión de cursos e materias</button>
             <button class="nav-link" id="nav-exercicios-tab" data-bs-toggle="tab" data-bs-target="#nav-exercicios" type="button" role="tab" aria-controls="nav-exercicios" aria-selected="false">Xestión de exercícios</button>
         </div>
     </nav>
@@ -68,20 +64,19 @@ $usr->cerrarConexion();
                 <div class="row d-flex justify-content-center mt-5">           
                     <div class="col-md-3 border-end">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <!-- <img class="rounded-circle" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> -->
-                            <span class="font-weight-bold"><?php echo $datosUsuario->usuario?></span>
-                            <span class="text-black-50"><?php echo $datosUsuario->email?></span>
-                            <span class="text-black-50">Id de usuario: <?php echo $datosUsuario->id?></span>
+                            <span class="fw-bold fs-4 mb-3"><?php echo $datosUsuario->usuario?></span>
+                            <!-- <span class="text-secondary"><?php echo $datosUsuario->email?></span> -->
+                            <span class="text-secondary">Id de usuario: <?php echo $datosUsuario->id?></span>
                             <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
-                            <span class="text-black-50">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+                            <span class="text-secondary">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
                         </div>
                     </div>
 
                     <div class="col-md-5 border-end">
                         <div class="d-flex flex-column p-3 py-5">
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Nome</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Nome</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $datosUsuario->nombre." ".$datosUsuario->apellido1." ".$datosUsuario->apellido2 ?></p>
@@ -89,8 +84,8 @@ $usr->cerrarConexion();
                             </div>
                         
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Email</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Email</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $datosUsuario->email ?></p>
@@ -98,8 +93,8 @@ $usr->cerrarConexion();
                             </div>
 
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Teléfono</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Teléfono</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $datosUsuario->telefono ?></p>
@@ -107,8 +102,8 @@ $usr->cerrarConexion();
                             </div>
 
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">rol</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">rol</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $_SESSION["rol"] ?></p>
@@ -116,8 +111,8 @@ $usr->cerrarConexion();
                             </div>
 
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Usuario activo</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Usuario activo</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                 
@@ -220,7 +215,7 @@ $usr->cerrarConexion();
                 </div>
                 
                 <div class="row"><!--fila botóns de paxinación-->
-                    <div class="col-md-6" id="botonsPaxinas">
+                    <div class="col-md-12" id="botonsPaxinas">
                     </div>
                 </div>
 
@@ -241,12 +236,12 @@ $usr->cerrarConexion();
                             <div class="ms-2">
                                 <button type="submit" class="btn btn-success" id="addCursoButton" onclick="addCurso()" 
                                 title="Escribe o nome do curso e pulsa para añadilo">
-                                    Añadir curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
+                                Engadir curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
                                 </button>
                             </div>
                         </div>
                         <div class="form-text">
-                                Para insertar un curso novo escribe o nome do curso e pulsa en "Añadir curso"
+                                Para insertar un curso novo escribe o nome do curso e pulsa en "Engadir curso"
                         </div>
 
                         <div class="row">
@@ -267,17 +262,17 @@ $usr->cerrarConexion();
                         <div class="d-flex justify-content-end mt-3">
                             <div class="flex-grow-1">
                                 <input type="text" name="addAsign" id="addAsign" class="form-control" 
-                                placeholder="Escribe o nome da asignatura nova" title="Escribe o nome da asignatura e pulsa para añadila" required>
+                                placeholder="Escribe o nome da materia nova" title="Escribe o nome da materia e pulsa para añadila" required>
                             </div>
                             <div class="ms-2">
                                 <button type="submit" class="btn btn-success" id="addAsignButton" onclick="addAsignatura()" 
-                                    title="Escribe o nome da asignatura e pulsa para añadila">
-                                    Añadir asignatura o curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
+                                    title="Escribe o nome da materia e pulsa para añadila">
+                                    Engadir materia o curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
                                 </button>
                             </div>                         
                         </div>
                         <div class="form-text">
-                            Para insertar unha asignatura nova selecciona primeiro o curso donde queres insertala
+                            Para insertar unha materia nova selecciona primeiro o curso donde queres insertala
                         </div>                    
                     </div>              
                 </div> 
@@ -300,11 +295,11 @@ $usr->cerrarConexion();
 
                     <div class="col-md-5 mt-2">
                         <table class="table table-striped table-light">
-                        <caption>Asignaturas</caption>
+                        <caption>Materias</caption>
                             <thead>
                                 <tr class="table-primary">
                                     <th scope="col">Id</th>
-                                    <th scope="col">Asignatura</th>
+                                    <th scope="col">Materia</th>
                                     <th scope="col" colspan="2" class="text-center">Accións</th>
                                 </tr>
                             </thead>
@@ -330,7 +325,7 @@ $usr->cerrarConexion();
                             Crear exercicio<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>
                         </a>
                         <button type="button" class="btn btn-success ms-3" id="actualiLista" name="actualiLista" onclick="getExerciciosTabla()">
-                            Aztualizar lista<span class="ms-1 fa-solid fa-arrows-rotate" style="color: #ffffff;"></span>        
+                            Actualizar lista<span class="ms-1 fa-solid fa-arrows-rotate" style="color: #ffffff;"></span>        
                         </button> 
                     </div>
                     <div class="col" id="notificacionExercicio"></div>
@@ -379,7 +374,7 @@ $usr->cerrarConexion();
                                     <th scope="col">Id</th>
                                     <th scope="col">Tema</th>
                                     <th scope="col">Curso</th>
-                                    <th scope="col">Asignatura</th>                                                    
+                                    <th scope="col">Materia</th>                                                    
                                     <th scope="col">Autor</th>
                                     <th scope="col">Activo</th>                            
                                     <th scope="col">Fecha</th>                            
@@ -393,7 +388,7 @@ $usr->cerrarConexion();
                 </div>
 
                 <div class="row"><!--fila botóns de paxinación-->
-                    <div class="col-md-6" id="botonsPaxinasEx">
+                    <div class="col-md-12" id="botonsPaxinasEx">
                     </div>
                 </div>
 
@@ -422,8 +417,8 @@ require "./ventanas_modales/updateCursosModal.php";
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
-        <div class="row mt-2">
-            <div class="col">2024 TaskVaultAcademy
+        <div class="row">
+            <div class="col">2024 TaskVault
             </div>
         </div>
     </div>

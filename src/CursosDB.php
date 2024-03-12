@@ -82,7 +82,7 @@ class CursosDB extends Conexion {
             if( $isOk ) return true;
 
         } catch (\PDOException $ex) {
-            die("Error borrando a asignatura: ".$ex->getMessage());
+            die("Error borrando a materia: ".$ex->getMessage());
         }
         return false;
     }
@@ -208,38 +208,6 @@ class CursosDB extends Conexion {
         return $cursos;
     }
 
-     /**
-     * Consulta os cursos dispoñibles e as asignaturas de cada curso
-     * @return array array multidimensional de cursos e asignaturas
-     */
-    // public function getCursosAsignaturas() {
-    //     $cursos = [];        
-    //     $sql = "SELECT cursos.id 
-    //     as idCurso,cursos.curso 
-    //     as nomeCurso,asignaturas.id 
-    //     as idAsignatura ,asignaturas.curso 
-    //     as nomeAsignatura 
-    //     FROM cursos, asignaturas 
-    //     WHERE cursos.id=asignaturas.curso";
-
-    //     try {
-    //         $stmt = $this->conexion->prepare($sql);
-    //         $stmt->execute();
-    //         if ( $stmt->rowCount() != 0 ) {
-    //             while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
-
-    //                 $cursos[$row->idCurso][$row->nomeCurso][$row->idAsignatura] = $row->nomeAsignatura;               
-    //             }        
-    //             $stmt = null;
-    //             return $cursos;
-    //         }
-    //     } catch (\PDOException $ex) {
-    //         die("Error consultando a base de datos: ".$ex->getMessage());
-    //     }
-    //     $stmt = null;
-    //     return $cursos;
-    // }
-
     /**
     * Consulta as asignaturas dispoñibles para un curso
     * @param string id do curso
@@ -292,5 +260,4 @@ class CursosDB extends Conexion {
         $stmt = null;
         return false;
     }
-
 }

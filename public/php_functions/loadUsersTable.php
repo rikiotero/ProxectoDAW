@@ -70,7 +70,7 @@ if( ($filtro == null && $rol == null && $activo && $inactivo) || ($filtro == nul
 $limit = "LIMIT $inicio , $numRexistros";
 
 //con "implode" creamos un string coas columnas que desexamos buscar, separando os elementos do array con ", "
-$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, roles". "$where $limit";
+$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, roles".$where." ORDER BY fecha_alta DESC ". $limit;
 // var_dump($sql);
 // exit;
 
@@ -136,7 +136,7 @@ if ( $output["numRexistrosFiltrados"] > 0 ) {
     //cálculo do número de páxinas según o número de usuarios que se mostran
     $numPaxinas =  ceil( $output["numRexistrosFiltrados"] / $numRexistros ) ;   
 
-    $output["paxinacion"] .= "<nav class='d-flex justify-content-end'>";
+    $output["paxinacion"] .= "<nav class='d-flex justify-content-center'>";
     $output["paxinacion"] .= "<ul class='pagination'>";
 
     for ($i=1; $i<=$numPaxinas ; $i++) {  //marcar seleccionada a páxina activa

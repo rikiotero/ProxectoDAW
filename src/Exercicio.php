@@ -49,10 +49,10 @@ class Exercicio implements JsonSerializable {
 
             if ( !empty($asignaturas) ) {                
                 if ( !array_key_exists( $this->asignatura,$asignaturas ) ) {
-                    $erroresValidacion[] = "A asignatura é incorrecta";
+                    $erroresValidacion[] = "A materia é incorrecta";
                 }
             }else {
-                $erroresValidacion[] = "O curso seleccionado non ten asignaturas";
+                $erroresValidacion[] = "O curso seleccionado non ten materias";
             }
             
 
@@ -79,18 +79,6 @@ class Exercicio implements JsonSerializable {
             'activo' => $this->activo,
             'creador' => $this->creador,
             'fecha_creacion' => $this->fecha_creacion
-
-            // 'usuario' => $this->getUsuario(),
-            // 'nombre' => $this->getNombre(),
-            // 'apellido1' => $this->getApellido1(),
-            // 'apellido2' => $this->getApellido2(),
-            // 'email' => $this->getEmail(),
-            // 'telefono' => $this->getTlf(),
-            // 'fecha_alta' => $this->getFechaAlta(),
-            // 'activo' => $this->getActivo(),
-            // 'rol' => $this->getRol(),
-            // 'curso' => $this->curso,
-            // 'asignaturas' => $this->asignaturas
         ];
     }
     

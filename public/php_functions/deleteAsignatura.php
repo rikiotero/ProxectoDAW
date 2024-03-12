@@ -17,14 +17,14 @@ if ( empty( $db->getExercicioByAsignatura($id)) ) {
     $db = new CursosDB();
     if ( $db->deleteAsignatura($id) ) {    
         $db->cerrarConexion();
-        $output = "<div class='alert alert-success'>Asignatura borrada correctamente</div>";    
+        $output = "<div class='alert alert-success'>Materia borrada correctamente</div>";    
     }else {
         $db->cerrarConexion();
-        $output = "<div class='alert alert-danger'>Non se pudo borrar a asignatura</div>";
+        $output = "<div class='alert alert-danger'>Non se pudo borrar a materia</div>";
     }
 }else {
     $db->cerrarConexion();
-    $output = "<div class='alert alert-danger'>Non se pode eliminar a asignatura mentras existan exercicios desta asignatura</div>";
+    $output = "<div class='alert alert-danger'>Non se pode eliminar a materia mentras existan exercicios desta materia</div>";
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

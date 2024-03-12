@@ -19,14 +19,14 @@ if ( !in_array($nomeNovo,$arrayAsignaturas) ) {         //comprobación de que n
 
     if ( $db->updateAsignatura($idAsignatura,$nomeNovo) ) {         
             $db->cerrarConexion();
-            $output = "<div class='alert alert-success'>Asignatura actualizada correctamente</div>";    
+            $output = "<div class='alert alert-success'>Materia actualizada correctamente</div>";    
         }else {
             $db->cerrarConexion();
-            $output = "<div class='alert alert-danger'>Non se pudo actualizar o asignatura</div>";
+            $output = "<div class='alert alert-danger'>Non se pudo actualizar o materia</div>";
         }
 }else {
     $db->cerrarConexion();
-    $output = "<div class='alert alert-danger'>Xa existe unha asignatura con ese nome, proba con outro nome</div>";
+    $output = "<div class='alert alert-danger'>Xa existe unha materia con ese nome, proba con outro nome</div>";
 }
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>

@@ -31,28 +31,6 @@ class User {
         $this->curso = $curso;
     }
 
-    // /**
-    //  * Validación de datos de usuario
-    //  * @return boolean True si valida ou false si non valida
-    //  */
-    // public function validaUsuario2() {
-    //     if ( preg_match("/[a-zA-ZçÇñÑáéíóúÁÉÍÓÚ0-9_-]{3,16}$/", $this->usuario) 
-    //          && preg_match("/^[^\s]+.{2,}[^\s]$/", $this->password)
-    //          && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->nombre)
-    //          && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apellido1)
-    //          && preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ][a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$/", $this->apellido2)
-    //          && (preg_match("/^[0-9a-zA-Z_\-\.]{2,}@[a-zA-Z_\-]+\.[a-zA-Z]{2,5}$/", $this->email) || $this->email == null)
-    //          && (preg_match("/^[0-9]{9}$/", $this->tlf) || $this->tlf === null)
-    //          && preg_match("/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/", $this->fecha_alta)
-    //          && is_bool($this->activo)
-    //          && preg_match("/^[1-3]$/", $this->rol)) 
-    //          { 
-    //             return true;
-    //         }
-    //     return false;
-    // }
-
-
     /**
      * Validación de datos de usuario
      * @return array Array cos erros de validación

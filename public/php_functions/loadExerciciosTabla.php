@@ -81,7 +81,7 @@ $limit = "LIMIT $inicio , $numRexistros";
 
 $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios LEFT JOIN usuarios ON exercicios.creador=usuarios.id
 JOIN asignaturas ON exercicios.asignatura=asignaturas.id
-JOIN cursos ON asignaturas.curso=cursos.id"."$where $limit";
+JOIN cursos ON asignaturas.curso=cursos.id".$where." ORDER BY fecha_alta DESC ". $limit;
 
  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
 //  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
@@ -147,7 +147,7 @@ if ( $output["numRexistrosFiltrados"] > 0 ) {
     //cálculo do número de páxinas según o número de usuarios que se mostran
     $numPaxinas =  ceil( $output["numRexistrosFiltrados"] / $numRexistros ) ;   
 
-    $output["paxinacion"] .= "<nav class='d-flex justify-content-end'>";
+    $output["paxinacion"] .= "<nav class='d-flex justify-content-center'>";
     $output["paxinacion"] .= "<ul class='pagination'>";
 
     for ($i=1; $i<=$numPaxinas ; $i++) {  //marcar seleccionada a páxina activa

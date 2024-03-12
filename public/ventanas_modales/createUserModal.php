@@ -9,7 +9,7 @@ use Clases\CursosDB;
     <div class="modal-content">
       <!-- Modal crear usuario header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="createUserModalLabel">Rexistro de novo usuario</h1>
+        <h1 class="modal-title fs-4" id="createUserModalLabel">Rexistro de novo usuario</h1>
       </div>
       <!-- Modal crear usuario body-->
       <div class="modal-body">        
@@ -97,12 +97,12 @@ use Clases\CursosDB;
               </div>
 
               <div class="col-md-4" id="divNovoAsignaturas">
-                  <label for="novoAsignaturas" class="form-label">Asignaturas</label>
+                  <label for="novoAsignaturas" class="form-label">Materias</label>
                   <select id="novoAsignaturas" name="novoAsignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple>
-                    <option value="0">Selección de asignaturas</option>
+                    <option value="0">Selección de materias</option>
                   </select>
                   <div class="form-text">
-                    Manten "Ctrl" pulsado para seleccionar varias
+                    Manten "Ctrl" pulsado para seleccionar varias materias
                   </div>
 
                   <script>

@@ -4,7 +4,7 @@
     <div class="modal-content">
         <!-- Modal borrar usuario header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteUserModalLabel">Borrar usuario</h1>
+        <h1 class="modal-title fs-4" id="deleteUserModalLabel">Borrar usuario</h1>
       </div>
         <!-- Modal actualizar usuario body-->
       <div class="modal-body">

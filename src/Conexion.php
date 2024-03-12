@@ -4,7 +4,7 @@ use \PDO;
 
 class Conexion {
     private $host = "localhost";
-    private $db = "academia2";
+    private $db = "academia";
     private $user = "administrador";
     private $pass= "admin";
     private $opciones = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);

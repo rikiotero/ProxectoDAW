@@ -4,7 +4,7 @@
     <div class="modal-content">
         <!-- Modal borrar exercicio header-->      
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Borrar exercicio</h1>
+        <h1 class="modal-title fs-4">Borrar exercicio</h1>
       </div>
         <!-- Modal actualizar exercicio body-->
       <div class="modal-body">

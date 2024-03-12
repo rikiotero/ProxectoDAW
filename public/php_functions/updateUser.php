@@ -111,7 +111,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         $asignaturas = array_keys($asignaturas);
         foreach ( $datos["asignaturas"] as $key => $value ) {
             if( !in_array( $value,$asignaturas ) ) {
-                $erroresValidacion[] = "As asignaturas non se corresponde co curso seleccionado";
+                $erroresValidacion[] = "As materias non se corresponde co curso seleccionado";
                 break;
             }
         }

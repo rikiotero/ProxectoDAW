@@ -8,40 +8,7 @@ class ExercicioDB extends Conexion {
     public function __construct() {
         parent::__construct();
     }
-
-    /**
-    * Consulta todos os exercicios
-    * @return array Array de exercicios cos resultados da consulta
-    */
-    // public function getExercicios() {
-    //     $resultado = [];
-    //     $sql = "SELECT * FROM exercicios";
-    //     try {
-    //         $stmt = $this->conexion->prepare($sql);
-    //         $stmt->execute();
-    //         if ( $stmt->rowCount() != 0 ) {
-    //             while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
-    //                 $exercicio = new Exercicio(
-    //                     $row->id,
-    //                     $row->tema,
-    //                     $row->enunciado,
-    //                     $row->asignatura,
-    //                     $row->activo,
-    //                     $row->creador,
-    //                     $row->fecha_creacion
-    //                 );
-    //                 array_push($resultado,$exercicio);
-    //                 $exercicio = null;                
-    //             }        
-    //             $stmt = null;
-    //             return $resultado;
-    //         }
-    //     } catch (\PDOException $ex) {
-    //         die("Error consultando os exercicios: ".$ex->getMessage());
-    //     }
-    //     return $resultado;
-    // }
-
+    
     /**
      * Garda un exercicio
      * @param Exercicio Exercicio que vai gardar

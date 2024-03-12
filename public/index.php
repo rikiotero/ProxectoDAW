@@ -13,7 +13,8 @@ use Clases\UserDB;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskVaultAcademy</title>
+    <title>TaskVault</title>
+    <link rel="icon" href="./src/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/css/style.css">          
 </head>

@@ -21,7 +21,7 @@ if ( empty( $db->getAsignaturas($id) ) ) {
     }
 }else {
     $db->cerrarConexion();
-    $output = "<div class='alert alert-danger'>Non se pode eliminar o curso mentras teña asignaturas asociadas</div>";
+    $output = "<div class='alert alert-danger'>Non se pode eliminar o curso mentras teña materias asociadas</div>";
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

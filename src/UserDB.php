@@ -262,36 +262,7 @@ class UserDB extends Conexion {
         $stmt = null;
         return $resultado;
     }
-
-    // /**
-    // * Obtén as asignaturas asignadas a un usuario
-    // * @param string Id do usuario
-    // * @return array array coas asignaturas asignadas o usuario
-    // */
-    // public function getAsignaturas($id) {
-    //     $sql = "SELECT asignaturas.nombre FROM asignaturas, usuario_asignatura WHERE asignaturas.id=usuario_asignatura.asignatura_id AND usuario_asignatura.usuario_id=:id";
-    //     $resultado = [];
-    //     try {
-    //         $stmt = $this->conexion->prepare($sql);
-    //         $stmt->execute([
-    //                 ':id' => $id
-    //                 ]);
-            
-    //         if ( $stmt->rowCount() != 0 ) {
-    //             while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) {
-    //                 array_push($resultado,$row->nombre);                
-    //             }        
-    //             $stmt = null;
-    //             return $resultado;
-    //         }
-
-    //     } catch (\PDOException $ex) {
-    //         die("Error consultando a base de datos: ".$ex->getMessage());
-    //     }
-    //     $stmt = null;
-    //     return $resultado;
-    // }
-
+   
     /**
      * Actualiza os datos de un usuario
      * @param string $userName Nome do usuario que se vai actualizar

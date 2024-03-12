@@ -20,7 +20,7 @@ if( !empty($datos) ) {
     }
 
 }else {
-    $output .= "<option value='0'>Sin asignaturas</option>";
+    $output .= "<option value='0'>Sen materias</option>";
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

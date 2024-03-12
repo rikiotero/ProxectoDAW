@@ -170,7 +170,7 @@ createUserModalButton.addEventListener("click", () => {
     document.getElementById("novoTlf").value = "";
     document.getElementById("novoRol").options[2].selected = true;
     document.getElementById("novoCurso").options[0].selected = true;
-    document.getElementById("novoAsignaturas").innerHTML = "<option value='0'>Selección de asignaturas</option>"
+    document.getElementById("novoAsignaturas").innerHTML = "<option value='0'>Selección de materias</option>"
     document.getElementById("divCursoNovo").style.display = "";             
     document.getElementById("divNovoAsignaturas").style.display = "";
 })

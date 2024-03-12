@@ -26,6 +26,7 @@ $usr->cerrarConexion();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de estudiante</title>
+    <link rel="icon" href="./src/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">   
@@ -34,13 +35,14 @@ $usr->cerrarConexion();
 <body>
     <header>
         <div class="d-flex flex-row align-items-center justify-content-between">
-        <div>
-            <a class="navbar-brand" href="index.php">
-                <img src="src/img/logo_256.png" alt="Logo" loading="lazy" />
-            </a>
-        </div>
+            <div class="d-flex flex-row align-items-center p-3 headerLogo">
+                <a class="navbar-brand" href="index.php">
+                    <img src="src/img/logo.png" alt="Logo" loading="lazy" />
+                </a>
+                <h1 class="ms-2">Task Vault</h1>
+            </div>
         
-            <div class="me-auto p-2">
+            <div class="headerTitle p-2">
                 <h1>Panel de Estudiante</h1>
             </div>
             <div class="p-2 d-flex flex-row align-items-center align-self-start headerUsuario">
@@ -67,20 +69,18 @@ $usr->cerrarConexion();
                 <div class="row d-flex justify-content-center mt-5">           
                     <div class="col-md-3 border-end">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <!-- <img class="rounded-circle" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> -->
-                            <span class="font-weight-bold"><?php echo $datosUsuario->usuario?></span>
-                            <span class="text-black-50"><?php echo $datosUsuario->email?></span>
-                            <span class="text-black-50">Id de usuario: <?php echo $datosUsuario->id?></span>
+                            <span class="fw-bold fs-4 mb-3"><?php echo $datosUsuario->usuario?></span>
+                            <span class="text-secondary">Id de usuario: <?php echo $datosUsuario->id?></span>
                             <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
-                            <span class="text-black-50">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+                            <span class="text-secondary">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
                         </div>
                     </div>
 
                     <div class="col-md-5 border-end">
                         <div class="d-flex flex-column p-3 py-5">
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Nome</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Nome</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $datosUsuario->nombre." ".$datosUsuario->apellido1." ".$datosUsuario->apellido2 ?></p>
@@ -88,8 +88,8 @@ $usr->cerrarConexion();
                             </div>
                         
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Email</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Email</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $datosUsuario->email ?></p>
@@ -97,8 +97,8 @@ $usr->cerrarConexion();
                             </div>
 
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Teléfono</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Teléfono</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $datosUsuario->telefono ?></p>
@@ -106,8 +106,8 @@ $usr->cerrarConexion();
                             </div>
 
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">rol</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">rol</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo $_SESSION["rol"] ?></p>
@@ -115,8 +115,8 @@ $usr->cerrarConexion();
                             </div>
 
                             <div class="row g-3 border-bottom">
-                                <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Usuario activo</h6>
+                                <div class="col-md-4">
+                                    <p class="fw-bold mb-3 mt-3">Usuario activo</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                 
@@ -142,7 +142,7 @@ $usr->cerrarConexion();
                         <div class="d-flex flex-column p-3 py-5">
                             <div class="row g-3 border-bottom">
                                 <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Curso</h6>
+                                    <p class="fw-bold mb-3 mt-3">Curso</p>
                                 </div>
                                 <div class="col-md-6 text-secondary">
                                     <p class="mb-3 mt-3"><?php echo !empty($curso) ? current($curso) : "Sin curso asignado" ?></p>
@@ -151,7 +151,7 @@ $usr->cerrarConexion();
 
                             <div class="row g-3">
                                 <div class="col-md-3">
-                                    <h6 class="mb-3 mt-3">Asignaturas</h6>
+                                    <p class="fw-bold mb-3 mt-3">Materias</p>
                                 </div>
                                 <?php
                                 if( !empty($asignaturas) ) {
@@ -164,7 +164,7 @@ $usr->cerrarConexion();
                                     echo "</diV>";
                                 }else {
                                     echo "<div class='col-md-8 text-secondary'>";
-                                    echo "<p class='mb-3 mt-3'>Sin asignaturas asignadas</p>";
+                                    echo "<p class='mb-3 mt-3'>Sin materias asignadas</p>";
                                     echo "</diV>";
                                 }
                                 ?>
@@ -204,7 +204,7 @@ $usr->cerrarConexion();
                                 <tr>
                                     <th scope="col">Id</th>
                                     <th scope="col">Tema</th>
-                                    <th scope="col">Asignatura</th>                                                    
+                                    <th scope="col">Materia</th>                                                    
                                     <th scope="col">Autor</th>                           
                                     <th scope="col">Fecha</th>                            
                                     <th scope="col">Ver</th>
@@ -217,7 +217,7 @@ $usr->cerrarConexion();
                 </div>
                 
                 <div class="row"><!--fila botóns de paxinación-->
-                    <div class="col-md-6" id="botonsPaxinasEx">
+                    <div class="col-md-12" id="botonsPaxinasEx">
                     </div>
                 </div>
 
@@ -238,8 +238,8 @@ require "./ventanas_modales/updateUsersListModal.php";
 <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
-        <div class="row mt-2">
-            <div class="col">2024 TaskVaultAcademy
+        <div class="row">
+            <div class="col">2024 TaskVault
             </div>
         </div>
     </div>

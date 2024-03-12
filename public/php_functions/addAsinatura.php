@@ -20,13 +20,13 @@ if ( !in_array($asignatura,$asignaturasCurso) ) {  // comprobación de que non e
     $db->cerrarConexion();
     
     if( $id ) {
-        $output = array ($id,"<div class='alert alert-success'>Asignatura creada correctamente</div>");
+        $output = array ($id,"<div class='alert alert-success'>Materia creada correctamente</div>");
     }else {
-        $output = "<div class='alert alert-danger'>Non se pudo crear a asignatura, proba de novo</div>";
+        $output = "<div class='alert alert-danger'>Non se pudo crear a materia, proba de novo</div>";
     }
 }else {
     $db->cerrarConexion();
-    $output = "<div class='alert alert-danger'>Xa existe unha asignaturas con ese nome en ese curso</div>";
+    $output = "<div class='alert alert-danger'>Xa existe unha materia con ese nome en ese curso</div>";
 
 }
 

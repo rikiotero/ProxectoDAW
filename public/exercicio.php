@@ -17,6 +17,7 @@ if( !isset($_SESSION["rol"]) ) redirect("");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editor de exercicios</title>
+    <link rel="icon" href="./src/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -24,7 +25,7 @@ if( !isset($_SESSION["rol"]) ) redirect("");
     <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>
     <script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>
     <script src="./tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-    <script type="text/javascript" src="./js/TinyMCE_eqneditor.js" defer></script>        
+    <script type="text/javascript" src="./src/js/TinyMCE_eqneditor.js" defer></script>        
     <script>
 
       tinymce.init({
@@ -100,36 +101,22 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
   // var_dump($exercicio);
   $db->cerrarConexion();
 }
-
-// if ( isset($_POST["crearEx"]) ) {
-//   $db = new UserDB();
-//   $exercicio = new Exercicio(null,$_POST["tema"],$_POST["enunciado"],$_POST["asignatura"],$_POST["exercActivo"],$db->getUserId($_POST["creador"]),$_POST["fechaCreacion"]);
-//   var_dump($exercicio);
-//   $db = new ExercicioDB();
-//   if ( $db->insertExercicio($exercicio) ) {
-//     echo "Insertado correctamente";
-//   }
-
-//   $db->cerrarConexion();
-// }
 ?>
 
 
 <body>
-  <header class="headerExerc">
+  <header class="headerExerc pb-3">
         <div class="d-flex flex-row align-items-center justify-content-between">
-        <div>
-            <a class="navbar-brand" href="index.php">
-                <img src="src/img/logo_256.png" alt="Logo" loading="lazy" />
-            </a>
-        </div>
+          <div class="d-flex flex-row align-items-center p-3 headerLogo">
+              <a class="navbar-brand" href="index.php">
+                  <img src="src/img/logo.png" alt="Logo" loading="lazy" />
+              </a>
+              <h1 class="ms-2">Task Vault</h1>
+          </div>
         
-            <div class="me-auto p-2">
+            <div class="p-2 headerTitle">
                 <h1>Editor de exercicios</h1>
             </div>
-            <!-- <div class="p-2">
-                <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
-            </div>  -->
             <div class="p-2 d-flex flex-row align-items-center align-self-start headerUsuario">
                 <input type="text" size='10px' value="<?php echo $_SESSION["user"]?>" class="form-control bg-transparent" disabled>
                 <a href="./php_functions/closeSession.php" title="cerrar sesión">
@@ -139,9 +126,9 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
         </div> 
     </header>
 
-  <div class="container mt-3">
+  <div class="container mt-5">
     <div class="row mt-1" id="msgExercicio"></div>
-    <div class="row mt-1">
+    <div class="row g-5">
       <!-- <form class="row g-3 align-items-center"  method="post" >    -->
       <div class="col-md-4"><!--columna datos exercicio-->
         <input type="hidden" name="idExerc" id="idExerc" value="<?php echo isset($_GET["id"]) ? $_GET["id"] : ""?>">
@@ -193,9 +180,9 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
 
         <div class="row g-3 mt-3"><!--Asignatura-->
           <div class="form-group col-md-12">
-            <label for="asignatura" class="form-label">Asignatura:</label>
+            <label for="asignatura" class="form-label">Materia:</label>
             <select id="asignatura" name="asignatura" class="form-select" <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
-              <option value="0">Sin asignaturas</option>
+              <option value="0">Sin materias</option>
               <?php
               $db = new CursosDB();
               $asignaturas = $db->getAsignaturas($curso);
@@ -270,13 +257,12 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
   <script src="./bootstrap/js/bootstrap.bundle.min.js"></script> 
 
   <script>
+    
   //listener para cargar as asignaturas correspondentes co curso seleccionado
   let cursoExercicio = document.getElementById("curso");
   cursoExercicio.addEventListener("change", () => {
     cargarAsignaturas(cursoExercicio.value,"asignatura");
   });
-
-  // getCursos("curso");
 
   //carga o contido do textarea TinyMCE
   window.addEventListener('load', function() {
@@ -284,29 +270,13 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
     setTimeout(function() {
       tinymce.activeEditor.setContent(cadena);  //carga do exercicio no editor
     }, 500);
-   
-    
-    // fetch("./php_functions/loadEnunciado.php", {
-    //   method: "POST",
-    //   headers: {
-    //       "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(datos),
-    //   })
-    // .then(response => response.json())
-    // .then(data => {
-    //   tinymce.activeEditor.setContent(response);
-    // }).catch(err => {
-    //     console.error("ERROR: ", err.message)
-    //   }); 
-
-     
+        
   });
   </script>
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
-        <div class="row mt-2">
-            <div class="col">2024 TaskVaultAcademy
+        <div class="row">
+            <div class="col">2024 TaskVault
             </div>
         </div>
     </div>
