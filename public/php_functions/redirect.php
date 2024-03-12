@@ -7,16 +7,16 @@ function redirect($rol) {
 
     switch ($rol) {
         case "administrador":
-            header("Location:".$_SERVER['DOCUMENT_ROOT']."/adminPanel.php");
+            header("Location:adminPanel.php");
             break;
         case "profesor":
-            header("Location:".$_SERVER['DOCUMENT_ROOT']."/teacherPanel.php");
+            header("Location:teacherPanel.php");
             break;
         case "estudiante":
-            header("Location:".$_SERVER['DOCUMENT_ROOT']."/studentPanel.php");
+            header("Location:studentPanel.php");
             break;
         default:
-            header("Location:".$_SERVER['DOCUMENT_ROOT']."/index.php");
+            header("Location:index.php");
             break;
     }
 }
