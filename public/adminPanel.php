@@ -325,7 +325,7 @@ require "./ventanas_modales/updateCursosModal.php";
 
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
-        <div class="row d-flex flex-row justify-content-center">
+        <div class="row">
             <div class="col">2024 TaskVault</div>
         </div>
     </div>
