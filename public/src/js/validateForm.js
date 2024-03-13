@@ -216,7 +216,7 @@ function validaCreateUser() {
         && validarCampoObligatorio("novoApellido2",regExpNombre,"O apelido só pode ter letras","msgNovoUsuario") 
         && validarCampo("novoEmail",regExpMail,"Formato de email incorrecto","msgNovoUsuario") 
         && validarCampo("novoTlf",regExpTlf,"O teléfono ten que ter 9 números","msgNovoUsuario")        
-        && validarCampoObligatorio("novoAlta",regExpFecha,"Fecha incorrecta","msgNovoUsuario")
+        && validarCampoObligatorio("novoAlta",regExpFecha,"Data incorrecta","msgNovoUsuario")
         )
     {
         return true

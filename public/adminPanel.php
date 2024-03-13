@@ -67,7 +67,7 @@ $usr->cerrarConexion();
                             <!-- <span class="text-black-50"><?php echo $datosUsuario->email?></span> -->
                             <span class="text-secondary">Id de usuario: <?php echo $datosUsuario->id?></span>
                             <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
-                            <span class="text-secondary">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+                            <span class="text-secondary">Data de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
                         </div>
                     </div>
 
@@ -325,9 +325,8 @@ require "./ventanas_modales/updateCursosModal.php";
 
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
-        <div class="row">
-            <div class="col">2024 TaskVault
-            </div>
+        <div class="row d-flex flex-row justify-content-center">
+            <div class="col">2024 TaskVault</div>
         </div>
     </div>
 </footer>

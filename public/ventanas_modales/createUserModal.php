@@ -56,7 +56,7 @@ use Clases\CursosDB;
                   <input type="tel" id="novoTlf" name="novoTlf" class="form-control" placeholder="Ex: 666999333">
               </div>
               <div class="col-md-4">
-                  <label for="novoAlta" class="form-label">Fecha de alta</label>
+                  <label for="novoAlta" class="form-label">Data de alta</label>
                   <input type="text" id="novoAlta" name="novoAlta" class="form-control" value="<?php echo date('d-m-Y');?>" readonly disabled>
               </div>
             </div>

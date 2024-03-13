@@ -64,7 +64,7 @@ class Exercicio implements JsonSerializable {
         $db = new UserDB();
         if ( !$db->getUserById($this->creador) ) $erroresValidacion [] = "O usuario autor é incorrecto";
         $db->cerrarConexion();
-        if ( !preg_match("/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/", $this->fecha_creacion) ) $erroresValidacion [] = "A fecha é incorrecta";
+        if ( !preg_match("/^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/", $this->fecha_creacion) ) $erroresValidacion [] = "A Data é incorrecta";
         if ( !preg_match("/^[01]$/", $this->activo) ) $erroresValidacion [] = "O valor de exercicio activo é incorrecto";
         return $erroresValidacion;
     }

@@ -69,7 +69,7 @@ $usr->cerrarConexion();
                             <!-- <span class="text-secondary"><?php echo $datosUsuario->email?></span> -->
                             <span class="text-secondary">Id de usuario: <?php echo $datosUsuario->id?></span>
                             <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
-                            <span class="text-secondary">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+                            <span class="text-secondary">Data de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
                         </div>
                     </div>
 
@@ -378,7 +378,7 @@ $usr->cerrarConexion();
                                     <th scope="col">Materia</th>                                                    
                                     <th scope="col">Autor</th>
                                     <th scope="col">Activo</th>                            
-                                    <th scope="col">Fecha</th>                            
+                                    <th scope="col">Data</th>                            
                                     <th scope="col" colspan="2" class="text-center">Accións</th>
                                 </tr>
                             </thead>

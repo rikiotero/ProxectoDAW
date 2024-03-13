@@ -7,7 +7,7 @@ require "../../vendor/autoload.php";
 use Clases\ExercicioDB;
 
 //columnas donde vamos a realizar a búsqueda
-$columnas = ["exercicios.id","tema","asignaturas.nombre ","usuarios.usuario","fecha_creacion"];
+$columnas = ["exercicios.id","tema","asignaturas.nombre","usuarios.usuario","fecha_creacion","enunciado"];
 
 //recollida dos campos para filtrar a búsqueda
 $datos = json_decode(file_get_contents('php://input'), true);
@@ -66,7 +66,7 @@ $limit = "LIMIT $inicio , $numRexistros";
 $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios, asignaturas, usuarios 
                                                 WHERE exercicios.asignatura=asignaturas.id 
                                                 AND exercicios.creador=usuarios.id ".$andAsignaturas."".$andFiltro.
-                                                " AND exercicios.activo=1 ".$limit;
+                                                " AND exercicios.activo=1 ORDER BY asignaturas.nombre,fecha_creacion DESC ".$limit;
 
 $db = new ExercicioDB();
 $stmt = $db->getExerciciosFiltered($sql);

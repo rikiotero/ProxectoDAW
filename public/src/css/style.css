@@ -149,43 +149,33 @@ caption {
 }
 /* texto place holder rojo nas validacións dos formularios */
 input.redText::placeholder {
-    color: red;
-    opacity: 1; /* Firefox */
+  color: red;
+  opacity: 1; /* Firefox */
 }
 
 /*ventanas modales*/
 .modal-content {
-  /* position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  color: var(--bs-modal-color);
-  pointer-events: auto;
-  background-clip: padding-box;
-  border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-  border-radius: var(--bs-modal-border-radius);
-  outline: 0; */
-  /* background-color: rgb(244 250 255); */
   background-color:rgb(219,236,250);
   --bs-modal-footer-border-color: rgb(206, 206, 206);
   border: 0px solid;
 }
+
 .modal-content .modal-header {
   background-color: rgb(111 140 161);
   color: rgb(234 238 242);
 }
 
-.modal-content .form-control, .tab-content .form-control {
+.modal-content .form-control, .tab-content .form-control,.datosExer .form-control {
   background-color: rgb(245 251 255);
   color: rgb(2 26 43) !important; 
 }
 
-.modal-content .form-select,.tab-content .form-select {
+.modal-content .form-select,.tab-content .form-select ,.datosExer .form-select {
   background-color: rgb(245 251 255);
   color: rgb(2 26 43) !important;
 }
 
-.modal-content .form-label {
+.modal-content .form-label, .datosExer .form-label {
   font-weight: 500;
 }
 
@@ -196,8 +186,6 @@ input.redText::placeholder {
 .modal-content .form-select:disabled {
   background-color: rgb(206, 206, 206);
 }
-
-/* tabs coas listas de usuarioe e exercicios */
 
 
 /* pé de páxina*/

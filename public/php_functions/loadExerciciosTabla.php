@@ -79,9 +79,9 @@ if($curso != null) {
 //limite de rexistros
 $limit = "LIMIT $inicio , $numRexistros";
 
-$sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios LEFT JOIN usuarios ON exercicios.creador=usuarios.id
-JOIN asignaturas ON exercicios.asignatura=asignaturas.id
-JOIN cursos ON asignaturas.curso=cursos.id".$where." ORDER BY fecha_alta DESC ". $limit;
+$sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios LEFT JOIN usuarios ON exercicios.creador=usuarios.id 
+        JOIN asignaturas ON exercicios.asignatura=asignaturas.id
+        JOIN cursos ON asignaturas.curso=cursos.id".$where." ORDER BY fecha_creacion DESC ". $limit;
 
  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
 //  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              

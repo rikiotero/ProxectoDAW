@@ -53,7 +53,7 @@ use Clases\CursosDB;
                   <input type="tel" id="tlf" name="tlf" class="form-control" placeholder="Ex: 666999333">
               </div>
               <div class="col-md-4">
-                  <label for="alta" class="form-label">Fecha de alta</label>
+                  <label for="alta" class="form-label">Data de alta</label>
                   <input type="text" id="alta" name="alta" class="form-control" disabled readonly>
               </div>
             </div>

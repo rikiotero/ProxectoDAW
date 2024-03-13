@@ -71,7 +71,7 @@ $usr->cerrarConexion();
                             <span class="fw-bold fs-4 mb-3"><?php echo $datosUsuario->usuario?></span>
                             <span class="text-secondary">Id de usuario: <?php echo $datosUsuario->id?></span>
                             <input type="hidden" id="idUsuario" value="<?php echo $datosUsuario->id?>"></input>
-                            <span class="text-secondary">Fecha de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
+                            <span class="text-secondary">Data de alta: <?php echo date("d-m-Y", strtotime($datosUsuario->fecha_alta))?></span>
                         </div>
                     </div>
 
@@ -202,7 +202,7 @@ $usr->cerrarConexion();
                                     <th scope="col">Tema</th>
                                     <th scope="col">Materia</th>                                                    
                                     <th scope="col">Autor</th>                           
-                                    <th scope="col">Fecha</th>                            
+                                    <th scope="col">Data</th>                            
                                     <th scope="col">Ver</th>
                                 </tr>
                             </thead>

@@ -24,63 +24,8 @@ if( !isset($_SESSION["rol"]) ) redirect("");
     <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>
     <script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>
     <script src="./tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-    <script type="text/javascript" src="./src/js/TinyMCE_eqneditor.js" defer></script>        
-    <script>
-
-      tinymce.init({
-        selector: '#enunciado',
-        language: 'es',
-        width: '100%',
-        height:600,
-        plugins: ['fullscreen','save','table','code','searchreplace','eqneditor'],
-        toolbar: 'fullscreen | undo redo | searchreplace | eqneditor | styles | fontfamily |' + 
-        '| fontsizeinput | forecolor | backcolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
-        // image_caption: true,
-        // image_title: true,
-        // entity_encoding: "raw",
-        // /* enable automatic uploads of images represented by blob or data URIs*/
-        // automatic_uploads: true,
-        // /*
-        //   URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
-        //   images_upload_url: 'postAcceptor.php',
-        //   here we add custom filepicker only to Image dialog
-        // */
-        // file_picker_types: 'image',
-        // /* and here's our custom image picker*/
-        // file_picker_callback: (cb, value, meta) => {
-        //   const input = document.createElement('input');
-        //   input.setAttribute('type', 'file');
-        //   input.setAttribute('accept', 'image/*');
-
-        //   input.addEventListener('change', (e) => {
-        //     const file = e.target.files[0];
-
-        //     const reader = new FileReader();
-        //     reader.addEventListener('load', () => {
-        //       /*
-        //         Note: Now we need to register the blob in TinyMCEs image blob
-        //         registry. In the next release this part hopefully won't be
-        //         necessary, as we are looking to handle it internally.
-        //       */
-        //       const id = 'blobid' + (new Date()).getTime();
-        //       const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-        //       const base64 = reader.result.split(',')[1];
-        //       const blobInfo = blobCache.create(id, file, base64);
-        //       blobCache.add(blobInfo);
-
-        //       /* call the callback and populate the Title field with the file name */
-        //       cb(blobInfo.blobUri(), { title: file.name });
-        //     });
-        //     reader.readAsDataURL(file);
-        //   });
-
-        //   input.click();
-        // },
-        // content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
-
-
-      });
-    </script>   
+    <script type="text/javascript" src="./src/js/TinyMCE_eqneditor.js" defer></script>
+    <script type="text/javascript" src="./src/js/jsExercicio.js" defer></script>  
 </head>
 
 
@@ -122,10 +67,9 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
         </div> 
     </header>
 
-  <div class="container mt-5">
+  <div class="container mt-5 datosExer">
     <div class="row mt-1" id="msgExercicio"></div>
     <div class="row g-5">
-      <!-- <form class="row g-3 align-items-center"  method="post" >    -->
       <div class="col-md-4"><!--columna datos exercicio-->
         <input type="hidden" name="idExerc" id="idExerc" value="<?php echo isset($_GET["id"]) ? $_GET["id"] : ""?>">
 
@@ -136,8 +80,8 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
               value="<?php echo $exercicio->getCreador()?>"  readonly>
           </div>
           <div class="form-group col-md-6">
-            <label for="fechaCreacion" class="form-label">Fecha de creción:</label>
-            <input type="text" name="fechaCreacion" id="fechaCreacion" class="form-control" placeholder="Fecha de creacion" 
+            <label for="fechaCreacion" class="form-label">Data de creción:</label>
+            <input type="text" name="fechaCreacion" id="fechaCreacion" class="form-control" placeholder="Data de creacion" 
               value="<?php echo date('d-m-Y', strtotime($exercicio->getFechaCreacion()) )?>" readonly>
           </div>
         </div>
@@ -246,27 +190,17 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
           </div>
         </div>
       </div>
-        
-      <!-- </form> -->
     </div>
   </div>
   <script src="./bootstrap/js/bootstrap.bundle.min.js"></script> 
 
   <script>
-    
-  //listener para cargar as asignaturas correspondentes co curso seleccionado
-  let cursoExercicio = document.getElementById("curso");
-  cursoExercicio.addEventListener("change", () => {
-    cargarAsignaturas(cursoExercicio.value,"asignatura");
-  });
-
   //carga o contido do textarea TinyMCE
   window.addEventListener('load', function() {
-    let cadena = <?php echo '`'.$exercicio->getEnunciado().'`'?>;
+    let enunciado = <?php echo '`'.$exercicio->getEnunciado().'`'?>;
     setTimeout(function() {
-      tinymce.activeEditor.setContent(cadena);  //carga do exercicio no editor
-    }, 500);
-        
+      tinymce.activeEditor.setContent(enunciado);  //carga do exercicio no editor
+    }, 500);        
   });
   </script>
 <footer class="text-center py-1 fixed-bottom">
