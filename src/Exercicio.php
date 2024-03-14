@@ -36,7 +36,6 @@ class Exercicio implements JsonSerializable {
        
         //validación do curso e asignatura        
         $cursosDB = new CursosDB();
-        // $cursoId = $cursosDB->getCursoByAsignatura($this->asignatura);
         $asignaturas = $cursosDB->getAsignaturas($curso);
 
         if ( $curso != "0" ) {

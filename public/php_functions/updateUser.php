@@ -13,28 +13,37 @@ use Clases\CursosDB;
 $datos = json_decode(file_get_contents("php://input"), true);
 
 $db = new UserDB();
+$userAntes = $db->getUser($datos["usuarioVello"]); //datos de usuario antes ser modificado
+
+//Prevención de que un estudiante modifique datos que non ten permitido
+if ( $_SESSION["rol"] == "estudiante" ) {
+    $datos["nombre"] = $userAntes->nombre;
+    $datos["apellido1"] = $userAntes->apellido1;
+    $datos["apellido2"] = $userAntes->apellido2;
+    $datos["curso"] = array_keys( $db->getCurso($userAntes->id) )[0];
+    $datos["asignaturas"] = array_keys( $db->getAsignaturas($userAntes->id) );
+}
 
 //comprobación de si se modificou o nome de usuario, 
 //si se modificou compróbase que non exista un usuario co mesmo nome
-
 if ( $datos["usuarioVello"] != $datos["usuario"] ) { 
     
     if ( $db->getUser($datos["usuario"]) ) {       //xa existe un usuario con ese nome
         $db->cerrarConexion();
         $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
     } 
 }
 
-// $sesion = $_SESSION["user"];
 
 if ( $datos["rol"] != 3) {   // non é estudiante
     
-    $passw = $db->getPassword($datos["usuarioVello"]);
+    // $passw = $db->getPassword($datos["usuarioVello"]);
 
     $user = new User(
         strip_tags( trim($datos["usuario"]) ),
-        $passw,
+        $userAntes->password,
         strip_tags( trim($datos["nombre"]) ),
         strip_tags( trim($datos["apellido1"]) ),
         strip_tags( trim($datos["apellido2"]) ),
@@ -43,10 +52,14 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         strip_tags( trim($datos["alta"]) ),
         $datos["activo"] == 1 ? 1 : 0,
         strip_tags( trim($datos["rol"]) ),
-        $datos["curso"] != 0 ? strip_tags( trim($datos["curso"] ) ) : null,
     );
 
     $erroresValidacion = $user->validaUsuario(); //validación antes de insertar usuario
+
+    //Validación por si o usuario modificou o rol sin poder facelo
+    if ( $_SESSION["rol"] != "administrador" && $datos["rol"] != $userAntes->rol ) {     
+        $erroresValidacion[] = "O rol introducido é incorrecto";
+    }
 
     if ( empty($erroresValidacion) ) { 
 
@@ -54,6 +67,8 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         $db->cerrarConexion();
 
         if( $actualizado ) {
+            if ( $_SESSION["user"] == $datos["usuarioVello"] ) //si é o usuario logueado o que modifica o seu nome de usuario actualizase a sesion
+                $_SESSION["user"] = $datos["usuario"];
             $output = "<div class='alert alert-success'>Usuario actualizado correctamente</div>";
 
         }else {
@@ -73,13 +88,13 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
 
-}else { // é estudiante    
-        
-    $passw = $db->getPassword($datos["usuarioVello"]);
+}else { // é estudiante  
+    
+    // $passw = $db->getPassword($datos["usuarioVello"]);
 
     $estudiante = new Student(
         strip_tags( trim($datos["usuario"]) ),
-        $passw,        
+        $userAntes->password,        
         strip_tags( trim($datos["nombre"]) ),
         strip_tags( trim($datos["apellido1"]) ),
         strip_tags( trim($datos["apellido2"]) ),
@@ -88,14 +103,16 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         strip_tags( trim($datos["alta"]) ),
         $datos["activo"] == 1 ? 1 : 0,
         strip_tags( trim($datos["rol"]) ),
-        $datos["curso"] != 0 ? strip_tags( trim($datos["curso"] ) ) : null,
+        strip_tags( trim($datos["curso"] ) ),
         $datos["asignaturas"]
     );
 
     $erroresValidacion = $estudiante->validaUsuario();  //validación antes de insertar usuario
 
     //validación do curso
-    if ( $datos["curso"] != "0" ) {
+    if ( $datos["curso"] == "0" ) {
+        $erroresValidacion[] = "Seleccionar un curso é obrigatorio";
+    }else {
         $cursosDB = new CursosDB();     
         $cursos =  $cursosDB->getCursos();
         $asignaturas = $cursosDB->getAsignaturas($datos["curso"]);
@@ -107,7 +124,9 @@ if ( $datos["rol"] != 3) {   // non é estudiante
     }
 
     //Validación das asignaturas
-    if ( !empty($datos["asignaturas"]) && $datos["asignaturas"][0] != "0" ) {
+    if ( empty($datos["asignaturas"]) ) {
+        $erroresValidacion[] = "Debes seleccionar algunha materia";
+    }else {
         $asignaturas = array_keys($asignaturas);
         foreach ( $datos["asignaturas"] as $key => $value ) {
             if( !in_array( $value,$asignaturas ) ) {
@@ -116,6 +135,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
             }
         }
     }
+
 
     if ( empty($erroresValidacion) ) {
 
@@ -130,7 +150,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
     
             $output = "<div class='alert alert-success'>Usuario actualizado correctamente</div>";
         }else {
-            $output = "<div class='alert alert-danger'>Non se pudo crear o actualizar o usuario, proba de novo</div>";
+            $output = "<div class='alert alert-danger'>Non se pudo actualizar o usuario, proba de novo</div>";
         }
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
 
@@ -148,47 +168,4 @@ if ( $datos["rol"] != 3) {   // non é estudiante
     }
 }
 
-
-
-
-
-//comprobación de si se modificou o nome de usuario, si se modificou compróbase que non exista un usuario co mesmo 
-//nome de usuario e validanse os datos para gardalos na base de datos, si todo vai ben actualizanse os datos na base 
-//de datos e cambiase o nome de usuario na sesión
-
-
-
-// if ( $datos["usuarioVello"] != $datos["usuario"] ) { 
-//     if ( !$db->getUser($datos["usuario"]) && $user->validaUsuario() ) {
-//         $actualizado = $db->updateUser($_SESSION["user"],$user);
-    
-//         if( $actualizado ){
-//             $_SESSION["user"] = $datos["usuario"];
-//             $output = "<div class='alert alert-success'>Usuario actualizado correctamente</div>";
-//         }else {
-//             $output = "<div class='alert alert-danger'>Non se pudo actualizar o usuario, huvo un erro o intentar actualizar, proba de novo</div>";
-//         }
-//         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     }else {
-//         $output = "<div class='alert alert-danger'>Non se pudo actualizar o usuario, debes completar correctamente os campos obrigatorios</div>";
-//         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     }
-
-// }else {
-//     if ( $user->validaUsuario() ) {  //validación de datos no servidor antes de actualizalos
-    
-//         $actualizado = $db->updateUser($_SESSION["user"],$user);
-        
-//         if( $actualizado ){
-//             $_SESSION["user"] = $datos["usuario"];
-//             $output = "<div class='alert alert-success'>Usuario actualizado correctamente</div>";
-//         }else {
-//             $output = "<div class='alert alert-danger'>Non se pudo actualizar o usuario, huvo un erro o intentar actualizar, proba de novo</div>";
-//         }
-//         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     }else {
-//         $output = "<div class='alert alert-danger'>Non se pudo actualizar o usuario, debes completar correctamente os campos obrigatorios</div>";
-//         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     }
-// }
 ?>

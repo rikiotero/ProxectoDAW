@@ -4,11 +4,13 @@ use \JsonSerializable;
 
 class Student extends User implements JsonSerializable {
 
-    private $asignaturas;
+    private $curso;
+    private $asignaturas;    
 
-    public function __construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol, $curso=null, $asignaturas=null) {
+    public function __construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol, $curso, $asignaturas) {
         
-        parent::__construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol,$curso);
+        parent::__construct($usuario, $password, $nombre, $apellido1, $apellido2, $email, $telefono, $fecha_alta, $activo, $rol);
+        $this->curso = $curso;
         $this->asignaturas = $asignaturas;
     }
 
@@ -42,5 +44,20 @@ class Student extends User implements JsonSerializable {
     public function setAsignaturas($asignaturas)
     {
         $this->asignaturas = $asignaturas;
+    }
+     /**
+     * Get the value of asignaturas
+     */
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+    /**
+     * Set the value of asignaturas
+     */
+    public function setCurso($curso)
+    {
+        $this->curso = $curso;
     }
 }

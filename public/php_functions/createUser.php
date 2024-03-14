@@ -24,18 +24,23 @@ if( $datos["rol"] != 3) {               // non é estudiante
         $datos["tlf"] != "" ? strip_tags( trim($datos["tlf"]) ) : null,
         strip_tags( trim($datos["alta"]) ),
         $datos["activo"] == 1 ? 1 : 0,
-        strip_tags( trim($datos["rol"]) ),
-        $datos["curso"] != 0 ? strip_tags( trim($datos["curso"] ) ) : null,
+        strip_tags( trim($datos["rol"]) )
     );
     
     $erroresValidacion = $user->validaUsuario(); //validación antes de insertar usuario
+
+    //Validación por si o usuario modificou campos que non pode modificar
+    if ( $_SESSION["rol"] == "profesor" && $datos["rol"] != "3") {
+        $erroresValidacion[] = "O rol introducido é incorrecto, só podes crear estudiantes";
+    }
+
     $db = new UserDB();
     if ( $db->getUser($datos["usuario"]) ) {       //xa existe un usuario con ese nome
         $db->cerrarConexion();
         $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
     
-    }elseif ( empty($erroresValidacion) ) {   //si non hai erros de validación insértase na base de datos 
+    }elseif ( empty($erroresValidacion) ) {     //si non hai erros de validación insértase na base de datos 
         
         $rexistrado = $db->insertUser($user);
         $db->cerrarConexion();
@@ -58,6 +63,14 @@ if( $datos["rol"] != 3) {               // non é estudiante
     }
 
 }else {                     // o usuario a insertar é estudiante 
+ 
+
+    $db = new UserDB();
+    if ( $db->getUser($datos["usuario"]) ) {            //xa existe un usuario con ese nome
+        $db->cerrarConexion();
+        $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);    
+    }
 
     $estudiante = new Student(
         strip_tags( trim($datos["usuario"]) ),
@@ -70,21 +83,16 @@ if( $datos["rol"] != 3) {               // non é estudiante
         strip_tags( trim($datos["alta"]) ),
         $datos["activo"] == 1 ? 1 : 0,
         strip_tags( trim($datos["rol"]) ),
-        $datos["curso"] != 0 ? strip_tags( trim($datos["curso"] ) ) : null,
+        strip_tags( trim($datos["curso"] ) ),
         $datos["asignaturas"]
     );
 
     $erroresValidacion = $estudiante->validaUsuario();  //validación antes de insertar usuario
 
-    $db = new UserDB();
-    if ( $db->getUser($datos["usuario"]) ) {            //xa existe un usuario con ese nome
-        $db->cerrarConexion();
-        $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
-        echo json_encode($output, JSON_UNESCAPED_UNICODE);    
-    }
-
     //validación do curso
-    if ( $datos["curso"] != "0" ) {
+    if ( $datos["curso"] == "0" ) {
+        $erroresValidacion[] = "Seleccionar un curso é obrigatorio";
+    }else {
         $cursosDB = new CursosDB();     
         $cursos =  $cursosDB->getCursos();
         $asignaturas = $cursosDB->getAsignaturas($datos["curso"]);
@@ -96,7 +104,9 @@ if( $datos["rol"] != 3) {               // non é estudiante
     }
 
     //Validación das asignaturas
-    if ( !empty($datos["asignaturas"]) ) {
+    if ( empty($datos["asignaturas"]) ) {
+        $erroresValidacion[] = "Debes seleccionar algunha materia";
+    }else {
         $asignaturas = array_keys($asignaturas);
         foreach ( $datos["asignaturas"] as $key => $value ) {
             if( !in_array( $value,$asignaturas ) ) {
@@ -106,7 +116,7 @@ if( $datos["rol"] != 3) {               // non é estudiante
         }
     }
 
-    if ( empty($erroresValidacion) ) {      
+    if ( empty($erroresValidacion) ) {  
 
         $rexistrado = $db->insertStudent($estudiante);
         $db->cerrarConexion();

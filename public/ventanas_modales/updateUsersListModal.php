@@ -31,15 +31,18 @@ use Clases\CursosDB;
             <div class="row g-3">
               <div class="form-group col-md">
                 <label for="nome" class="form-label">Nome *</label>
-                <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" required>
+                <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" required 
+                <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : "" ?>>
               </div>
               <div class="form-group col-md">
                 <label for="apellido1" class="form-label">Primer apelido *</label>
-                <input type="text" name="apellido1" id="apellido1" class="form-control" placeholder="Primer apelido" required>
+                <input type="text" name="apellido1" id="apellido1" class="form-control" placeholder="Primer apelido" required 
+                <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : "" ?>>
               </div>
               <div class="form-group col-md">
                 <label for="apellido2" class="form-label">Segundo apelido *</label>
-                <input type="text" name="apellido2" id="apellido2" class="form-control" placeholder="Segundo apelido" required>
+                <input type="text" name="apellido2" id="apellido2" class="form-control" placeholder="Segundo apelido" required
+                <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : "" ?>>
               </div> 
             </div>
 
@@ -57,9 +60,8 @@ use Clases\CursosDB;
                   <input type="text" id="alta" name="alta" class="form-control" disabled readonly>
               </div>
             </div>
-            <?php
-            if ( $_SESSION["rol"] != "estudiante" ) {
-            ?>
+
+
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="rol" class="form-label">Rol de usuario</label>
@@ -76,21 +78,21 @@ use Clases\CursosDB;
                   ?>            
                 </select>
               </div> 
-              
+
                 <?php
                   $db = new CursosDB();  //obtemos os cursos da db
                   $cursos = $db->getCursos();
                   $db->cerrarConexion();
                 ?>
                 <div class="col-md-4" id="divCurso">
-                  <label for="curso" class="form-label">Curso</label>
+                  <label for="curso" class="form-label">Curso *</label>
                   <select id="curso" name="curso" class="form-select" <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
                     <option value="0">Seleción de curso</option>
                   </select>
                 </div>
 
                   <div class="col-md-4" id="divAsignaturas">
-                    <label for="asignaturas" class="form-label">Materias</label>
+                    <label for="asignaturas" class="form-label">Materias *</label>
                     <select id="asignaturas" name="asignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple 
                       <?php echo $_SESSION["rol"] == "estudiante" ? "disabled" : ""?>>
                     </select>
@@ -133,13 +135,13 @@ use Clases\CursosDB;
 
             </div>
             <?php
-            }
+            // }
             ?>
 
 
             <div class="row g-3">
               <div class="col-md-12">
-                  * Campos obligatorios.
+                  * Campos obrigatorios.
               </div>
             </div>
             <div class="row g-3">  

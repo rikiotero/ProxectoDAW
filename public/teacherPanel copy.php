@@ -53,7 +53,7 @@ $usr->cerrarConexion();
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-usuario-tab" data-bs-toggle="tab" data-bs-target="#nav-usuario" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Datos de usuario</button>
             <button class="nav-link" id="nav-listaAlumnos-tab" data-bs-toggle="tab" data-bs-target="#nav-listaAlumnos" type="button" role="tab" aria-controls="nav-listaAlumnos" aria-selected="false">Xestión de alumnos</button>
-            <!-- <button class="nav-link" id="nav-asignaturas-tab" data-bs-toggle="tab" data-bs-target="#nav-asignaturas" type="button" role="tab" aria-controls="nav-asignaturas" aria-selected="false">Xestión de cursos e materias</button> -->
+            <button class="nav-link" id="nav-asignaturas-tab" data-bs-toggle="tab" data-bs-target="#nav-asignaturas" type="button" role="tab" aria-controls="nav-asignaturas" aria-selected="false">Xestión de cursos e materias</button>
             <button class="nav-link" id="nav-exercicios-tab" data-bs-toggle="tab" data-bs-target="#nav-exercicios" type="button" role="tab" aria-controls="nav-exercicios" aria-selected="false">Xestión de exercícios</button>
         </div>
     </nav>
@@ -222,6 +222,96 @@ $usr->cerrarConexion();
 
             </div>
         </div><!-- fin contido da tab de xestión de alumnos-->
+
+        <!-- contido da tab de xestión de cursos-asignaturas-->
+        <div class="tab-pane fade" id="nav-asignaturas" role="tabpanel" aria-labelledby="nav-asignaturas">
+            <div class="container mt-3">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-md-5 mt-5">
+                        <div class="d-flex justify-content-end">
+                            <div class="flex-grow-1">
+                                <input type="text" name="addCurso" id="addCurso" class="form-control" 
+                                placeholder="Escribe o nome do curso novo" title="Escribe o nome do curso e pulsa para añadilo"required>
+                            </div>
+
+                            <div class="ms-2">
+                                <button type="submit" class="btn btn-success" id="addCursoButton" onclick="addCurso()" 
+                                title="Escribe o nome do curso e pulsa para añadilo">
+                                Engadir curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-text">
+                                Para insertar un curso novo escribe o nome do curso e pulsa en "Engadir curso"
+                        </div>
+
+                        <div class="row">
+                            <div class="col m-2" id="msgCursos">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 mt-5">
+                        <div class="row">
+                            <div class="col">
+                                <select id="selectCurso" name="selectCurso" class="form-select">
+                                    <option value="0">Selecciona curso...</option>                            
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <div class="flex-grow-1">
+                                <input type="text" name="addAsign" id="addAsign" class="form-control" 
+                                placeholder="Escribe o nome da materia nova" title="Escribe o nome da materia e pulsa para añadila" required>
+                            </div>
+                            <div class="ms-2">
+                                <button type="submit" class="btn btn-success" id="addAsignButton" onclick="addAsignatura()" 
+                                    title="Escribe o nome da materia e pulsa para añadila">
+                                    Engadir materia o curso<span class="ms-1 fa-solid fa-plus" style="color: #ffffff;"></span>        
+                                </button>
+                            </div>                         
+                        </div>
+                        <div class="form-text">
+                            Para insertar unha materia nova selecciona primeiro o curso donde queres insertala
+                        </div>                    
+                    </div>              
+                </div> 
+
+                <div class="row d-flex justify-content-between">
+                    <div class="col-md-5 mt-2">
+                        <table class="table table-striped table-light">
+                        <caption>Cursos</caption>
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Curso</th>
+                                    <th scope="col" colspan="2" class="text-center">Accións</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaCursos">
+                            </tbody>
+                        </table> 
+                    </div>
+
+                    <div class="col-md-5 mt-2">
+                        <table class="table table-striped table-light">
+                        <caption>Materias</caption>
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Materia</th>
+                                    <th scope="col" colspan="2" class="text-center">Accións</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaAsignaturas">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>  
+        </div><!-- fin contido da tab de xestión de cursos-asignaturas-->
 
         <!-- contido da tab de xestión de exercícios-->
         <div class="tab-pane fade" id="nav-exercicios" role="tabpanel" aria-labelledby="nav-exercicios">

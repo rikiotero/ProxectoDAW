@@ -133,7 +133,7 @@ class CursosDB extends Conexion {
     }
 
     /**
-     * Recupera un curso buscanbdo polo seu nome
+     * Recupera un curso buscando polo seu nome
      * @param string nome do curso 
      * @return object|boolean Un obxeto co curso si existe ou false si non hai resultados
      */
@@ -158,7 +158,7 @@ class CursosDB extends Conexion {
     }
 
     /**
-    * Recupera un curso buscanbdo polo seu id
+    * Recupera un curso buscando polo seu id
     * @param string id do curso
     * @return object|boolean Un obxeto co curso si existe ou false si non hai resultados
     */
@@ -253,6 +253,30 @@ class CursosDB extends Conexion {
                 $row = $stmt->fetch(PDO::FETCH_OBJ); 
                 $stmt = null;
                 return $row->curso;
+            }    
+        } catch (\PDOException $ex) {
+            die("Error consultando a curso: ".$ex->getMessage());
+        }
+        $stmt = null;
+        return false;
+    }
+
+     /**
+     * Comproba si hai asignaturas sen estudiante
+     * @param string $asignId ID da asignatura
+     * @return boolean resultado da comprobación
+     */
+    public function checkAsignatura($asignId) {
+        $sql = "SELECT * FROM usuario_asignatura WHERE asignatura_id=:id";
+        try {
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([
+                ':id' => $asignId
+                ]);
+            if ( $stmt->rowCount() != 0 ) {
+                $row = $stmt->fetch(PDO::FETCH_OBJ); 
+                $stmt = null;
+                return true;
             }    
         } catch (\PDOException $ex) {
             die("Error consultando a curso: ".$ex->getMessage());

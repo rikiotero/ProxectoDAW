@@ -53,14 +53,14 @@ function  createUser() {
         document.getElementById("msgNovoUsuario").innerHTML = data; //móstrase a mensaxe de todo ben ou non
             
         //reseteo dos campos do formulario
-        document.getElementById("novoUsuario").value = "";
-        document.getElementById("novoPassword").value = "";
-        document.getElementById("novoPassword2").value = "";
-        document.getElementById("novoNome").value = "";
-        document.getElementById("novoApellido1").value = "";
-        document.getElementById("novoApellido2").value = "";
-        document.getElementById("novoEmail").value = "";
-        document.getElementById("novoTlf").value = "";
+        // document.getElementById("novoUsuario").value = "";
+        // document.getElementById("novoPassword").value = "";
+        // document.getElementById("novoPassword2").value = "";
+        // document.getElementById("novoNome").value = "";
+        // document.getElementById("novoApellido1").value = "";
+        // document.getElementById("novoApellido2").value = "";
+        // document.getElementById("novoEmail").value = "";
+        // document.getElementById("novoTlf").value = "";
 
         //execútase a funcion que carga as tablas de usuarios/estudiantes
         //solo se executa si está definida, estará definida ou non según o panel que se cargue

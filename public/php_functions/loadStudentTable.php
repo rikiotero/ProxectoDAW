@@ -65,17 +65,21 @@ if($curso != null) {
 }
 
  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
- if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
-    $where .= " WHERE usuarios.rol=3"; 
-}else{
-    $where .= " AND usuarios.rol=3";
-}
+//  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
+//     $where .= " WHERE usuarios.rol=3"; 
+// }else{
+//     $where .= " AND usuarios.rol=3";
+// }
 
 //limite de rexistros
 $limit = "LIMIT $inicio , $numRexistros";
 
-$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
-LEFT JOIN cursos ON usuarios.curso = cursos.id".$where." ORDER BY fecha_alta DESC ".$limit;
+// $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
+// LEFT JOIN cursos ON usuarios.curso = cursos.id".$where." ORDER BY fecha_alta DESC ".$limit;
+$sql = "SELECT DISTINCT " . implode(", ", $columnas) . " FROM usuarios     
+    JOIN usuario_asignatura ON usuario_asignatura.usuario_id=usuarios.id    
+    JOIN asignaturas ON asignaturas.id=usuario_asignatura.asignatura_id    
+    JOIN cursos ON cursos.id=asignaturas.curso ".$where." ORDER BY fecha_alta DESC ".$limit;
 // var_dump($sql);
 // exit;
 
@@ -83,11 +87,14 @@ $db = new UserDB();
 $stmt = $db->getUsersFiltered($sql);
 
 //obtemos o número total de rexistros da consulta para facer a paxinación
-$sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
-LEFT JOIN cursos ON usuarios.curso = cursos.id".$where;
+$sql = "SELECT DISTINCT " . implode(", ", $columnas) . " FROM usuarios     
+    JOIN usuario_asignatura ON usuario_asignatura.usuario_id=usuarios.id    
+    JOIN asignaturas ON asignaturas.id=usuario_asignatura.asignatura_id    
+    JOIN cursos ON cursos.id=asignaturas.curso ".$where;
 $rexistros = $db->getUsersFiltered($sql);
 $numRows = $rexistros->rowCount();
 
+$rexistros = $db->getUsersFiltered($sql);
 $db->cerrarConexion();
 
 $output = [];                                           //array que se vai retornar
@@ -113,8 +120,6 @@ if ( $stmt->rowCount() != 0 ) {
         if ( $row['activo'] == "1" ) $output["html"] .= "<td><i class='fa-solid fa-check' style='color: #098b43;'></i></td>";
         else $output["html"] .= "<td><i class='fa-solid fa-x' style='color: #f03333;'></i></td>";
          
-        // $output["html"] .= "<td>".($row['activo'] == "1") ?  '<i class="fa-solid fa-check" style="color: #098b43;"></i>' : ''  ."</td>";
-        // $output["html"] .= "<td>".$row['activo']."</td>";
         $output["html"] .= "<td><a href='' data-bs-toggle='modal'  title='editar usuario' id={$row['id']}><i class='fa-solid fa-pen-to-square' style='color: #e6b328;'></i></a></td>";
 
         $output["html"] .= "<td><a href='' data-bs-toggle='modal' title='borrar usuario' id=borrar-{$row['id']}><i class='fa-solid fa-trash' style='color: #ff2600;'></i></a></td>";

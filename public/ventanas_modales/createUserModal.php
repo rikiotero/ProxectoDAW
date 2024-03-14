@@ -85,7 +85,7 @@ use Clases\CursosDB;
                   $db->cerrarConexion();
                 ?>
               <div class="col-md-4" id="divCursoNovo">
-                <label for="novoCurso" class="form-label">Curso</label>
+                <label for="novoCurso" class="form-label">Curso *</label>
                 <select id="novoCurso" name="novoCurso" class="form-select">
                   <option value="0">Seleción de curso</option>
                   <?php                        
@@ -97,7 +97,7 @@ use Clases\CursosDB;
               </div>
 
               <div class="col-md-4" id="divNovoAsignaturas">
-                  <label for="novoAsignaturas" class="form-label">Materias</label>
+                  <label for="novoAsignaturas" class="form-label">Materias *</label>
                   <select id="novoAsignaturas" name="novoAsignaturas" class="form-select" title="Manter pulsado 'Ctrl' para seleccionar varias" multiple>
                     <option value="0">Selección de materias</option>
                   </select>
@@ -133,7 +133,7 @@ use Clases\CursosDB;
                 </div>
               </div>
               <div class="col-md-12">
-                * Campos obligatorios.
+                * Campos obrigatorios.
               </div>
               <div id="msgNovoUsuario"></div>
             </div>

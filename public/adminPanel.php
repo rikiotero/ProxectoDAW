@@ -319,7 +319,6 @@ require "./ventanas_modales/updateCursosModal.php";
 <script type="text/javascript" src="./src/js/ajaxUser.js" defer></script>
 <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>
 <script type="text/javascript" src="./src/js/jsAdministrador.js" defer></script>
-
 <script type="text/javascript" src="./src/js/validateForm.js" defer></script>
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 

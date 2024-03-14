@@ -29,7 +29,9 @@ $usr->cerrarConexion();
     <link rel="icon" href="./src/img/favicon.png" type="image/png">
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">          
     <link rel="stylesheet" href="./src/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="text/javascript" src="./src/js/ajaxUser.js" defer></script>
+   
 </head>
 <body>
     <header>
@@ -227,7 +229,6 @@ $usr->cerrarConexion();
 require "./ventanas_modales/updateUsersListModal.php";
 ?>
 <script type="text/javascript" src="./src/js/ajaxCursos.js" defer></script>  
-<script type="text/javascript" src="./src/js/ajaxUser.js" defer></script>
 <script type="text/javascript" src="./src/js/ajaxExercicios.js" defer></script>     
 <script type="text/javascript" src="./src/js/validateForm.js" defer></script>
 <script type="text/javascript" src="./src/js/jsStudent.js" defer></script>   
