@@ -88,9 +88,7 @@ if ( $datos["rol"] != 3) {   // non é estudiante
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
 
-}else { // é estudiante  
-    
-    // $passw = $db->getPassword($datos["usuarioVello"]);
+}else { // é estudiante
 
     $estudiante = new Student(
         strip_tags( trim($datos["usuario"]) ),
@@ -108,7 +106,11 @@ if ( $datos["rol"] != 3) {   // non é estudiante
     );
 
     $erroresValidacion = $estudiante->validaUsuario();  //validación antes de insertar usuario
-
+    
+    //Validación por si o usuario modificou o rol sin poder facelo
+    if ( $_SESSION["rol"] != "administrador" && $datos["rol"] != $userAntes->rol ) {     
+        $erroresValidacion[] = "O rol introducido é incorrecto";
+    }
     //validación do curso
     if ( $datos["curso"] == "0" ) {
         $erroresValidacion[] = "Seleccionar un curso é obrigatorio";
