@@ -30,18 +30,33 @@ if( !isset($_SESSION["rol"]) ) redirect("");
 
 
 <?php
-$exercicio = new Exercicio(null,"","","","1",$_SESSION['user'],date("d-m-Y"));
+$exercicio = new Exercicio(null,"","","","1",$_SESSION['user'],date("d-m-Y")); //exercicio vacío
 
 if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
+  
   $db = new ExercicioDB();
   $exercicio = $db->getExercicioById($_GET["id"]);   //obtemos os datos do exercicio
-  $db = new UserDB();
-  $row = $db->getUserById($exercicio->getCreador());   //obtemos o nome de usuario do autor
-  $exercicio->setId($_GET["id"]);
-  $exercicio->setCreador( $row->usuario );
-  $exercicio->setEnunciado( $exercicio->getEnunciado() ); 
-  $row = null;  
-  $db->cerrarConexion();
+  
+  if ( $exercicio ) {           //si o exercicio non existe redireccionamos, pode non existir si se cambia o id na variable da URL 
+    $db = new UserDB();
+    $row = $db->getUserById($exercicio->getCreador());   //obtemos o nome de usuario do autor
+    // $exercicio->setId($_GET["id"]);
+    $exercicio->setCreador( $row->usuario );   //cambio o id de creador polo nome de usuario
+    // $exercicio->setEnunciado( $exercicio->getEnunciado() ); 
+    // $row = null;   
+    if ( $_SESSION["rol"] == "estudiante") {    //verificación por si se intenta acceder a un excercicio sen permiso
+      $asignaturaEstudiante = $db->getAsignaturas($_SESSION["id"]); 
+      if ( !array_key_exists( $exercicio->getAsignatura(),$asignaturaEstudiante) ) {
+        $db->cerrarConexion();      
+        redirect("");
+      }  
+    }
+    $db->cerrarConexion();
+  }else {
+    $db->cerrarConexion();
+    redirect("");
+  }
+
 }
 ?>
 
@@ -203,6 +218,7 @@ if ( isset($_GET["id"]) ) {       //estamos editando ou consultando exercicio
     }, 500);        
   });
   </script>
+  
 <footer class="text-center py-1 fixed-bottom">
     <div class="container">
         <div class="row">

@@ -81,7 +81,7 @@ $limit = "LIMIT $inicio , $numRexistros";
 
 $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios LEFT JOIN usuarios ON exercicios.creador=usuarios.id 
         JOIN asignaturas ON exercicios.asignatura=asignaturas.id
-        JOIN cursos ON asignaturas.curso=cursos.id".$where." ORDER BY fecha_creacion DESC ". $limit;
+        JOIN cursos ON asignaturas.curso=cursos.id".$where." ORDER BY  cursos.curso,asignaturas.nombre,fecha_creacion DESC ". $limit;
 
  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
 //  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              

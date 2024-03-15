@@ -65,64 +65,6 @@ function validarCampo(id,expresionR,error,divErr) {
     return true;       
 }
 
-
-/**
- * Validación do nome de usuario, ten que cumpir a expresión regular e non existir un usuario co mesmo nome na base de datos
- * @param {string} id id do campo do formulario a validar
- * @param {RegExp} expresionR Expresión regular coa cal se compara o campo
- * @param {string} divErr Div de error que se quere mostrar si non valida
- * @returns {Boolean} true si valida, false si non
- */
-function validaUsuario(id,expresionR,divErr) {
-    const user = document.getElementById(id);
-    const divError = document.getElementById(divErr);
-
-    if (user.value.trim() == "") {
-        divError.innerHTML = "O Nome de usuario é un campo requerido";
-        divError.classList.add("alert","alert-danger");
-        user.value = "";
-        user.classList.add("redText");
-        user.style.borderColor = "red";
-        return false;
-    }else if (expresionR.test(user.value) == false) {
-        divError.innerHTML = "O nome de usuario ten que ter de 3-16 díxitos (admítense letras, números, '-' ou '_')";
-        divError.classList.add("alert","alert-danger");
-        user.classList.add("redText");
-        user.style.borderColor = "red";
-        return false
-    } else {
-        let datos = {
-            usuario: user.value
-        }
-
-        fetch('./php_functions/checkUser.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(datos),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if ( data == true ) {
-                divError.innerHTML = "O Nome de usuario xa existe, escribe outro "; //móstrase a mensaxe de todo ben ou non
-                divError.classList.add("alert","alert-danger");
-                user.classList.add("redText");
-                user.style.borderColor = "red";
-                user.value = "";
-                return false
-            }        
-        }).catch(err => {
-            console.error("ERROR: ", err.message);
-        });
-    }
-    user.style.borderColor = "rgb(233,236,239)";
-    user.classList.remove("redText");
-    divError.classList.remove("alert","alert-danger");
-    divError.innerHTML = "";
-    return true; 
-}
-
 /**
  * Valida o password respeto a unha expresión regular (min 4 caracteres) e que coincida coa repetición do mesmo
  * @param {string} passw Id do campo password
@@ -160,48 +102,6 @@ function validarPassw(IdPassw,IdPassw2,IdDivErr) {
     return true;    
 }
 
-/** -------------Validación do formulario do modal de crear novo usuario -----------------------
- * valida os campos a medida que estes perden o foco, si non son válidos mostra a mensaxe de error e cambia
- * a cor do input e a cor do placeholder--------------------------------------------------------------------
- */
-
-// const botonCrear = document.getElementById("enviar");
-// // botonCrear.disabled = true;
-
-// document.getElementById("novoUsuario").addEventListener("blur", () => {
-//     validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario");
-// });
-
-// document.getElementById("novoPassword").addEventListener("blur", () => {
-//     validarCampoObligatorio("novoPassword",regExpPass,"O contrasinal debe ten como mínimo 4 caracteres","msgNovoUsuario")
-// });
-
-// document.getElementById("novoPassword2").addEventListener("blur", () => {
-//     validarPassw("novoPassword","novoPassword2","msgNovoUsuario");
-// })
-
-// document.getElementById("novoNome").addEventListener("blur", () => {
-//     validarCampoObligatorio("novoNome",regExpNombre,"O nome só pode ter letras","msgNovoUsuario");
-// });
-
-// document.getElementById("novoApellido1").addEventListener("blur", () => {
-//     validarCampoObligatorio("novoApellido1",regExpNombre,"Os apelidos só poden ter letras","msgNovoUsuario");
-// });
-
-// document.getElementById("novoApellido2").addEventListener("blur", () => {
-//     validarCampoObligatorio("novoApellido2",regExpNombre,"Os apelidos só poden ter letras","msgNovoUsuario");
-// });
-
-
-// document.getElementById("novoEmail").addEventListener("blur", () => {
-//     validarCampo("novoEmail",regExpMail,"Formato de email incorrecto","msgNovoUsuario");
-// });
-
-// document.getElementById("novoTlf").addEventListener("blur", () => {
-//     validarCampo("novoTlf",regExpTlf,"O teléfono ten que ter 9 números","msgNovoUsuario");
-// });
-
-
 
 /**
  * Validación do formulario para crear usuarios
@@ -209,7 +109,7 @@ function validarPassw(IdPassw,IdPassw2,IdDivErr) {
  */
 function validaCreateUser() { 
 
-    if (validaUsuario("novoUsuario",regExpUsuario,"msgNovoUsuario")
+    if (validarCampoObligatorio("novoUsuario",regExpUsuario,"O nome de usuario debe ter entre 3-16 letras ou números","msgNovoUsuario")
         && validarPassw("novoPassword","novoPassword2","msgNovoUsuario") 
         && validarCampoObligatorio("novoNome",regExpNombre,"O nome só pode ter letras","msgNovoUsuario")        
         && validarCampoObligatorio("novoApellido1",regExpNombre,"O apelido só pode ter letras","msgNovoUsuario") 
@@ -238,8 +138,7 @@ function validaUpdateUser() {
 
     if( usuarioVello != usuarioNovo.value ) {
 
-        if (validaUsuario("usuario",regExpUsuario,"msgUpdate")
-            && validarCampoObligatorio("usuario",regExpUsuario,"O nome de usuario debe ter entre 3-16 letras ou números","msgUpdate")
+        if (validarCampoObligatorio("usuario",regExpUsuario,"O nome de usuario debe ter entre 3-16 letras ou números","msgUpdate")
             && validarCampoObligatorio("nome",regExpNombre,"O nome só pode ter letras","msgUpdate")
             && validarCampoObligatorio("apellido1",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
             && validarCampoObligatorio("apellido2",regExpNombre,"O apelido só pode ter letras","msgUpdate") 
@@ -258,5 +157,62 @@ function validaUpdateUser() {
     return false   
 }
 
+
+/**
+ * Validación do nome de usuario, ten que cumpir a expresión regular e non existir un usuario co mesmo nome na base de datos
+ * @param {string} id id do campo do formulario a validar
+ * @param {RegExp} expresionR Expresión regular coa cal se compara o campo
+ * @param {string} divErr Div de error que se quere mostrar si non valida
+ * @returns {Boolean} true si valida, false si non
+ */
+// function validaUsuario(id,expresionR,divErr) {
+//     const user = document.getElementById(id);
+//     const divError = document.getElementById(divErr);
+
+//     if (user.value.trim() == "") {
+//         divError.innerHTML = "O Nome de usuario é un campo requerido";
+//         divError.classList.add("alert","alert-danger");
+//         user.value = "";
+//         user.classList.add("redText");
+//         user.style.borderColor = "red";
+//         return false;
+//     }else if (expresionR.test(user.value) == false) {
+//         divError.innerHTML = "O nome de usuario ten que ter de 3-16 díxitos (admítense letras, números, '-' ou '_')";
+//         divError.classList.add("alert","alert-danger");
+//         user.classList.add("redText");
+//         user.style.borderColor = "red";
+//         return false
+//     } else {
+//         let datos = {
+//             usuario: user.value
+//         }
+
+//         fetch('./php_functions/checkUser.php', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(datos),
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             if ( data == true ) {
+//                 divError.innerHTML = "O Nome de usuario xa existe, escribe outro "; //móstrase a mensaxe de todo ben ou non
+//                 divError.classList.add("alert","alert-danger");
+//                 user.classList.add("redText");
+//                 user.style.borderColor = "red";
+//                 user.value = "";
+//                 return false
+//             }        
+//         }).catch(err => {
+//             console.error("ERROR: ", err.message);
+//         });
+//     }
+//     user.style.borderColor = "rgb(233,236,239)";
+//     user.classList.remove("redText");
+//     divError.classList.remove("alert","alert-danger");
+//     divError.innerHTML = "";
+//     return true; 
+// }
 
 
