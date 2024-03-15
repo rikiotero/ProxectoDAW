@@ -62,39 +62,14 @@ if($curso != null) {
         $where .= " AND cursos.id='".$curso."'";
     }
 }
-//  // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
-// if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
-//     $where .= " WHERE usuarios.id=alumno_curso.usuario_id AND alumno_curso.curso_id=cursos.id AND usuarios.rol=3"; 
-// }else{
-//     $where .= " AND usuarios.id=alumno_curso.usuario_id AND alumno_curso.curso_id=cursos.id AND usuarios.rol=3";
-// }
 
- // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
-//  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
-//     $where .= " WHERE exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id"; 
-// }else{
-//     $where .= " AND exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id";
-// }
 
-//limite de rexistros
+//limite de rexistros a mostrar para paxinación
 $limit = "LIMIT $inicio , $numRexistros";
 
 $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios LEFT JOIN usuarios ON exercicios.creador=usuarios.id 
         JOIN asignaturas ON exercicios.asignatura=asignaturas.id
         JOIN cursos ON asignaturas.curso=cursos.id".$where." ORDER BY  cursos.curso,asignaturas.nombre,fecha_creacion DESC ". $limit;
-
- // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
-//  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
-//     $where .= " WHERE exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id"; 
-// }else{
-//     $where .= " AND exercicios.creador=usuarios.id AND exercicios.asignatura=asignaturas.id AND asignaturas.curso=cursos.id";
-// }
-
-// $sql = "SELECT " . implode(", ", $columnas) . " FROM exercicios, usuarios, asignaturas,cursos". $where;
-
-
-// var_dump($sql);
-// exit;
 
 $db = new ExercicioDB();
 $stmt = $db->getExerciciosFiltered($sql);
@@ -122,15 +97,13 @@ if ( $stmt->rowCount() != 0 ) {
         $output["html"] .= "<td>".$row['tema']."</td>";
         $output["html"] .= "<td>".$row['curso']."</td>";
         $output["html"] .= "<td>".$row['nombre']."</td>";
-        $output["html"] .= "<td>".$row['usuario']."</td>"; 
+        $output["html"] .= "<td>".$row['usuario']."</td>";
+         
         if ( $row['activo'] == "1" ) $output["html"] .= "<td><i class='fa-solid fa-check' style='color: #098b43;'></i></td>";
         else $output["html"] .= "<td><i class='fa-solid fa-x' style='color: #f03333;'></i></td>";
         
         $output["html"] .= "<td>".date('d-m-Y', strtotime($row['fecha_creacion']))."</td>";
-        // $output["html"] .= "<td>".($row['activo'] == "1") ?  '<i class="fa-solid fa-check" style="color: #098b43;"></i>' : ''  ."</td>";
-        // $output["html"] .= "<td>".$row['activo']."</td>";
         $output["html"] .= "<td><a href='./exercicio.php?id={$row['id']}' target='_blank' title='editar exercicio' id=editar-{$row['id']}><span class='fa-solid fa-pen-to-square' style='color: #e6b328;'></span></a></td>";
-
         $output["html"] .= "<td><a href='' data-bs-toggle='modal' title='borrar exercicio' id=borrar-{$row['id']}><span class='fa-solid fa-trash' style='color: #ff2600;'></span></a></td>";
         $output["html"] .= "</tr>";
     }

@@ -39,6 +39,7 @@ if( $datos["rol"] != 3) {               // non é estudiante
         $db->cerrarConexion();
         $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
     
     }elseif ( empty($erroresValidacion) ) {     //si non hai erros de validación insértase na base de datos 
         
@@ -69,7 +70,8 @@ if( $datos["rol"] != 3) {               // non é estudiante
     if ( $db->getUser($datos["usuario"]) ) {            //xa existe un usuario con ese nome
         $db->cerrarConexion();
         $output = "<div class='alert alert-danger'>Xa existe un usuario rexistrado con ese nome, intentao con outro nome</div>";
-        echo json_encode($output, JSON_UNESCAPED_UNICODE);    
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;    
     }
 
     $estudiante = new Student(

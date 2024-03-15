@@ -64,16 +64,12 @@ function  createUser() {
 
         //execútase a funcion que carga as tablas de usuarios/estudiantes
         //solo se executa si está definida, estará definida ou non según o panel que se cargue
-        if( typeof getUsersData === 'function' ) {
-            getUsersData();
-        } 
-        if( typeof getStudentTable === 'function' ) {
-            getStudentTable();
-        }
-
-            // setTimeout(function() {
-            //     document.getElementById("msgNovoUsuario").innerHTML = ""; //despois de cinco segundos bórrase a mensaxe
-            // }, 5000);
+            if( typeof getUsersData === 'function' ) {
+                getUsersData();
+            } 
+            if( typeof getStudentTable === 'function' ) {
+                getStudentTable();
+            }  
         
         }).catch(err => {
             console.error("ERROR: ", err.message)
@@ -87,9 +83,7 @@ function  createUser() {
 function deleteUser() {
 
     //recuperamos o id do usuario a borrar, está gardado nun campo oculto do modal de borrar usuario
-    let userId = document.getElementById("idUsuarioBorrar").value;  
-    // userId = userId.slice(7,);
-
+    let userId = document.getElementById("idUsuarioBorrar").value;
     let datos = {
         id: userId,
     };
@@ -249,8 +243,6 @@ document.getElementById("apellido1").style.borderColor = "rgb(233,236,239)";
 document.getElementById("apellido1").classList.remove("redText");    
 document.getElementById("apellido2").style.borderColor = "rgb(233,236,239)";
 document.getElementById("apellido2").classList.remove("redText");
-
-// const userRol = document.getElementById("currentUserRol").value;
 
  let id = {
      id: userId,

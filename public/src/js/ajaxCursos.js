@@ -23,7 +23,6 @@ function addCurso() {
       if ( Array.isArray(data) ) { //curso insertado correctamente
         notificacion.innerHTML = data[1];  
         //engádese o curso novo ao select de curso no modal de actualizar usuario
-        // document.getElementById("curso").add(new Option(cursoNovo,data[0]));
         getCursos("selectCurso");           //actualiza o select de curso da pestaña de editar asignaturas
         getCursos("filtroCursoEx");         //actualiza o select de curso da pestaña de exercicios
         getCursos("curso");                 //actualiza o select de curso do modal de editar usuario
@@ -103,8 +102,8 @@ function deleteCurso(id) {
     getTablaCursos();   //recargar tabla      
     notificacion = document.getElementById("msgCursos");
     notificacion.innerHTML = data;
-    getCursos("selectCurso");  //actualiza o select de curso da pestaña de editar asignaturas
-    getCursos("curso");        //actualiza o select de curso do nodal de editar usuario
+    getCursos("selectCurso");           //actualiza o select de curso da pestaña de editar asignaturas
+    getCursos("curso");                 //actualiza o select de curso do nodal de editar usuario
     getCursos("filtroCursoEx");        //actualiza o select de curso da pestaña de exercicios
 
     setTimeout(function() {
@@ -233,11 +232,11 @@ function getTablaCursos() {
     // añadir listener os botóns de editar curso da tabla de cursos, recorrense os nodos fillos da tabla
     // e engádese o listener 
     tablaCursos.childNodes.forEach( element => {
-      element.childNodes[2].childNodes[0].addEventListener("click", (e) => {    //listener para os botón de editar curso da lista de cusos 
-        let id = element.childNodes[0].innerHTML;                               //id do curso a actualizar
-        updateCursoModal.show();                                                //abrir modal de editar nome de curso
-        document.getElementById("IdcursoUpdate").value = id;                    //gárdase o Id do curso nun campo oculto do modal
-        document.getElementById("msgUpdateCursos").innerHTML = "";              //borrar mensaxes de exito/error
+      element.childNodes[2].childNodes[0].addEventListener("click", (e) => {            //listener para os botón de editar curso da lista de cusos 
+        let id = element.childNodes[0].innerHTML;                                       //id do curso a actualizar
+        updateCursoModal.show();                                                        //abrir modal de editar nome de curso
+        document.getElementById("IdcursoUpdate").value = id;                            //gárdase o Id do curso nun campo oculto do modal
+        document.getElementById("msgUpdateCursos").innerHTML = "";                      //borrar mensaxes de exito/error
         document.getElementById("cursoUpdate").value = element.childNodes[1].innerHTML; //engadir o input text o nome do curso
       });
     })
@@ -256,8 +255,6 @@ function getTablaCursos() {
   })
   .catch(err => console.log(err))
 }
-
-
 
 /**
  * Obten os cursos da base de datos e cargaos en un input de tipo select
@@ -278,7 +275,6 @@ function getCursos(selectId) {
   })
   .catch(err => console.log(err))
 }
-
 
 /**
  * Carga as asignaturas do curso correspondente no "input select" de asignaturas

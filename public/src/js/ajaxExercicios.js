@@ -69,14 +69,7 @@ function getExerciciosStudent(paxina) {
 
   let filtro = document.getElementById("buscarEx").value;     //campo de búsqueda 
   let numRexistros = document.getElementById("numRexistrosEX").value;
-  // let curso = document.getElementById("curso").value;         //curso
-
-  // let asignaturaSelect = document.getElementById("asignaturas").selectedOptions;
-  // let asignaturas = [];                                       //asignaturas
-  // [...asignaturaSelect].forEach( element => { 
-  //   asignaturas.push(element.value);
-  // });
-
+ 
   if(paxina != null) {      //si non recibe páxina manten a actual
     paxinaActual = paxina;
   }
@@ -136,92 +129,92 @@ function deleteExercicio() {
   /**
    * Garda un exercicio
    */
-  function saveExercicio() {
+function saveExercicio() {
 
-    //recollida de datos
-    let creador = document.getElementById("creador").value;
-    let fechaCreacion = document.getElementById("fechaCreacion").value;
-    let tema = document.getElementById("tema").value;
-    let curso = document.getElementById("curso").value;
-    let asignatura = document.getElementById("asignatura").value;
-    let exercActivo = document.getElementById("exercActivo").checked;
-    let enunciado = tinymce.activeEditor.getContent();
+  //recollida de datos
+  let creador = document.getElementById("creador").value;
+  let fechaCreacion = document.getElementById("fechaCreacion").value;
+  let tema = document.getElementById("tema").value;
+  let curso = document.getElementById("curso").value;
+  let asignatura = document.getElementById("asignatura").value;
+  let exercActivo = document.getElementById("exercActivo").checked;
+  let enunciado = tinymce.activeEditor.getContent();
+  
+  let datos = {
+    creador: creador,
+    fechaCreacion: fechaCreacion,
+    tema: tema,
+    curso: curso,
+    asignatura: asignatura,
+    exercActivo: exercActivo,
+    enunciado: enunciado
+  };
+
+  fetch("./php_functions/createExercicio.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(datos),
+    })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("msgExercicio").innerHTML = data;
     
-    let datos = {
-      creador: creador,
-      fechaCreacion: fechaCreacion,
-      tema: tema,
-      curso: curso,
-      asignatura: asignatura,
-      exercActivo: exercActivo,
-      enunciado: enunciado
-    };
+    setTimeout(function() {        //borrado da notificación
+      document.getElementById("msgExercicio").innerHTML = "";
+    }, 10000);
 
-    fetch("./php_functions/createExercicio.php", {
-      method: "POST",
-      headers: {
+  }).catch(err => {
+      console.error("ERROR: ", err.message)
+    }); 
+}
+
+/**
+ * Actualiza os datos de un exercicio
+ */
+function updateExercicio() {
+
+  //recollida de datos
+  
+  let idExerc = document.getElementById("idExerc").value;
+  let creador = document.getElementById("creador").value;
+  let fechaCreacion = document.getElementById("fechaCreacion").value;
+  let tema = document.getElementById("tema").value;
+  let curso = document.getElementById("curso").value;
+  let asignatura = document.getElementById("asignatura").value;
+  let exercActivo = document.getElementById("exercActivo").checked;
+  let enunciado = tinymce.activeEditor.getContent();
+  
+  let datos = {
+    idExerc: idExerc,
+    creador: creador,
+    fechaCreacion: fechaCreacion,
+    curso: curso,
+    tema: tema,
+    asignatura: asignatura,
+    exercActivo: exercActivo,
+    enunciado: enunciado
+  };
+
+  fetch("./php_functions/updateExercicio.php", {
+    method: "POST",
+    headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos),
-      })
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("msgExercicio").innerHTML = data;
-     
-      setTimeout(function() {        //borrado da notificación
-        document.getElementById("msgExercicio").innerHTML = "";
-      }, 10000);
+    },
+    body: JSON.stringify(datos),
+    })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("msgExercicio").innerHTML = data;
 
-    }).catch(err => {
-        console.error("ERROR: ", err.message)
-      }); 
-  }
-
-  /**
-   * Actualiza os datos de un exercicio
-   */
-  function updateExercicio() {
-
-    //recollida de datos
+    setTimeout(function() {          
+      document.getElementById("msgExercicio").innerHTML = "";
+    }, 5000);
     
-    let idExerc = document.getElementById("idExerc").value;
-    let creador = document.getElementById("creador").value;
-    let fechaCreacion = document.getElementById("fechaCreacion").value;
-    let tema = document.getElementById("tema").value;
-    let curso = document.getElementById("curso").value;
-    let asignatura = document.getElementById("asignatura").value;
-    let exercActivo = document.getElementById("exercActivo").checked;
-    let enunciado = tinymce.activeEditor.getContent();
-    
-    let datos = {
-      idExerc: idExerc,
-      creador: creador,
-      fechaCreacion: fechaCreacion,
-      curso: curso,
-      tema: tema,
-      asignatura: asignatura,
-      exercActivo: exercActivo,
-      enunciado: enunciado
-    };
-
-    fetch("./php_functions/updateExercicio.php", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos),
-      })
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("msgExercicio").innerHTML = data;
-
-      setTimeout(function() {          
-        document.getElementById("msgExercicio").innerHTML = "";
-      }, 5000);
-      
-    }).catch(err => {
-        console.error("ERROR: ", err.message)
-      });
-  }
+  }).catch(err => {
+      console.error("ERROR: ", err.message)
+    });
+}
 
 

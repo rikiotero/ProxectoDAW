@@ -64,24 +64,14 @@ if($curso != null) {
     }
 }
 
- // si todos os filtros están vacios añadimos un 'WHERE' si non 'AND'
-//  if(($filtro == null && $curso == null && $activo && $inactivo) || ($filtro == null && $curso == null && !$activo && !$inactivo)) {              
-//     $where .= " WHERE usuarios.rol=3"; 
-// }else{
-//     $where .= " AND usuarios.rol=3";
-// }
-
-//limite de rexistros
+//limite de rexistros para paxinación
 $limit = "LIMIT $inicio , $numRexistros";
 
-// $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios 
-// LEFT JOIN cursos ON usuarios.curso = cursos.id".$where." ORDER BY fecha_alta DESC ".$limit;
+
 $sql = "SELECT DISTINCT " . implode(", ", $columnas) . " FROM usuarios     
     JOIN usuario_asignatura ON usuario_asignatura.usuario_id=usuarios.id    
     JOIN asignaturas ON asignaturas.id=usuario_asignatura.asignatura_id    
     JOIN cursos ON cursos.id=asignaturas.curso ".$where." ORDER BY fecha_alta DESC ".$limit;
-// var_dump($sql);
-// exit;
 
 $db = new UserDB();
 $stmt = $db->getUsersFiltered($sql);

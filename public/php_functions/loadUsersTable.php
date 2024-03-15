@@ -71,8 +71,6 @@ $limit = "LIMIT $inicio , $numRexistros";
 
 //con "implode" creamos un string coas columnas que desexamos buscar, separando os elementos do array con ", "
 $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, roles".$where." ORDER BY fecha_alta DESC ". $limit;
-// var_dump($sql);
-// exit;
 
 $db = new UserDB();
 $stmt = $db->getUsersFiltered($sql);
@@ -81,18 +79,6 @@ $stmt = $db->getUsersFiltered($sql);
 $sql = "SELECT " . implode(", ", $columnas) . " FROM usuarios, roles". $where;
 $rexistros = $db->getUsersFiltered($sql);
 $numRows = $rexistros->rowCount();
-
-
-//consulta para obter o número de rexistros que devolve a consulta filtrada
-// $sqlFiltro = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columnas) . " FROM usuarios, roles ". "$where $limit";
-// $resultadoFiltrado = $db->getUsersFiltered($sqlFiltro);
-
-
-// $sqlNumRows = "SELECT FOUND_ROWS()";                     //número de rexistros que devolveu a consulta con "SQL_CALC_FOUND_ROWS"
-// $resultado = $db->getUsersFiltered($sqlNumRows);
-// $numRows = $resultado->fetch(PDO::FETCH_NUM);
-// if ( $numRows ) $totalFiltro =  $numRows[0];
-// else $totalFiltro = 0;
 
 $db->cerrarConexion();
 

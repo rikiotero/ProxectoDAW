@@ -2,9 +2,6 @@
  * ----------------------------------------------------------------------------------
  */
 
-// carga de datos do usuario logueado na pantalla modal de editar o seu perfil
-// loadUserDataModal(document.getElementById("idUsuario").value);  //definida en ajaxUser.js
-
 //listeners para filtrar a tabla de estudiantes
 document.getElementById("buscarEx").addEventListener("keyup", () => {  //filtro por búsqueda
     getExerciciosStudent(1);

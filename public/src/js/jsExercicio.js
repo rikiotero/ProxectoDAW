@@ -1,4 +1,4 @@
-//iniciar o editor
+//iniciar o editor tinymce
 tinymce.init({
     selector: '#enunciado',
     language: 'es',
@@ -9,7 +9,7 @@ tinymce.init({
     '| fontsizeinput | forecolor | backcolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | bullist numlist',
   });
 
-//listener para cargar as asignaturas correspondentes co curso seleccionado
+//listener para cargar as asignaturas correspondentes co curso seleccionado na pantalla do editos de exercicios
 let cursoExercicio = document.getElementById("curso");
 cursoExercicio.addEventListener("change", () => {
     cargarAsignaturas(cursoExercicio.value,"asignatura");

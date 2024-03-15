@@ -12,9 +12,6 @@ $columnas = ["exercicios.id","tema","asignaturas.nombre","usuarios.usuario","fec
 //recollida dos campos para filtrar a búsqueda
 $datos = json_decode(file_get_contents('php://input'), true);
 
-// $curso = isset($_POST["curso"]) && $_POST["curso"] != "0" ? $_POST["curso"] : null;          //select de curso
-// $asignaturas = isset($_POST["asignaturas"]) ? $_POST["asignaturas"] : null;
-
 $filtro = $datos["filtro"] != "" ? $datos["filtro"] : null;         //input text de buscar...
 // $curso = array_keys($_SESSION["curso"])[0];                      //curso
 $asignaturas = $_SESSION["asignaturas"];                            //array de asignaturas
