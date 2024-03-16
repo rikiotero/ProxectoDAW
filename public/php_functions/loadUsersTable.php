@@ -106,7 +106,7 @@ if ( $stmt->rowCount() != 0 ) {
         $output["html"] .= "<td>".$row['rol']."</td>";
         $output["html"] .= "<td><a href='' data-bs-toggle='modal'  title='editar usuario' id={$row['id']}><i class='fa-solid fa-pen-to-square' style='color: #e6b328;'></i></a></td>";
         //botón borrar usuario
-        if ( $row['usuario'] != "administrador") {
+        if ( $row['usuario'] != "administrador") { //si é o usuario "administrador" non se pinta o botón de borrar"
             $output["html"] .= "<td><a href='' data-bs-toggle='modal' title='borrar usuario' id=borrar-{$row['id']}><i class='fa-solid fa-trash' style='color: #ff2600;'></i></a></td>";
             $output["html"] .= "</tr>";
         }else {

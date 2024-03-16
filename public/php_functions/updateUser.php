@@ -40,6 +40,9 @@ if ( $datos["usuarioVello"] != $datos["usuario"] ) {
 if ( $datos["rol"] != 3) {   // non é estudiante
     
     // $passw = $db->getPassword($datos["usuarioVello"]);
+    if ( $userAntes->id == 1 ) {
+        $datos["activo"] = 1;
+    }
 
     $user = new User(
         strip_tags( trim($datos["usuario"]) ),
